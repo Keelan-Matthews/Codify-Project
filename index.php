@@ -1,22 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles/override.css">
-    <link rel="stylesheet" href="styles/splash.css">
-    <title>Codify | Welcome</title>
-</head>
+<?php
+    $pageTitle = "Welcome";
+    $stylesheet = "styles/splash.css";
+    include 'templates/header.php';
+?>
 <body>
     <main>
         <div class="row">
-            <div class="col-12 col-md-7 d-flex align-items-center">
-                <div class="hero-container ">
-                    <img src="media/svg/logo.svg" alt="" class="pb-5 w-100 h-100">
+            <div class="col-12 order-2 order-md-1 col-md-7 d-flex align-items-center">
+                <div class="hero-container">
+                    <img src="media/svg/logo.svg" alt="" class="pb-5 pt-5 pt-md-0 w-100 h-100">
                     <!-- Please note the indentation is intentional to preserve correct tab amounts -->
-                    <pre class="rounded shadow text-white lighter-gray p-1 p-md-3 pe-md-5 code-container"> 
+                    <pre class="rounded shadow text-white lighter-gray p-1 p-md-3 pe-md-5" id="code-container"> 
                         <code class="fs-5">
     if (user<span class="text-secondary">.events</span> === 'need') {
         switch user<span class="text-secondary">.events</span>.type {
@@ -32,11 +26,13 @@
     }
                         </code>
                     </pre>
+                    <a href="register.php">
+                        <div class="btn btn-primary btn-lg">>_run.sh</div>
+                    </a>
                     
-                    <div class="btn btn-primary btn-lg">>_run.sh</div>
                 </div>
             </div>
-            <div class="col-12 col-md-5 d-flex flex-column align-items-end justify-content-between circle-background pe-5">
+            <div class="col-12 col-md-5 order-1 order-md-2 d-flex flex-column align-items-end justify-content-between circle-background pe-5">
                 <div class="d-flex mt-4">
                     <a href="login.php">
                         <div class="btn btn-secondary">Login</div>
@@ -51,6 +47,7 @@
             </div>
         </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="js/splash.js"></script>
 </body>
 </html>

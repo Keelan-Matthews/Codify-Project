@@ -6,7 +6,7 @@
 .circle-background {
     background-color: #E8F4FF;
     height: 100vh;
-    border-radius: 60% 0 0 40%;
+    border-radius: 500px 0 0 400px;
 }
 
 .lighter-gray {
@@ -20,7 +20,7 @@ code, code a {
 
 @media screen and (min-width: 768px) {
     .hero-container {
-        margin-left: 200px;
+        margin-left: 10vw;
     }
 }
 
