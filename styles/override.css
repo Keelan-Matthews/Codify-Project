@@ -13,8 +13,12 @@
 
 main {
     overflow-x: hidden;
-    background-color: #222222;
+    background-color: var(--background);
     height: 100vh;
+}
+
+.lighter-gray {
+    background-color: #2C2C2C;
 }
 
 a {
@@ -42,4 +46,8 @@ h1,h2,h3,h4,a {
 .btn-secondary {
     background-color: var(--background);
     border: 0;
+}
+
+.bcg-light {
+    background-color: #E8F4FF;
 }
