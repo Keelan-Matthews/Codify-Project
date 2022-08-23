@@ -20,7 +20,7 @@ if (isset($_GET["error"])) {
 <body>
     <main>
         <div class="row h-100">
-            <div class="col-6 bcg-light d-flex align-items-center justify-content-center">
+            <div class="col-12 col-md-6 bcg-light d-flex align-items-center justify-content-center" id="illustration-col">
                 <div class="illustration">
                     <svg class="animated" id="freepik_stories-secure-login" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs">
                         <style>
@@ -1177,8 +1177,8 @@ if (isset($_GET["error"])) {
                     </svg>
                 </div>
             </div>
-            <div class="col-6 d-flex flex-column align-items-center">
-                <img src="media/svg/logo.svg" alt="" class="my-5 py-5">
+            <div class="col-12 col-md-6 d-flex flex-column align-items-center">
+                <img src="media/svg/logo.svg" alt="" class="my-5 py-5 w-75">
                 <div class="form-container lighter-gray p-5 rounded shadow d-flex flex-column align-items-center">
                     <h3 class="text-white mb-4">Sign in</h3>
                     <form action="backend/validate-login.php" method="post" class="d-flex flex-column align-items-center w-100">
@@ -1214,6 +1214,8 @@ if (isset($_GET["error"])) {
             </div>
         </div>
     </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="js/login.js"></script>
 </body>
 
 </html>

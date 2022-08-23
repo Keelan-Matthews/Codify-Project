@@ -1,8 +1,14 @@
 .form-container {
-   width: 50%;
+   width: 90%;
 }
 
 .illustration {
     width: 70%;
     height: 70%;
+}
+
+@media screen and (min-width: 1000px) {
+    .form-container {
+        width: 50%;
+    }
 }
