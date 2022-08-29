@@ -39,6 +39,10 @@ h1,h2,h3,h4,a {
     border: 0;
 }
 
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+
 .text-secondary {
     color: var(--secondary) !important;
 }
