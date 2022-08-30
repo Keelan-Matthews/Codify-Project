@@ -1,4 +1,8 @@
 <?php
+if($_SESSION["signed_in"] == false){
+    header("Location: ./index.php");
+}
+
 $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
@@ -8,7 +12,7 @@ require 'templates/header.php';
         <div class="col-12 col-md-10">
             <div class="container mt-5">
                 <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
-                <div class="events d-flex flex-wrap justify-content-between">
+                <div class="events row justify-content-between">
                 </div>
             </div>
         </div>
@@ -25,15 +29,15 @@ require 'templates/header.php';
                 <div class="w-100">
                     <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation ms-md-4 ps-md-5">
                         <li class="fs-4 fw-light my-4">
-                            <a href="index.php" class="d-flex text-white">
+                            <a href="index.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-home pe-2"></i>
-                                <span class="mobile-hide">Home</span>
+                                <span class="navtext-hide">Home</span>
                             </a>
                         </li>
                         <li class="fs-4 fw-light my-4">
-                            <a href="dashboard.php" class="d-flex text-white">
+                            <a href="dashboard.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-globe pe-2"></i>
-                                <span class="mobile-hide">Explore</span>
+                                <span class="navtext-hide">Explore</span>
                             </a>
                         </li>
                         <div class="mobile-show">
@@ -44,15 +48,15 @@ require 'templates/header.php';
                             </li>
                         </div>
                         <li class="fs-4 fw-light my-4">
-                            <a href="profile.php" class="d-flex text-white">
+                            <a href="profile.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-comment-dots pe-2"></i>
-                                <span class="mobile-hide">Messages</span>
+                                <span class="navtext-hide">Messages</span>
                             </a>
                         </li>
                         <li class="fs-4 fw-light my-4">
-                            <a href="settings.php" class="d-flex text-white">
+                            <a href="settings.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-user pe-2"></i>
-                                <span class="mobile-hide">Profile</span>
+                                <span class="navtext-hide">Profile</span>
                             </a>
                         </li>
                     </ul>
