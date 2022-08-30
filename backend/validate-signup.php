@@ -47,7 +47,8 @@
         }
 
         $instance->addUser($username, $email, $password);
-
+        header("location: ../dashboard.php");
+        exit();
     } else {
         header("location: ../register.php?error=notsubmitted");
         exit();

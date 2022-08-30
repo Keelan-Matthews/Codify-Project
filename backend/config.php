@@ -115,7 +115,7 @@ function invalidEmail($email)
 function invalidPassword($password)
 {
     $result = true;
-    if (!preg_match("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/", $password)) {
+    if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/", $password)) {
         $result = true;
     } else
         $result = false;

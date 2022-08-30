@@ -12,38 +12,25 @@ const resize = () => {
     }
 }
 
-$('form').submit((e) => checkInputs() || e.preventDefault());
+$('form').submit((e) => { if (!checkInputs()) e.preventDefault()});
 
 const checkInputs = () => {
+    const usernameValue = $('#usernameInput').value.trim();
     const emailValue = $('#emailInput').value.trim();
     const passwordValue = $('#passwordInput').value.trim();
     let valid = true;
 
-    // if(nameValue === '') {
-    //     setErrorFor(iName, 'Name cannot be blank');
-    //     valid = false;
-    // } else if(nameValue.length > 20) {
-    //     setErrorFor(iName, 'Cannot be longer than 20 characters');
-    //     valid = false;
-    // } else if (!isWord(nameValue)) {
-    //     setErrorFor(iName, 'Can only contain characters');
-    //     valid = false;
-    // } else {
-    //     setSuccessFor(iName);
-    // }
+    let usernameerrorMessage = '';
 
-    // if(surnameValue === '') {
-    //     setErrorFor(surname, 'Surname cannot be blank');
-    //     valid = false;
-    // } else if (!isWord(surnameValue)) {
-    //     setErrorFor(surname, 'Can only contain characters');
-    //     valid = false;
-    // } else if (surnameValue.length > 30) {
-    //     setErrorFor(surname, 'Cannot be longer than 30 characters');
-    //     valid = false;
-    // } else {
-    //     setSuccessFor(surname);
-    // }
+    if(usernameValue === '') {
+        usernameerrorMessage = 'Username is required';
+    } else if(nameValue.length > 20) {
+        usernameerrorMessage = 'Username must be less than 20 characters';
+    } else if (!isUsername(nameValue)) {
+        usernameerrorMessage = 'Can only contain lowercase characters and numbers';
+    }
+
+    setValidity($('#usernameInput'), usernameerrorMessage);
 
     let emailerrorMessage = '';
 
@@ -89,8 +76,8 @@ const isStrongPassword = password => {
     return password.match(re);
 }
 
-const isWord = word => {
-    return /^[a-zA-Z]+$/.test(word);
+const isUsername = word => {
+    return /^[a-z0-9]+$/.test(word);
 }
 
 const setValidity = (input, message) => {
