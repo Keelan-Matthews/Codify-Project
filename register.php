@@ -51,7 +51,7 @@ if (isset($_GET["error"])) {
                         <div class="invalid-feedback"><?php echo $passwordError ?></div>
                     </div>
 
-                    <small class="text-white">Already a member? <a href="register.php">Login</a></small>
+                    <small class="text-white">Already a member? <a href="login.php">Login</a></small>
 
                     <div class="w-100 mt-4">
                         <input type="submit" name="submit" class="btn btn-primary btn-lg w-100" value="Register" class="submit-button" />

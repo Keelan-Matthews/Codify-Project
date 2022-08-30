@@ -55,3 +55,56 @@ h1,h2,h3,h4,a {
 .bcg-light {
     background-color: #E8F4FF;
 }
+
+.form-group.success input {
+    border: 3px solid rgb(112, 195, 63);
+}
+
+.form-group.error input {
+    border: 3px solid rgb(195, 70, 63);
+}
+
+.form-group i {
+    visibility: hidden;
+    position: absolute;
+    top: 44px;
+    right: 10px;
+}
+
+.form-group.success .fa-check-circle {
+    visibility: visible;
+    color: rgb(112, 195, 63);
+}
+
+.form-group.error .fa-exclamation-circle {
+    visibility: visible;
+    color: rgb(195, 70, 63);
+}
+
+.form-group small {
+    visibility: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.form-group.error small {
+    visibility: visible;
+    color: rgb(195, 70, 63);
+}
+
+.form-control {
+    border: 0;
+    background-color: #3b3b3b;
+    color: white;
+}
+
+.form-control:focus {
+    border: 0;
+    background-color: #3b3b3b;
+    color: white;
+}
+
+label {
+    color: #fff;
+}

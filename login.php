@@ -18,30 +18,33 @@ if (isset($_GET["error"])) {
 ?>
 <main>
     <div class="row h-100">
-        <div class="col-12 col-md-6 bcg-light d-flex align-items-center justify-content-center" id="illustration-col">
-            <div class="illustration">
-                <img src="media/svg/login.svg" alt="">
+        <div id="illustration-col" class="col-12 col-md-6 bcg-light">
+            <div class="d-flex align-items-center justify-content-center h-100">
+                <div class="illustration">
+                    <img src="media/svg/login.svg" alt="">
+                </div>
             </div>
         </div>
+
         <div class="col-12 col-md-6 d-flex flex-column align-items-center">
             <img src="media/svg/logo.svg" alt="" class="my-5 py-5 w-75">
             <div class="form-container lighter-gray p-5 rounded shadow d-flex flex-column align-items-center">
                 <h3 class="text-white mb-4">Sign in</h3>
                 <form action="backend/validate-login.php" method="post" class="d-flex flex-column align-items-center w-100">
-                    <div <?php echo ($emailError === "") ? "class='form-group w-100'" : "class='form-group w-100 error'" ?>>
+                    <div class='form-group w-100 position-relative pb-4 <?php echo ($emailError === "") ? "" : "error" ?>'>
                         <label for="emailInput" class="form-label text-white">Email</label>
                         <input type="email" class="form-control" name="email" id="emailInput" placeholder="name@example.com" />
                         <i class="fas fa-check-circle"></i>
                         <i class="fas fa-exclamation-circle"></i>
-                        <div class="invalid-feedback"><?php echo $emailError ?></div>
+                        <small><?php echo $emailError ?></small>
                     </div>
 
-                    <div <?php echo ($passwordError === "") ? "class='form-group w-100 my-3'" : "class='form-group w-100 my-3 error'" ?>>
+                    <div class='form-group w-100 position-relative pb-4 <?php echo ($passwordError === "") ? "" : "error" ?>'>
                         <label for="passwordInput" class="form-label text-white">Password</label>
                         <input type="password" class="form-control" name="password" id="passwordInput" placeholder="strong password" />
                         <i class="fas fa-check-circle"></i>
                         <i class="fas fa-exclamation-circle"></i>
-                        <div class="invalid-feedback"><?php echo $passwordError ?></div>
+                        <small><?php echo $passwordError ?></small>
                     </div>
 
                     <small class="text-white">Not registered? <a href="register.php">Sign up</a></small>

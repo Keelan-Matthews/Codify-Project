@@ -1,13 +1,63 @@
 <?php
-if($_SESSION["signed_in"] == false){
-    header("Location: ./index.php");
-}
+// if($_SESSION["signed_in"] == false){
+//     header("Location: ./index.php");
+// }
 
 $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
 ?>
 <main>
+    <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="createEventLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white">
+                    <h5 class="modal-title" id="createEventLabel">Create Event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="">
+                        <div class="form-floating form-group mb-4">
+                            <input type="text" class="form-control" id="eventName" placeholder="name@example.com">
+                            <label for="eventName">Event Name</label>
+                        </div>
+                        <div class="d-flex mb-4">
+                            <div class="form-floating form-group w-50 pe-3">
+                                <input type="text" class="form-control" id="eventLocation" placeholder="location">
+                                <label for="eventLocation">Event Location</label>
+                            </div>
+                            <div class="form-group w-50">
+                                <input type="date" class="form-control py-3" placeholder="DD/MM/YYYY">
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <select class="form-control mb-4 py-3" id="eventCategory">
+                                <option>Select Category</option>
+                                <option>Category 1</option>
+                                <option>Category 2</option>
+                                <option>Category 3</option>
+                            </select>
+                        </div>
+
+                        <div class="form-floating form-group mb-4">
+                            <label for="eventDescription">Event Description</label>
+                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="text"></textarea>
+                        </div>
+                        <div class="form-group form-group">
+                            <label for="eventImage">Event Image</label>
+                            <input type="file" class="form-control" id="eventImage">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-12 col-md-10">
             <div class="container mt-5">
@@ -40,11 +90,11 @@ require 'templates/header.php';
                                 <span class="navtext-hide">Explore</span>
                             </a>
                         </li>
-                        <div class="mobile-show">
+                        <div class="mobile-show" data-bs-toggle="modal" data-bs-target="#createEvent">
                             <li class="fs-4 fw-light my-4 rounded-circle bg-primary d-flex justify-content-center align-items-center px-2">
-                                <a href="dashboard.php" class="text-white">
+                                <div class="text-white">
                                     <i class="fas fa-plus"></i>
-                                </a>
+                                </div>
                             </li>
                         </div>
                         <li class="fs-4 fw-light my-4">
@@ -62,7 +112,7 @@ require 'templates/header.php';
                     </ul>
                 </div>
             </nav>
-            <div class="btn btn-primary btn-lg mt-3 w-75 mobile-hide">Create Event</div>
+            <div class="btn btn-primary btn-lg mt-3 w-75 mobile-hide" data-bs-toggle="modal" data-bs-target="#createEvent">Create Event</div>
         </div>
     </div>
 </main>

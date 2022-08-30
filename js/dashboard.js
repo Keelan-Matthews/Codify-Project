@@ -24,7 +24,7 @@ let events = {
     ]
 }
 
-const Event = ({ title, date, location, img, profile }) => `
+const event = ({ title, date, location, img, profile }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded event-card">
             <div class="d-flex p-3">
@@ -41,14 +41,19 @@ const Event = ({ title, date, location, img, profile }) => `
 `;
 
 const populateHomeEvents = () => {
-    $('.events').html(events.events.map(Event).join(''));
+    $('.events').html(events.events.map(event).join(''));
 }
 
 $(document).ready(() => {
     populateHomeEvents();
+    resize();
 });
 
 $(window).resize(() => {
+    resize();
+})
+
+const resize = () => {
     let windowsize = $(window).width();
 
     if (windowsize < 1200) {
@@ -57,7 +62,7 @@ $(window).resize(() => {
     else {
         $('.navtext-hide').css('display', 'block');
     }
-    
+
     if (windowsize < 769) {
         $('.mobile-hide').css('display', 'none');
         $('.mobile-show').css('display', 'block');
@@ -66,4 +71,4 @@ $(window).resize(() => {
         $('.mobile-hide').css('display', 'block');
         $('.mobile-show').css('display', 'none');
     }
-})
+}

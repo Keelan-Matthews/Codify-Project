@@ -5,8 +5,8 @@ if (!isset($_SESSION)) {
     if (!isset($_SESSION["signed_in"])) {
         $_SESSION["signed_in"] = false;
     }
-    if (!isset($_SESSION["role"])) {
-        $_SESSION["role"] = "";
+    if (!isset($_SESSION["admin"])) {
+        $_SESSION["admin"] = "";
     }
     if (!isset($_SESSION["user_id"])) {
         $_SESSION["user_id"] = "";
@@ -148,7 +148,7 @@ function emailExists($conn, $email)
 }
 
 function apiCall($data) {
-    $url = "https://wheatley.cs.up.ac.za/u21549967/api.php";
+    $url = "localhost/IMY-220-Project/api.php";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_POST, 1);
