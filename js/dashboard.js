@@ -20,7 +20,91 @@ let events = {
             "location": "Cape Town",
             "img": "media/test.jpg",
             "profile": "media/profile.jpg"
-        }
+        },
+        {
+            "title": "Ludum Dare 2022",
+            "date": "2020-05-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2021",
+            "date": "2020-04-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2020",
+            "date": "2020-03-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2022",
+            "date": "2020-05-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2021",
+            "date": "2020-04-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2020",
+            "date": "2020-03-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2022",
+            "date": "2020-05-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2021",
+            "date": "2020-04-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2020",
+            "date": "2020-03-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2022",
+            "date": "2020-05-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2021",
+            "date": "2020-04-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
+        {
+            "title": "Ludum Dare 2020",
+            "date": "2020-03-01",
+            "location": "Cape Town",
+            "img": "media/test.jpg",
+            "profile": "media/profile.jpg"
+        },
     ]
 }
 

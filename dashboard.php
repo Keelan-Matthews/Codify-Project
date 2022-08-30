@@ -7,7 +7,7 @@ $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
 ?>
-<main>
+<main class="overflow-hidden">
     <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="createEventLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content lighter-gray">
@@ -78,13 +78,13 @@ require 'templates/header.php';
                 </a>
                 <div class="w-100">
                     <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation ms-md-4 ps-md-5">
-                        <li class="fs-4 fw-light my-4">
+                        <li class="fs-4 fw-light my-4 home-link active">
                             <a href="index.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-home pe-2"></i>
                                 <span class="navtext-hide">Home</span>
                             </a>
                         </li>
-                        <li class="fs-4 fw-light my-4">
+                        <li class="fs-4 fw-light my-4 explore-link">
                             <a href="dashboard.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-globe pe-2"></i>
                                 <span class="navtext-hide">Explore</span>

@@ -23,8 +23,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         case "login":
             $email = stripcslashes($data->email);
             $password = stripcslashes($data->password);
-            $email = mysqli_real_escape_string($conn, $email);
-            $password = mysqli_real_escape_string($conn, $password);
 
             $api->returnUser($instance, $email, $password);
             break;

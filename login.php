@@ -31,19 +31,15 @@ if (isset($_GET["error"])) {
             <div class="form-container lighter-gray p-5 rounded shadow d-flex flex-column align-items-center">
                 <h3 class="text-white mb-4">Sign in</h3>
                 <form action="backend/validate-login.php" method="post" class="d-flex flex-column align-items-center w-100">
-                    <div class='form-group w-100 position-relative pb-4 <?php echo ($emailError === "") ? "" : "error" ?>'>
+                    <div class='form-group w-100 position-relative pb-4'>
                         <label for="emailInput" class="form-label text-white">Email</label>
-                        <input type="email" class="form-control" name="email" id="emailInput" placeholder="name@example.com" />
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation-circle"></i>
+                        <input type="email" class="form-control <?php echo ($emailError === "") ? '' : 'is-invalid' ?>" name="email" id="emailInput" placeholder="name@example.com" />
                         <small><?php echo $emailError ?></small>
                     </div>
 
-                    <div class='form-group w-100 position-relative pb-4 <?php echo ($passwordError === "") ? "" : "error" ?>'>
+                    <div class='form-group w-100 position-relative pb-4'>
                         <label for="passwordInput" class="form-label text-white">Password</label>
-                        <input type="password" class="form-control" name="password" id="passwordInput" placeholder="strong password" />
-                        <i class="fas fa-check-circle"></i>
-                        <i class="fas fa-exclamation-circle"></i>
+                        <input type="password" class="form-control <?php echo ($passwordError === "") ? '' : 'is-invalid' ?>" name="password" id="passwordInput" placeholder="strong password" />
                         <small><?php echo $passwordError ?></small>
                     </div>
 

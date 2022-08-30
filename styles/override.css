@@ -5,6 +5,7 @@
     --secondary: #2EAC9B;
     --background: #222222;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -30,7 +31,11 @@ p {
     font-family: 'Montserrat', sans-serif;
 }
 
-h1,h2,h3,h4,a {
+h1,
+h2,
+h3,
+h4,
+a {
     font-family: 'Poppins', sans-serif;
 }
 
@@ -56,31 +61,6 @@ h1,h2,h3,h4,a {
     background-color: #E8F4FF;
 }
 
-.form-group.success input {
-    border: 3px solid rgb(112, 195, 63);
-}
-
-.form-group.error input {
-    border: 3px solid rgb(195, 70, 63);
-}
-
-.form-group i {
-    visibility: hidden;
-    position: absolute;
-    top: 44px;
-    right: 10px;
-}
-
-.form-group.success .fa-check-circle {
-    visibility: visible;
-    color: rgb(112, 195, 63);
-}
-
-.form-group.error .fa-exclamation-circle {
-    visibility: visible;
-    color: rgb(195, 70, 63);
-}
-
 .form-group small {
     visibility: hidden;
     position: absolute;
@@ -88,13 +68,13 @@ h1,h2,h3,h4,a {
     left: 0;
 }
 
-.form-group.error small {
+.is-invalid~small {
     visibility: visible;
     color: rgb(195, 70, 63);
 }
 
 .form-control {
-    border: 0;
+    border-color: #3b3b3b;
     background-color: #3b3b3b;
     color: white;
 }
@@ -107,4 +87,12 @@ h1,h2,h3,h4,a {
 
 label {
     color: #fff;
+}
+
+.events::-webkit-scrollbar {
+    width: 0.2em;
+}
+
+.events::-webkit-scrollbar-thumb {
+    background-color: var(--primary);
 }

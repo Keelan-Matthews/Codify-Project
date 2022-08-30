@@ -39,21 +39,19 @@ if (isset($_POST['submit'])) {
 
         $json = apiCall($data);
 
-        echo "<script>console.log('" . $json . "');</script>";
+        if (!$json['status'] == "success") {
+            header('Location: ../login.php?error=loginfailed');
+            exit();
+        }
 
-        // if (!$json['user_id']) {
-        //     header('Location: ../login.php?error=loginfailed');
-        //     exit();
-        // }
+        $_SESSION["signed_in"] = true;
+        $_SESSION["admin"] = $json["data"]["admin"];
+        $_SESSION["user_id"] = $json["data"]["user_id"];
+        $_SESSION["username"] = $json["data"]["username"];
+        $_SESSION["email"] = $json["data"]["email"];
 
-        // $_SESSION["signed_in"] = true;
-        // $_SESSION["admin"] = $json["data"]["admin"];
-        // $_SESSION["user_id"] = $json["data"]["user_id"];
-        // $_SESSION["username"] = $json["data"]["username"];
-        // $_SESSION["email"] = $json["data"]["email"];
-
-        // header('Location: ../dashboard.php');
-        // exit();
+        header('Location: ../dashboard.php');
+        exit();
     }
 } else {
     header("location: ../login.php?error=notsubmitted");
