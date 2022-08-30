@@ -6,53 +6,76 @@
 $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
+
+$nameError = "";
+$locationError = "";
+$dateError = "";
+$categoryError = "";
+$descriptionError = "";
+$imageError = "";
+
+if (isset($_GET["error"])) {
+    if ($_GET["error"] == "emptyname")  $nameError = "Name cannot be blank";
+    if ($_GET["error"] == "emptylocation")  $locationError = "Location cannot be blank";
+    if ($_GET["error"] == "emptydate")  $dateError = "Please select a date";
+    if ($_GET["error"] == "emptycategory")  $categoryError = "Please select a category";
+    if ($_GET["error"] == "emptydescription")  $descriptionError = "Description cannot be blank";
+    if ($_GET["error"] == "emptyimage")  $imageError = "Please upload an image";
+}
 ?>
 <main class="overflow-hidden">
     <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="createEventLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content lighter-gray">
-                <div class="modal-header text-white">
+                <div class="modal-header text-white border-0">
                     <h5 class="modal-title" id="createEventLabel">Create Event</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
-                        <div class="form-floating form-group mb-4">
-                            <input type="text" class="form-control" id="eventName" placeholder="name@example.com">
+                    <form action="backend/validate-event.php" method="post" id="event-form">
+                        <div class="form-floating form-group mb-5">
+                            <input type="text" class="form-control <?php echo ($nameError === "") ? '' : 'is-invalid' ?>" id="eventName" placeholder="name@example.com" name="name">
                             <label for="eventName">Event Name</label>
+                            <small><?php echo $nameError ?></small>
                         </div>
-                        <div class="d-flex mb-4">
+                        <div class="d-flex mb-5">
                             <div class="form-floating form-group w-50 pe-3">
-                                <input type="text" class="form-control" id="eventLocation" placeholder="location">
+                                <input type="text" class="form-control <?php echo ($locationError === "") ? '' : 'is-invalid' ?>" id="eventLocation" placeholder="location" name="location">
                                 <label for="eventLocation">Event Location</label>
+                                <small><?php echo $locationError ?></small>
                             </div>
                             <div class="form-group w-50">
-                                <input type="date" class="form-control py-3" placeholder="DD/MM/YYYY">
+                                <input type="date" class="form-control py-3 <?php echo ($dateError === "") ? '' : 'is-invalid' ?>" placeholder="DD/MM/YYYY" name="date">
+                                <small><?php echo $dateError ?></small>
                             </div>
                         </div>
 
-                        <div class="form-group mb-4">
-                            <select class="form-control mb-4 py-3" id="eventCategory">
+                        <div class="form-floating mb-5">
+                            <select class="form-select mb-4 <?php echo ($categoryError === "") ? '' : 'is-invalid' ?>" id="eventCategory" name="category">
                                 <option>Select Category</option>
                                 <option>Category 1</option>
                                 <option>Category 2</option>
                                 <option>Category 3</option>
                             </select>
+                            <label for="eventCategory">Event Category</label>
+                            <small><?php echo $categoryError ?></small>
                         </div>
 
-                        <div class="form-floating form-group mb-4">
+                        <div class="form-floating form-group mb-5">
+                            <textarea class="form-control <?php echo ($descriptionError === "") ? '' : 'is-invalid' ?>" id="eventDescription" rows="3" placeholder="text" name="description"></textarea>
                             <label for="eventDescription">Event Description</label>
-                            <textarea class="form-control" id="eventDescription" rows="3" placeholder="text"></textarea>
+                            <small><?php echo $descriptionError ?></small>
                         </div>
                         <div class="form-group form-group">
                             <label for="eventImage">Event Image</label>
-                            <input type="file" class="form-control" id="eventImage">
+                            <input type="file" class="form-control <?php echo ($imageError === "") ? '' : 'is-invalid' ?>" id="eventImage" name="image">
+                            <small><?php echo $imageError ?></small>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer border-0">
                     <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Create</button>
+                    <button type="submit" form="event-form" name="submit" class="btn btn-primary">Create</button>
                 </div>
             </div>
         </div>
@@ -119,4 +142,12 @@ require 'templates/header.php';
 <?php
 $scriptsheet = "dashboard.js";
 require 'templates/footer.php';
+if (isset($_GET["error"])) {
+    echo '
+    <script>
+        $(document).ready(() => {
+            $("#createEvent").modal("show");
+        });
+    </script>';
+}
 ?>

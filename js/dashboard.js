@@ -156,3 +156,85 @@ const resize = () => {
         $('.mobile-show').css('display', 'none');
     }
 }
+
+$('form').submit((e) => { 
+    if (!checkInputs()) {
+        e.preventDefault()
+        $('#createEvent').modal('show');
+    }
+});
+
+const checkInputs = () => {
+    const eventName = $('#eventName').value.trim();
+    const eventDate = $('#eventDate').value.trim();
+    const eventLocation = $('#eventLocation').value.trim();
+    const eventImg = $('#eventImg').value.trim();
+    const eventCategory = $('#eventCategory').value.trim();
+    const eventDescription = $('#eventDescription').value.trim();
+
+    let valid = true;
+
+    let nameErrorMessage = '';
+
+    if(eventName === '') {
+        nameErrorMessage = 'Event name is required';
+    } else if(nameValue.length > 30) 
+        nameErrorMessage = 'Event name must be less than 30 characters';
+
+    setValidity($('#eventName'), nameErrorMessage);
+
+    let dateErrorMessage = '';
+    if(eventDate === '') {
+        dateErrorMessage = 'Event date is required';
+    }
+    setValidity($('#eventDate'), dateErrorMessage);
+
+    let locationErrorMessage = '';
+    if(eventLocation === '') {
+        locationErrorMessage = 'Event location is required';
+    }
+    else if(eventLocation.length > 20) {
+        locationErrorMessage = 'Event location must be less than 20 characters';
+    }
+    setValidity($('#eventLocation'), locationErrorMessage);
+
+    let imgErrorMessage = '';
+    if(eventImg === '') {
+        imgErrorMessage = 'Event image is required';
+    }
+    setValidity($('#eventImg'), imgErrorMessage);
+
+    let categoryErrorMessage = '';
+    if(eventCategory === '') {
+        categoryErrorMessage = 'Event category is required';
+    }
+    setValidity($('#eventCategory'), categoryErrorMessage);
+
+    let descriptionErrorMessage = '';
+    if(eventDescription === '') {
+        descriptionErrorMessage = 'Event description is required';
+    }
+
+    setValidity($('#eventDescription'), descriptionErrorMessage);
+
+    return valid;
+}
+
+const setErrorFor = (input, message) => {
+    const small = $(input).siblings('small');
+
+    small.innerText = message;
+    $(input).className = 'form-control is-invalid';
+}
+
+const setSuccessFor = input => {
+    $(input).className = 'form-control is-valid';
+}
+
+const setValidity = (input, message) => {
+    if (message) {
+        setErrorFor(input, message);
+        valid = false;
+    }
+    else setSuccessFor(input);
+}

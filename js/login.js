@@ -59,11 +59,11 @@ const setErrorFor = (input, message) => {
     const small = $(input).siblings('small');
 
     small.innerText = message;
-    $(input).parent().className = 'form-group w-100 position-relative pb-4 error';
+    $(input).className = 'form-control is-invalid';
 }
 
 const setSuccessFor = input => {
-    $(input).parent().className = 'form-group w-100 position-relative pb-4 success';
+    $(input).className = 'form-control is-valid';
 }
 
 const isEmail = email => {

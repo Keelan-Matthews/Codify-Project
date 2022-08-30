@@ -73,17 +73,22 @@ a {
     color: rgb(195, 70, 63);
 }
 
-.form-control {
+.form-control, .form-select {
     border-color: #3b3b3b;
     background-color: #3b3b3b;
     color: white;
 }
 
-.form-control:focus {
+.form-control:focus, .form-select:focus {
     border: 0;
     background-color: #3b3b3b;
     color: white;
 }
+
+.form-control:not(:placeholder-shown) + label, .form-select:not(:placeholder-shown) + label {
+     color: var(--primary);
+     font-weight: bold;
+  }
 
 label {
     color: #fff;

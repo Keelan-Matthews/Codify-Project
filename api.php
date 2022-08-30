@@ -21,8 +21,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     switch ($data->type) {
         case "login":
-            $email = stripcslashes($data->email);
-            $password = stripcslashes($data->password);
+            $email = test_input($data->email);
+            $password = test_input($data->password);
 
             $api->returnUser($instance, $email, $password);
             break;
