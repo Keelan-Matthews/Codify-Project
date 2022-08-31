@@ -1,11 +1,11 @@
 <?php
-// if($_SESSION["signed_in"] == false){
-//     header("Location: ./index.php");
-// }
-
 $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
+
+if($_SESSION["signed_in"] == false){
+    header("Location: ./index.php");
+}
 
 $nameError = "";
 $locationError = "";
@@ -32,7 +32,7 @@ if (isset($_GET["error"])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="backend/validate-event.php" method="post" id="event-form">
+                    <form action="backend/validate-event.php" method="post" id="event-form" enctype="multipart/form-data">
                         <div class="form-floating form-group mb-5">
                             <input type="text" class="form-control <?php echo ($nameError === "") ? '' : 'is-invalid' ?>" id="eventName" placeholder="name@example.com" name="name">
                             <label for="eventName">Event Name</label>
@@ -53,9 +53,10 @@ if (isset($_GET["error"])) {
                         <div class="form-floating mb-5">
                             <select class="form-select mb-4 <?php echo ($categoryError === "") ? '' : 'is-invalid' ?>" id="eventCategory" name="category">
                                 <option>Select Category</option>
-                                <option>Category 1</option>
-                                <option>Category 2</option>
-                                <option>Category 3</option>
+                                <option value="hackathon">Hackathon</option>
+                                <option value="game_jam">Game Jam</option>
+                                <option value="speedrun">Speedrun</option>
+                                <option value="other">Other</option>
                             </select>
                             <label for="eventCategory">Event Category</label>
                             <small><?php echo $categoryError ?></small>
@@ -91,7 +92,7 @@ if (isset($_GET["error"])) {
         </div>
         <div class="col-12 col-md-2 lighter-gray shadow d-flex flex-column align-items-center mobile-nav p-0 vh-md-100">
             <div class="w-100 text-end pe-4 py-4 mobile-hide">
-                <a href="logout.php" class="nav-link text-white">
+                <a href="backend/logout.php" class="nav-link text-white">
                     <i class="fas fa-sign-out-alt"></i>
                 </a>
             </div>

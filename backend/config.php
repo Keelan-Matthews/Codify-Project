@@ -68,10 +68,17 @@ class Database
         }
     }
 
-    function returnHome() 
+    public function addEvent($name, $description, $date, $location, $category, $image, $user_id)
     {
-        
+        $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image, $user_id);
+        return $stmt->execute();
     }
+
+    // function returnHome() 
+    // {
+        
+    // }
 
     function returnUser($email, $password)
     {
@@ -147,7 +154,7 @@ function invalidEmail($email)
 function invalidPassword($password)
 {
     $result = true;
-    if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/", $password)) {
+    if (!preg_match("/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/", $password)) {
         $result = true;
     } else
         $result = false;

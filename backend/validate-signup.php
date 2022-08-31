@@ -47,10 +47,11 @@
         }
 
         $instance->addUser($username, $email, $password);
-        header("location: ../dashboard.php");
+        $_SESSION["signed_in"] = true;
+        header("Location: ../dashboard.php");
         exit();
     } else {
-        header("location: ../register.php?error=notsubmitted");
+        header("Location: ../register.php?error=notsubmitted");
         exit();
     }
 ?>

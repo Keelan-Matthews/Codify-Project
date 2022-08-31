@@ -27,9 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnUser($email, $password);
             break;
 
-        case "home":
-            $instance->returnHome();
+        case "add_event":
+            $instance->addEvent($data->name, $data->description, $data->date, $data->location, $data->category, $data->image, $data->user_id);
             break;
+
+        // case "home":
+        //     $instance->returnHome();
+        //     break;
 
         default:
             echo json_encode($api->error("An error occured while processing request"));

@@ -9,8 +9,9 @@ if (isset($_POST['submit'])) {
     $date = isset($_POST["date"]) ? test_input($_POST["date"]) : null;
     $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
     $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
-    $filename = isset($_FILES['image']['name']) ? $_FILES['image']['name'] : null;
+    $filename = isset($_FILES['image']) ? $_FILES['image']['name'] : null;
 
+    echo "<script>console.log('name','$filename');</script>";
     if ($name == null) {
         header('Location: ../dashboard.php?error=emptyname');
         exit();
@@ -42,25 +43,44 @@ if (isset($_POST['submit'])) {
     }
 
     $target_dir = "media/events/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+    $image_name =  $name . $_SESSION['user_id'] . $category;
+    $image_path = strtolower($target_dir . str_replace(" ","",$image_name) . "." . $ext);
 
     $allowedFiles =  array('jpg', 'jpeg', 'png');
-    $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
 
     if ($_FILES['image']['size'] < 5000000 && in_array($ext, $allowedFiles)) {
-        $target_file = $target_dir . $filename;
-        move_uploaded_file($_FILES['image']['tmp_name'], $target_file);
+        move_uploaded_file($_FILES['image']['tmp_name'], "../" . $image_path);
     } else {
         header('Location: ../dashboard.php?error=incorrectimage');
         exit();
     }
 
-    $instance = Database::getInstance();
-    $conn = $instance->getConnection();
+    $data = array(
+        'type' => 'add_event',
+        'name' => $name,
+        'description' => $description,
+        'date' => $date,
+        'location' => $location,
+        'category' => $category,
+        'image' => $image_path,
+        'user_id' => $_SESSION['user_id']
+    );
 
-    $id = $_SESSION['user_id'];
-
-    $mysqli->query("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `image`, `user_id`) VALUES ('$name', '$description', '$date', '$location', '$filename', '$id')");
-
+    $json = apiCall($data);
+    
+    if ($json) 
+    {
+        header('Location: ../dashboard.php');
+        exit();
+    }
+    else 
+    {
+        header('Location: ../dashboard.php?error=failed');
+        exit();
+    }
+    
 } else {
     header("location: ../dashboard.php?error=notsubmitted");
     exit();
