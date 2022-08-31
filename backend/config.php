@@ -70,7 +70,7 @@ class Database
 
     function returnHome() 
     {
-        `
+        
     }
 
     function returnUser($email, $password)
