@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
         'user_id' => $_SESSION['user_id']
     );
 
-    $json = apiCall($data);
+    // $json = apiCall($data);
 
     header('Location: ../dashboard.php');
     exit();

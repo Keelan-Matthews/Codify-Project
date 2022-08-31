@@ -34,7 +34,7 @@ if (isset($_GET["error"])) {
             <img src="media/svg/logo.svg" alt="" class="my-5 py-5 w-50">
             <div class="form-container lighter-gray p-5 rounded shadow d-flex flex-column align-items-center">
                 <h3 class="text-white mb-4">Sign in</h3>
-                <form action="backend/validate-login.php" method="post" class="d-flex flex-column align-items-center w-100">
+                <form action="" method="post" class="d-flex flex-column align-items-center w-100">
                     <div class='form-group w-100 position-relative pb-4 form-floating'>
                         <input type="email" class="form-control <?php echo ($emailError === "") ? '' : 'is-invalid' ?>" name="email" id="emailInput" placeholder="name@example.com" />
                         <label for="emailInput" class="form-label text-white">Email</label>

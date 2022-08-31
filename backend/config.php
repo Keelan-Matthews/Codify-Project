@@ -25,8 +25,8 @@ class Database
     private $connection;
 
     private $servername = "localhost";
-    private $username = "root";
-    private $password = "";
+    private $username = "u21549967";
+    private $password = "deoqtvvm";
     private $db = "u21549967";
 
     private function __construct()
@@ -75,14 +75,14 @@ class Database
         return $stmt->execute();
     }
 
-    function returnHome($user_id) 
+    function returnHome($user_id)
     {
         $sql = "SELECT e.*, u.profile_photo FROM dbevents AS e, dbusers AS u WHERE e.user_id = '$user_id'";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                $events[] = $row; 
+            while ($row = $result->fetch_assoc()) {
+                $events[] = $row;
             }
             header("HTTP/1.1 200 OK");
         } else {
@@ -95,19 +95,51 @@ class Database
 
     function returnUser($email, $password)
     {
-        $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
-        $result = $this->getConnection()->query($sql);
-        $user = "";
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $user = $this->success($row);
-            header("HTTP/1.1 200 OK");
-        } else {
-            $user = $this->error("User not found");
-            header("HTTP/1.1 404 Not Found");
+        if (empty($email) !== false) {
+            header('Location: ../login.php?error=emptyemail');
+            exit();
         }
-        header("Content-Type: application/json");
-        echo json_encode($user);
+
+        if (empty($password) !== false) {
+            header('Location: ../login.php?error=emptypassword');
+            exit();
+        }
+
+        if (emailExists($this->connection, $email) === false) {
+            header('Location: ../login.php?error=emailnotexist');
+            exit();
+        }
+
+        $valid = $this->getUser($email, $password);
+
+        if ($valid === false) {
+            header('Location: ../login.php?error=invalidpassword');
+            exit();
+        } else {
+            $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
+            $result = $this->getConnection()->query($sql);
+            $user = "";
+            if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $user = $this->success($row);
+                header("HTTP/1.1 200 OK");
+            } else {
+                $user = $this->error("User not found");
+                header("HTTP/1.1 404 Not Found");
+            }
+            header("Content-Type: application/json");
+
+            $_SESSION["signed_in"] = true;
+            $_SESSION["admin"] = $user["data"]["admin"];
+            $_SESSION["user_id"] = $user["data"]["user_id"];
+            $_SESSION["username"] = $user["data"]["username"];
+            $_SESSION["email"] = $user["data"]["email"];
+
+            header('Location: ../dashboard.php');
+            exit();
+
+            echo json_encode($user);
+        }
     }
 
     public function getUser($email, $password)
@@ -199,39 +231,39 @@ function emailExists($conn, $email)
     mysqli_stmt_close($stmt);
 }
 
-function apiCall($data) {
-    $url = "localhost/IMY-220-Project/api.php";
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_USERPWD, "u21549967" . ":" . "");
+// function apiCall($data) {
+//     $url = "localhost/IMY220/api.php";
+//     $ch = curl_init();
+//     curl_setopt($ch, CURLOPT_URL, $url);
+//     curl_setopt($ch, CURLOPT_POST, 1);
+//     curl_setopt($ch, CURLOPT_USERPWD, "u21549967" . ":" . "deoqtvvm");
 
-    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+//     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-    $res = curl_exec($ch);
+//     $res = curl_exec($ch);
 
-    if (curl_errno($ch)) {
-        die('Couldn\'t send request: ' . curl_error($ch));
-    } else {
-        $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        if ($resultStatus == 200) {
-            echo "<script>console.log('Call was successful')</script>";
-        } else {
-            echo "<script>console.log('Unsuccessful call')</script>";
-    
-            die('Request failed: HTTP status code: ' . $resultStatus);
-        }
-    }
-    
-    return json_decode($res,true);
-}
+//     if (curl_errno($ch)) {
+//         die('Couldn\'t send request: ' . curl_error($ch));
+//     } else {
+//         $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//         if ($resultStatus == 200) {
+//             echo "<script>console.log('Call was successful')</script>";
+//         } else {
+//             echo "<script>console.log('Unsuccessful call')</script>";
+
+//             die('Request failed: HTTP status code: ' . $resultStatus);
+//         }
+//     }
+
+//     return json_decode($res,true);
+// }
 
 function test_input($data)
 {
-	$data = trim($data);
-	$data = stripslashes($data);
-	$data = htmlspecialchars($data);
-	return $data;
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $data;
 }

@@ -12,7 +12,30 @@ const resize = () => {
     }
 }
 
-$('form').submit((e) => { if (!checkInputs()) e.preventDefault()});
+$('form').submit((e) => { 
+    e.preventDefault();
+    if (!checkInputs()) 
+        console.log("There was an error");
+    else {
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "type": "login",
+                "email": $('#emailInput').valu.trim(),
+                "password": $('#passwordInput').value.trim()
+            }),
+            url: 'api.php',
+            type: 'POST',
+            success: (res) => {
+                console.log(res);
+            },
+            error: () => {
+                console.log('An error occurred during the api call');
+            },
+            processData: false,
+        })
+    }
+});
 
 const checkInputs = () => {
     const usernameValue = $('#usernameInput').value.trim();

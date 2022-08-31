@@ -70,8 +70,8 @@ const resize = () => {
 }
 
 $('form').submit((e) => { 
+    e.preventDefault();
     if (!checkInputs()) {
-        e.preventDefault()
         $('#createEvent').modal('show');
     }
 });
