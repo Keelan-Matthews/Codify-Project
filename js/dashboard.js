@@ -1,8 +1,8 @@
-const eventCard = ({ name, date, location, image, profile }) => `
+const eventCard = ({ name, date, location, image, profile_photo }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded event-card">
             <div class="d-flex p-3">
-                <img src="${profile}" class="rounded-circle me-3" width="50" height="50">
+                <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
                 <div class="text-white">
                     <h5 class="my-0">${name}</h5>
                     <small>${location}</small>

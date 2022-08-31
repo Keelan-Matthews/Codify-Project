@@ -77,7 +77,7 @@ class Database
 
     function returnHome($user_id) 
     {
-        $sql = "SELECT * FROM dbevents WHERE `user_id` = '$user_id'";
+        $sql = "SELECT e.*, u.profile_photo FROM dbevents AS e, dbusers AS u WHERE e.user_id = '$user_id'";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
