@@ -31,9 +31,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->addEvent($data->name, $data->description, $data->date, $data->location, $data->category, $data->image, $data->user_id);
             break;
 
-        // case "home":
-        //     $instance->returnHome();
-        //     break;
+        case "home":
+            $instance->returnHome($data->user_id);
+            break;
 
         default:
             echo json_encode($api->error("An error occured while processing request"));

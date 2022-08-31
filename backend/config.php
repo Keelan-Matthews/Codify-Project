@@ -75,10 +75,23 @@ class Database
         return $stmt->execute();
     }
 
-    // function returnHome() 
-    // {
-        
-    // }
+    function returnHome($user_id) 
+    {
+        $sql = "SELECT * FROM dbevents WHERE `user_id` = '$user_id'";
+        $result = $this->getConnection()->query($sql);
+        $events = array();
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                $events[] = $row; 
+            }
+            header("HTTP/1.1 200 OK");
+        } else {
+            $events = $this->error("No events found");
+            header("HTTP/1.1 404 Not Found");
+        }
+        header("Content-Type: application/json");
+        echo json_encode($events);
+    }
 
     function returnUser($email, $password)
     {
@@ -87,7 +100,7 @@ class Database
         $user = "";
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $user = $this->success([$row]);
+            $user = $this->success($row);
             header("HTTP/1.1 200 OK");
         } else {
             $user = $this->error("User not found");

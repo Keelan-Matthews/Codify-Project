@@ -69,17 +69,9 @@ if (isset($_POST['submit'])) {
     );
 
     $json = apiCall($data);
-    
-    if ($json) 
-    {
-        header('Location: ../dashboard.php');
-        exit();
-    }
-    else 
-    {
-        header('Location: ../dashboard.php?error=failed');
-        exit();
-    }
+
+    header('Location: ../dashboard.php');
+    exit();
     
 } else {
     header("location: ../dashboard.php?error=notsubmitted");
