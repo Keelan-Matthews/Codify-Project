@@ -68,6 +68,28 @@ class Database
         }
     }
 
+    function returnHome() 
+    {
+        `
+    }
+
+    function returnUser($email, $password)
+    {
+        $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
+        $result = $this->getConnection()->query($sql);
+        $user = "";
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $user = $this->success([$row]);
+            header("HTTP/1.1 200 OK");
+        } else {
+            $user = $this->error("User not found");
+            header("HTTP/1.1 404 Not Found");
+        }
+        header("Content-Type: application/json");
+        echo json_encode($user);
+    }
+
     public function getUser($email, $password)
     {
         $stmt = $this->connection->prepare("SELECT * FROM dbusers WHERE email=?");
@@ -87,6 +109,16 @@ class Database
         } else {
             return false;
         }
+    }
+
+    private function error($message)
+    {
+        return ["status" => "failed", "timestamp" => time(), "data" => ["message" => $message]];
+    }
+
+    private function success($data)
+    {
+        return ["status" => "success", "timestamp" => time(), "data" => $data];
     }
 }
 

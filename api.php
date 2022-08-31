@@ -24,7 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $email = test_input($data->email);
             $password = test_input($data->password);
 
-            $api->returnUser($instance, $email, $password);
+            $instance->returnUser($email, $password);
+            break;
+
+        case "home":
+            $instance->returnHome();
             break;
 
         default:
@@ -52,22 +56,5 @@ class API
     function success($data)
     {
         return ["status" => "success", "timestamp" => time(), "data" => $data];
-    }
-
-    function returnUser($instance, $email, $password)
-    {
-        $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
-        $result = $instance->getConnection()->query($sql);
-        $user = "";
-        if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $user = $this->success([$row]);
-            header("HTTP/1.1 200 OK");
-        } else {
-            $user = $this->error("User not found");
-            header("HTTP/1.1 404 Not Found");
-        }
-        header("Content-Type: application/json");
-        echo json_encode($user);
     }
 }
