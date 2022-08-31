@@ -37,7 +37,9 @@ require 'templates/header.php';
                     <div class="btn btn-secondary">Login</div>
                 </a>
                 <a href="register.php">
-                    <div class="btn">Register</div>
+                    <div class="text-black p-1 ps-4">
+                        <p>Register</p>
+                    </div>
                 </a>
             </div>
             <div class="illustration">

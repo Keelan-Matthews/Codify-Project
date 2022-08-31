@@ -3,6 +3,10 @@ $pageTitle = "Register";
 $stylesheet = "login.css";
 require 'templates/header.php';
 
+if($_SESSION["signed_in"] == true){
+    header("Location: ./dashboard.php");
+}
+
 $usernameError = "";
 $emailError = "";
 $passwordError = "";

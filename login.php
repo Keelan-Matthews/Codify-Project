@@ -3,6 +3,10 @@ $pageTitle = "Login";
 $stylesheet = "login.css";
 require 'templates/header.php';
 
+if ($_SESSION["signed_in"] == true) {
+    header("Location: ./dashboard.php");
+}
+
 $emailError = "";
 $passwordError = "";
 
@@ -31,15 +35,15 @@ if (isset($_GET["error"])) {
             <div class="form-container lighter-gray p-5 rounded shadow d-flex flex-column align-items-center">
                 <h3 class="text-white mb-4">Sign in</h3>
                 <form action="backend/validate-login.php" method="post" class="d-flex flex-column align-items-center w-100">
-                    <div class='form-group w-100 position-relative pb-4'>
-                        <label for="emailInput" class="form-label text-white">Email</label>
+                    <div class='form-group w-100 position-relative pb-4 form-floating'>
                         <input type="email" class="form-control <?php echo ($emailError === "") ? '' : 'is-invalid' ?>" name="email" id="emailInput" placeholder="name@example.com" />
+                        <label for="emailInput" class="form-label text-white">Email</label>
                         <small><?php echo $emailError ?></small>
                     </div>
 
-                    <div class='form-group w-100 position-relative pb-4'>
-                        <label for="passwordInput" class="form-label text-white">Password</label>
+                    <div class='form-group w-100 position-relative pb-4 form-floating'>
                         <input type="password" class="form-control <?php echo ($passwordError === "") ? '' : 'is-invalid' ?>" name="password" id="passwordInput" placeholder="strong password" />
+                        <label for="passwordInput" class="form-label text-white">Password</label>
                         <small><?php echo $passwordError ?></small>
                     </div>
 

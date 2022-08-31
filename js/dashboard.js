@@ -25,10 +25,16 @@ const populateHomeEvents = () => {
         type: 'POST',
         success: (res) => {
             console.log(res);
+
+            res.map(event => {
+                if (event.profile_photo === "") {
+                    event.profile_photo = 'media/profile_photos/default.jpg';
+                }
+            })
             $('.events').html(res.map(eventCard).join(''));
         },
         error: () => {
-            console.log('error');
+            console.log('An error has occurred whilst loading events');
         },
         processData: false,
     })
