@@ -130,7 +130,7 @@ if (isset($_GET["error"])) {
 
     <div class="row">
         <div class="col-12 col-md-10">
-            <div class="container mt-5">
+            <div class="container mt-5 pb-5 pb-md-0">
                 <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
                 <div class="events row">
                 </div>
@@ -189,12 +189,4 @@ if (isset($_GET["error"])) {
 <?php
 $scriptsheet = "dashboard.js";
 require 'templates/footer.php';
-// if (isset($_GET["error"])) {
-//     echo '
-//     <script>
-//         $(document).ready(() => {
-//             $("#createEvent").modal("show");
-//         });
-//     </script>';
-// }
 ?>

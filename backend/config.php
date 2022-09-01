@@ -98,13 +98,20 @@ class Database
             echo json_encode($this->error("Email already exists"));
             exit();
         }
-        $stmt = $this->connection->prepare("INSERT INTO dbusers (`username`, `email`, `password`) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $email, $password);
+        
+        $stmt = $this->connection->prepare("INSERT INTO dbusers (`username`, `email`, `password`, `profile_photo`) VALUES (?, ?, ?, ?)");
+        $default_profile = "media/profile_photos/default.png";
+        $stmt->bind_param("ssss", $username, $email, $password, $default_profile);
 
         if ($stmt->execute()) {
             $_SESSION["signed_in"] = true;
-            echo json_encode($this->success("User added successfully"));
+            header('HTTP/1.1 200 OK');
+
+            $userId = $this->getConnection()->insert_id;
+            $_SESSION["user_id"] = $userId;
+            echo json_encode($this->success($_SESSION["user_id"]));
         } else {
+            // header('HTTP/1.1 400 Bad Request');
             echo json_encode($this->error("An error occured while adding user"));
         }
     }
@@ -150,7 +157,7 @@ class Database
 
         $allowedFiles =  array('jpg', 'jpeg', 'png');
 
-        if ($image['size'] < 10000000 && in_array($ext, $allowedFiles)) {
+        if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
             move_uploaded_file($image['tmp_name'], $image_path);
         } else {
             header('Location: dashboard.php?error=incorrectimage');
@@ -158,7 +165,13 @@ class Database
         }
         $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image_path, $user_id);
-        $stmt->execute();
+        
+        if ($stmt->execute()) {
+            header('HTTP/1.1 200 OK');
+            echo json_encode($this->success("Event added successfully"));
+        } else {
+            echo json_encode($this->error("An error occured while adding event"));
+        }
 
         header('location: dashboard.php');
         exit();
@@ -173,13 +186,14 @@ class Database
             while ($row = $result->fetch_assoc()) {
                 $events[] = $row;
             }
+            header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($events));
         } else {
-            $events = $this->error("No events found");
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No events found"));
             header("HTTP/1.1 404 Not Found");
         }
-        header("Content-Type: application/json");
-        echo json_encode($events);
     }
 
     function returnUser($email, $password)
