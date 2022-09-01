@@ -172,14 +172,11 @@ class Database
         } else {
             echo json_encode($this->error("An error occured while adding event"));
         }
-
-        header('location: dashboard.php');
-        exit();
     }
 
     function returnHome($user_id)
     {
-        $sql = "SELECT e.*, u.profile_photo FROM dbevents AS e, dbusers AS u WHERE e.user_id = '$user_id'";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
@@ -208,15 +205,18 @@ class Database
             exit();
         }
 
-        if (emailExists($this->connection, $email) === false) {
-            header('Location: ../login.php?error=emailnotexist');
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+
+        if (emailExists($conn, $email) === false) {
+            header('Location: login.php?error=emailnotexist');
             exit();
         }
 
         $valid = $this->getUser($email, $password);
 
         if ($valid === false) {
-            header('Location: ../login.php?error=invalidpassword');
+            header('Location: login.php?error=invalidpassword');
             exit();
         } else {
             $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
@@ -234,7 +234,6 @@ class Database
                 $_SESSION["email"] = $user["data"]["email"];
             } else {
                 $user = $this->error("User not found");
-                header("HTTP/1.1 404 Not Found");
             }
             header("Content-Type: application/json");
 

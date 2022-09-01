@@ -15,6 +15,7 @@ const eventCard = ({ name, date, location, image, profile_photo }) => `
 `;
 
 const populateHomeEvents = () => {
+
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify({
@@ -26,15 +27,10 @@ const populateHomeEvents = () => {
         success: (res) => {
             console.log(res);
 
-            res.map(event => {
-                if (event.profile_photo === "") {
-                    event.profile_photo = 'media/profile_photos/default.jpg';
-                }
-            })
-            $('.events').html(res.map(eventCard).join(''));
+            $('.events').html(res.data.map(eventCard).join(''));
         },
-        error: () => {
-            console.log('An error has occurred whilst loading events');
+        error: (res) => {
+            console.log(res);
         },
         processData: false,
     })
@@ -81,13 +77,18 @@ $('form').submit((e) => {
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
     
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
+        }
+
         $.ajax({
             url: 'api.php',
             type: 'POST',
             data: formData,
             contentType: false,
             processData: false,
-            success: () => {
+            success: (res) => {
+                console.log(res);
                 populateHomeEvents();
                 $('#createEvent').modal('hide');
             },
