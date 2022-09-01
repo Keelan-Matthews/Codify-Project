@@ -8,18 +8,22 @@ $api = API::instance();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if (!isset($data->type)) {
+    $type = isset($_POST["type"]) 
+        ? $_POST["type"] : 
+        (isset($data->type) ? $data->type : null); 
+
+    if (!isset($type)) {
         echo json_encode($api->error("Type parameter has not been specified."));
         return;
     }
 
     $reqTypes = ["home", "explore", "login", "rate", "chat", "add_event"];
-    if (!in_array($data->type, $reqTypes)) {
+    if (!in_array($type, $reqTypes)) {
         echo json_encode($api->error("Incorrect type parameter has been specified."));
         return;
     }
 
-    switch ($data->type) {
+    switch ($type) {
         case "login":
             $email = test_input($data->email);
             $password = test_input($data->password);
@@ -34,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
             $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
             $instance->addEvent($name, $description, $date, $location, $category, $image, $user_id);
             break;
 

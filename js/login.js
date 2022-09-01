@@ -27,7 +27,7 @@ $('form').submit((e) => {
             url: 'api.php',
             type: 'POST',
             success: (res) => {
-                console.log(res);
+                $(window).attr('location', 'dashboard.php');
             },
             error: () => {
                 console.log('An error occurred during the api call');
@@ -40,6 +40,7 @@ $('form').submit((e) => {
 const checkInputs = () => {
     const emailValue = $('#emailInput').val().trim();
     const passwordValue = $('#passwordInput').val().trim();
+
     let valid = true;
 
     let emailerrorMessage = '';

@@ -8,7 +8,7 @@ const eventCard = ({ name, date, location, image, profile_photo }) => `
                     <small>${location}</small>
                 </div>
             </div>
-            <img src="${image}" alt="${name}" class="my-2 w-100">
+            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
         </div>
     </div>
@@ -72,42 +72,41 @@ const resize = () => {
 $('form').submit((e) => { 
     e.preventDefault();
     if (!checkInputs()) {
+        console.log('invalid inputs');
         $('#createEvent').modal('show');
     }
-
-    let form = $(this);
-    let formData = new FormData(form[0]);
-    formData.append('type', 'add_event');
-    formData.append('user_id', user_id);
-
-    for (var pair of formData.entries()) {
-        console.log(pair[0]+ ', ' + pair[1]); 
+    else {
+        let form = $('form')[0];
+        let formData = new FormData(form);
+        formData.append('type', 'add_event');
+        formData.append('user_id', user_id);
+    
+        $.ajax({
+            url: 'api.php',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: () => {
+                populateHomeEvents();
+                $('#createEvent').modal('hide');
+            },
+            error: () => {
+                console.log('An error occurred during the api call');
+                $('#createEvent').modal('show');
+            }
+    
+        })
     }
-    // $.ajax({
-    //     url: 'api.php',
-    //     type: 'POST',
-    //     data: formData,
-    //     contentType: false,
-    //     processData: false,
-    //     success: (res) => {
-    //         console.log(res);
-    //         populateHomeEvents();
-    //         $('#createEvent').modal('hide');
-    //     },
-    //     error: () => {
-    //         console.log('An error occurred during the api call');
-    //     }
-
-    // })
 });
 
 const checkInputs = () => {
-    const eventName = $('#eventName').value.trim();
-    const eventDate = $('#eventDate').value.trim();
-    const eventLocation = $('#eventLocation').value.trim();
-    const eventImg = $('#eventImg').value.trim();
-    const eventCategory = $('#eventCategory').value.trim();
-    const eventDescription = $('#eventDescription').value.trim();
+    const eventName = $('#eventName').val();
+    const eventDate = $('#eventDate').val();
+    const eventLocation = $('#eventLocation').val();
+    const eventImg = $('#eventImage').get(0).files.length;
+    const eventCategory = $('#eventCategory').val();
+    const eventDescription = $('#eventDescription').val();
 
     let valid = true;
 
@@ -115,16 +114,17 @@ const checkInputs = () => {
 
     if(eventName === '') {
         nameErrorMessage = 'Event name is required';
-    } else if(nameValue.length > 30) 
+    } else if(eventName.length > 30) 
         nameErrorMessage = 'Event name must be less than 30 characters';
 
-    setValidity($('#eventName'), nameErrorMessage);
+    if (!setValidity($('#eventName'), nameErrorMessage)) valid = false;
 
     let dateErrorMessage = '';
-    if(eventDate === '') {
+    if(eventDate === undefined) {
         dateErrorMessage = 'Event date is required';
     }
-    setValidity($('#eventDate'), dateErrorMessage);
+
+    if (!setValidity($('#eventDate'), dateErrorMessage)) valid = false;
 
     let locationErrorMessage = '';
     if(eventLocation === '') {
@@ -133,45 +133,49 @@ const checkInputs = () => {
     else if(eventLocation.length > 20) {
         locationErrorMessage = 'Event location must be less than 20 characters';
     }
-    setValidity($('#eventLocation'), locationErrorMessage);
+
+    if (!setValidity($('#eventLocation'), locationErrorMessage)) valid = false;
 
     let imgErrorMessage = '';
-    if(eventImg === '') {
+    if(eventImg === 0) {
         imgErrorMessage = 'Event image is required';
     }
-    setValidity($('#eventImg'), imgErrorMessage);
+
+    if (!setValidity($('#eventImage'), imgErrorMessage)) valid = false;
 
     let categoryErrorMessage = '';
-    if(eventCategory === '') {
+    if(eventCategory === 'Select Category') {
         categoryErrorMessage = 'Event category is required';
     }
-    setValidity($('#eventCategory'), categoryErrorMessage);
+
+    if (!setValidity($('#eventCategory'), categoryErrorMessage)) valid = false;
 
     let descriptionErrorMessage = '';
     if(eventDescription === '') {
         descriptionErrorMessage = 'Event description is required';
     }
 
-    setValidity($('#eventDescription'), descriptionErrorMessage);
+    if (!setValidity($('#eventDescription'), descriptionErrorMessage)) valid = false;
 
     return valid;
 }
 
 const setErrorFor = (input, message) => {
-    const small = $(input).siblings('small');
+    const small = input.siblings('small');
 
-    small.innerText = message;
-    $(input).className = 'form-control is-invalid';
+    small.text(message);
+    input.addClass('is-invalid');
 }
 
 const setSuccessFor = input => {
-    $(input).className = 'form-control is-valid';
+    input.addClass('is-valid');
+    input.removeClass('is-invalid');
 }
 
 const setValidity = (input, message) => {
     if (message) {
         setErrorFor(input, message);
-        valid = false;
+        return false;
     }
     else setSuccessFor(input);
 }

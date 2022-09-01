@@ -63,7 +63,7 @@ if (isset($_GET["error"])) {
                         </div>
 
                         <div class="form-floating form-group mb-5">
-                            <textarea class="form-control <?php echo ($descriptionError === "") ? '' : 'is-invalid' ?>" id="eventDescription" rows="3" placeholder="text" name="description"></textarea>
+                            <textarea class="form-control <?php echo ($descriptionError === "") ? '' : 'is-invalid' ?>" id="eventDescription" rows="5" style="height:100%;" placeholder="text" name="description"></textarea>
                             <label for="eventDescription">Event Description</label>
                             <small><?php echo $descriptionError ?></small>
                         </div>
@@ -86,7 +86,7 @@ if (isset($_GET["error"])) {
         <div class="col-12 col-md-10">
             <div class="container mt-5">
                 <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
-                <div class="events row justify-content-between">
+                <div class="events row">
                 </div>
             </div>
         </div>

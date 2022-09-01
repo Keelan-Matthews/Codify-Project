@@ -75,32 +75,32 @@ class Database
         $filename = $image['name'];
 
         if ($name == null) {
-            header('Location: ../dashboard.php?error=emptyname');
+            header('Location: dashboard.php?error=emptyname');
             exit();
         }
 
         if ($location == null) {
-            header('Location: ../dashboard.php?error=emptylocation');
+            header('Location: dashboard.php?error=emptylocation');
             exit();
         }
 
         if ($date == null) {
-            header('Location: ../dashboard.php?error=emptydate');
+            header('Location: dashboard.php?error=emptydate');
             exit();
         }
 
         if ($category == null) {
-            header('Location: ../dashboard.php?error=emptycategory');
+            header('Location: dashboard.php?error=emptycategory');
             exit();
         }
 
         if ($description == null) {
-            header('Location: ../dashboard.php?error=emptydescription');
+            header('Location: dashboard.php?error=emptydescription');
             exit();
         }
 
         if ($filename == null) {
-            header('Location: ../dashboard.php?error=emptyimage');
+            header('Location: dashboard.php?error=emptyimage');
             exit();
         }
 
@@ -111,17 +111,17 @@ class Database
 
         $allowedFiles =  array('jpg', 'jpeg', 'png');
 
-        if ($image['size'] < 5000000 && in_array($ext, $allowedFiles)) {
-            move_uploaded_file($image['tmp_name'], "../" . $image_path);
+        if ($image['size'] < 10000000 && in_array($ext, $allowedFiles)) {
+            move_uploaded_file($image['tmp_name'], $image_path);
         } else {
-            header('Location: ../dashboard.php?error=incorrectimage');
+            header('Location: dashboard.php?error=incorrectimage');
             exit();
         }
         $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image, $user_id);
+        $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image_path, $user_id);
         $stmt->execute();
 
-        header('Location: ../dashboard.php');
+        header('location: dashboard.php');
         exit();
     }
 
@@ -173,20 +173,17 @@ class Database
                 $row = $result->fetch_assoc();
                 $user = $this->success($row);
                 header("HTTP/1.1 200 OK");
+
+                $_SESSION["signed_in"] = true;
+                $_SESSION["admin"] = $user["data"]["admin"];
+                $_SESSION["user_id"] = $user["data"]["user_id"];
+                $_SESSION["username"] = $user["data"]["username"];
+                $_SESSION["email"] = $user["data"]["email"];
             } else {
                 $user = $this->error("User not found");
                 header("HTTP/1.1 404 Not Found");
             }
             header("Content-Type: application/json");
-
-            $_SESSION["signed_in"] = true;
-            $_SESSION["admin"] = $user["data"]["admin"];
-            $_SESSION["user_id"] = $user["data"]["user_id"];
-            $_SESSION["username"] = $user["data"]["username"];
-            $_SESSION["email"] = $user["data"]["email"];
-
-            header('Location: ../dashboard.php');
-            exit();
 
             echo json_encode($user);
         }

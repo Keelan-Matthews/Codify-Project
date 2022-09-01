@@ -79,7 +79,7 @@ a>div:hover p {
 .form-group small {
     visibility: hidden;
     position: absolute;
-    bottom: 0;
+    bottom: -25px;
     left: 0;
 }
 
