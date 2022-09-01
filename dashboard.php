@@ -3,7 +3,7 @@ $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
 
-if($_SESSION["signed_in"] == false){
+if ($_SESSION["signed_in"] == false) {
     header("Location: ./index.php");
 }
 
@@ -25,7 +25,7 @@ if (isset($_GET["error"])) {
 ?>
 <main class="overflow-hidden">
     <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="createEventLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
             <div class="modal-content lighter-gray">
                 <div class="modal-header text-white border-0">
                     <h5 class="modal-title" id="createEventLabel">Create Event</h5>
@@ -67,10 +67,56 @@ if (isset($_GET["error"])) {
                             <label for="eventDescription">Event Description</label>
                             <small><?php echo $descriptionError ?></small>
                         </div>
-                        <div class="form-group form-group">
+                        <div class="form-group mb-5">
                             <label for="eventImage">Event Image</label>
                             <input type="file" class="form-control <?php echo ($imageError === "") ? '' : 'is-invalid' ?>" id="eventImage" name="image">
                             <small><?php echo $imageError ?></small>
+                        </div>
+                        <div class="form-group">
+                            <div class="d-flex flex-wrap justify-content-start">
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox1">Competitive</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox2">Casual</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox3">Teamwork</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox4">Solo</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox5">Online</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check-inline me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox6">Speedrun</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-check- me-2 mb-2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                                    <div class="tags">
+                                        <label class="form-check-label" for="inlineCheckbox7">Educational</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>

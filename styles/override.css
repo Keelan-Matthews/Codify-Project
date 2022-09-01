@@ -133,3 +133,34 @@ select:-webkit-autofill:focus {
   box-shadow: 0 0 0px 1000px #3b3b3b inset;
   transition: background-color 5000s ease-in-out 0s;
 }
+
+.form-check-input {
+    display: none;
+}
+
+.form-check {
+    padding: 0;
+}
+
+.form-check-inline {
+    margin-right: 0;
+}
+
+.tags .form-check-label {
+    color: var(--secondary);
+}
+
+.tags {
+    border: 3px solid var(--secondary);
+    border-radius: 5px;
+    padding: 8px;
+    transition: all 0.2s ease;
+}
+
+.form-check-input:checked~.tags {
+    background-color: var(--secondary);
+}
+
+.form-check-input:checked~.tags>.form-check-label {
+    color: white;
+}
