@@ -28,7 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "add_event":
-            $instance->addEvent($data->name, $data->description, $data->date, $data->location, $data->category, $data->image, $data->user_id);
+            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
+            $description = isset($_POST["description"]) ? test_input($_POST["description"]) : null;
+            $date = isset($_POST["date"]) ? test_input($_POST["date"]) : null;
+            $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
+            $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
+            $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $instance->addEvent($name, $description, $date, $location, $category, $image, $user_id);
             break;
 
         case "home":

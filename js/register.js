@@ -38,9 +38,22 @@ $('form').submit((e) => {
 });
 
 const checkInputs = () => {
+    const usernameValue = $('#usernameInput').val().trim();
     const emailValue = $('#emailInput').val().trim();
     const passwordValue = $('#passwordInput').val().trim();
     let valid = true;
+
+    let usernameerrorMessage = '';
+
+    if(usernameValue === '') {
+        usernameerrorMessage = 'Username is required';
+    } else if(nameValue.length > 20) {
+        usernameerrorMessage = 'Username must be less than 20 characters';
+    } else if (!isUsername(nameValue)) {
+        usernameerrorMessage = 'Can only contain lowercase characters and numbers';
+    }
+
+    setValidity($('#usernameInput'), usernameerrorMessage);
 
     let emailerrorMessage = '';
 
@@ -84,6 +97,10 @@ const isEmail = email => {
 const isStrongPassword = password => {
     const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
     return password.match(re);
+}
+
+const isUsername = word => {
+    return /^[a-z0-9]+$/.test(word);
 }
 
 const setValidity = (input, message) => {

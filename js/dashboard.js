@@ -74,6 +74,31 @@ $('form').submit((e) => {
     if (!checkInputs()) {
         $('#createEvent').modal('show');
     }
+
+    let form = $(this);
+    let formData = new FormData(form[0]);
+    formData.append('type', 'add_event');
+    formData.append('user_id', user_id);
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0]+ ', ' + pair[1]); 
+    }
+    // $.ajax({
+    //     url: 'api.php',
+    //     type: 'POST',
+    //     data: formData,
+    //     contentType: false,
+    //     processData: false,
+    //     success: (res) => {
+    //         console.log(res);
+    //         populateHomeEvents();
+    //         $('#createEvent').modal('hide');
+    //     },
+    //     error: () => {
+    //         console.log('An error occurred during the api call');
+    //     }
+
+    // })
 });
 
 const checkInputs = () => {

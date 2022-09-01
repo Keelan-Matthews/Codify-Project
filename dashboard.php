@@ -32,7 +32,7 @@ if (isset($_GET["error"])) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="backend/validate-event.php" method="post" id="event-form" enctype="multipart/form-data">
+                    <form action="" method="post" id="event-form" enctype="multipart/form-data">
                         <div class="form-floating form-group mb-5">
                             <input type="text" class="form-control <?php echo ($nameError === "") ? '' : 'is-invalid' ?>" id="eventName" placeholder="name@example.com" name="name">
                             <label for="eventName">Event Name</label>
@@ -143,12 +143,12 @@ if (isset($_GET["error"])) {
 <?php
 $scriptsheet = "dashboard.js";
 require 'templates/footer.php';
-if (isset($_GET["error"])) {
-    echo '
-    <script>
-        $(document).ready(() => {
-            $("#createEvent").modal("show");
-        });
-    </script>';
-}
+// if (isset($_GET["error"])) {
+//     echo '
+//     <script>
+//         $(document).ready(() => {
+//             $("#createEvent").modal("show");
+//         });
+//     </script>';
+// }
 ?>

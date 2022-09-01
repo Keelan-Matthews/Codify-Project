@@ -25,8 +25,10 @@ class Database
     private $connection;
 
     private $servername = "localhost";
-    private $username = "u21549967";
-    private $password = "deoqtvvm";
+    // private $username = "u21549967";
+    private $username = "root";
+    // private $password = "deoqtvvm";
+    private $password = "";
     private $db = "u21549967";
 
     private function __construct()
@@ -70,9 +72,57 @@ class Database
 
     public function addEvent($name, $description, $date, $location, $category, $image, $user_id)
     {
+        $filename = $image['name'];
+
+        if ($name == null) {
+            header('Location: ../dashboard.php?error=emptyname');
+            exit();
+        }
+
+        if ($location == null) {
+            header('Location: ../dashboard.php?error=emptylocation');
+            exit();
+        }
+
+        if ($date == null) {
+            header('Location: ../dashboard.php?error=emptydate');
+            exit();
+        }
+
+        if ($category == null) {
+            header('Location: ../dashboard.php?error=emptycategory');
+            exit();
+        }
+
+        if ($description == null) {
+            header('Location: ../dashboard.php?error=emptydescription');
+            exit();
+        }
+
+        if ($filename == null) {
+            header('Location: ../dashboard.php?error=emptyimage');
+            exit();
+        }
+
+        $target_dir = "media/events/";
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $image_name =  $name . $user_id . $category;
+        $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
+
+        $allowedFiles =  array('jpg', 'jpeg', 'png');
+
+        if ($image['size'] < 5000000 && in_array($ext, $allowedFiles)) {
+            move_uploaded_file($image['tmp_name'], "../" . $image_path);
+        } else {
+            header('Location: ../dashboard.php?error=incorrectimage');
+            exit();
+        }
         $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image, $user_id);
-        return $stmt->execute();
+        $stmt->execute();
+
+        header('Location: ../dashboard.php');
+        exit();
     }
 
     function returnHome($user_id)
