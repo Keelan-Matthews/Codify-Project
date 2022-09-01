@@ -50,7 +50,7 @@ const checkInputs = () => {
     else if (!isEmail(emailValue)) 
         emailerrorMessage = 'Email is not valid';
 
-    setValidity($('#emailInput'), emailerrorMessage);
+    if (!setValidity($('#emailInput'), emailerrorMessage)) valid = false;
 
     let passworderrorMessage = '';
 
@@ -61,20 +61,9 @@ const checkInputs = () => {
     else if (!isStrongPassword(passwordValue)) 
         passworderrorMessage = 'Must contain characters, digits and special characters';
 
-    setValidity($('#passwordInput'), passworderrorMessage);
+    if (!setValidity($('#passwordInput'), passworderrorMessage)) valid = false;
 
     return valid;
-}
-
-const setErrorFor = (input, message) => {
-    const small = $(input).siblings('small');
-
-    small.innerText = message;
-    $(input).className = 'form-control is-invalid';
-}
-
-const setSuccessFor = input => {
-    $(input).className = 'form-control is-valid';
 }
 
 const isEmail = email => {
@@ -87,10 +76,26 @@ const isStrongPassword = password => {
     return password.match(re);
 }
 
+const setErrorFor = (input, message) => {
+    const small = input.siblings('small');
+
+    small.text(message);
+    input.addClass('is-invalid');
+}
+
+const setSuccessFor = input => {
+    input.addClass('is-valid');
+    input.removeClass('is-invalid');
+}
+
 const setValidity = (input, message) => {
     if (message) {
         setErrorFor(input, message);
-        valid = false;
+        return false;
     }
-    else setSuccessFor(input);
+    else 
+    {
+        setSuccessFor(input);
+        return true;
+    }
 }

@@ -19,3 +19,10 @@ code, code a {
     }
 }
 
+@media screen and (max-width: 768px) {
+    .logo {
+        width: 70%;
+        height: 70%;
+    }
+}
+

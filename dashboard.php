@@ -45,7 +45,7 @@ if (isset($_GET["error"])) {
                                 <small><?php echo $locationError ?></small>
                             </div>
                             <div class="form-group w-50">
-                                <input type="date" class="form-control py-3 <?php echo ($dateError === "") ? '' : 'is-invalid' ?>" placeholder="DD/MM/YYYY" name="date">
+                                <input type="date" class="form-control py-3 <?php echo ($dateError === "") ? '' : 'is-invalid' ?>" placeholder="DD/MM/YYYY" name="date" id="eventDate">
                                 <small><?php echo $dateError ?></small>
                             </div>
                         </div>

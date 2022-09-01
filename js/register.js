@@ -17,20 +17,25 @@ $('form').submit((e) => {
     if (!checkInputs()) 
         console.log("There was an error");
     else {
+
         $.ajax({
             contentType: 'application/json',
             data: JSON.stringify({
-                "type": "login",
+                "type": "register",
                 "email": $('#emailInput').val().trim(),
-                "password": $('#passwordInput').val().trim()
+                "password": $('#passwordInput').val().trim(),
+                "username": $('#usernameInput').val()
             }),
             url: 'api.php',
             type: 'POST',
             success: (res) => {
-                console.log(res);
+                $(window).attr('location', 'dashboard.php');
             },
-            error: () => {
-                console.log('An error occurred during the api call');
+            error: (res) => {
+                let errMessage = $.parseJSON(res.responseText).data.message;
+                if (errMessage == "Email already exists") {
+                    setErrorFor($('#emailInput'), errMessage);
+                }
             },
             processData: false,
         })
@@ -47,13 +52,13 @@ const checkInputs = () => {
 
     if(usernameValue === '') {
         usernameerrorMessage = 'Username is required';
-    } else if(nameValue.length > 20) {
+    } else if(usernameValue.length > 20) {
         usernameerrorMessage = 'Username must be less than 20 characters';
-    } else if (!isUsername(nameValue)) {
+    } else if (!isUsername(usernameValue)) {
         usernameerrorMessage = 'Can only contain lowercase characters and numbers';
     }
 
-    setValidity($('#usernameInput'), usernameerrorMessage);
+     if (!setValidity($('#usernameInput'), usernameerrorMessage)) valid = false;
 
     let emailerrorMessage = '';
 
@@ -62,7 +67,7 @@ const checkInputs = () => {
     else if (!isEmail(emailValue)) 
         emailerrorMessage = 'Email is not valid';
 
-    setValidity($('#emailInput'), emailerrorMessage);
+    if (!setValidity($('#emailInput'), emailerrorMessage)) valid = false;
 
     let passworderrorMessage = '';
 
@@ -73,20 +78,9 @@ const checkInputs = () => {
     else if (!isStrongPassword(passwordValue)) 
         passworderrorMessage = 'Must contain characters, digits and special characters';
 
-    setValidity($('#passwordInput'), passworderrorMessage);
+    if (!setValidity($('#passwordInput'), passworderrorMessage)) valid = false;
 
     return valid;
-}
-
-const setErrorFor = (input, message) => {
-    const small = $(input).siblings('small');
-
-    small.innerText = message;
-    $(input).className = 'form-control is-invalid';
-}
-
-const setSuccessFor = input => {
-    $(input).className = 'form-control is-valid';
 }
 
 const isEmail = email => {
@@ -103,10 +97,26 @@ const isUsername = word => {
     return /^[a-z0-9]+$/.test(word);
 }
 
+const setErrorFor = (input, message) => {
+    const small = input.siblings('small');
+
+    small.text(message);
+    input.addClass('is-invalid');
+}
+
+const setSuccessFor = input => {
+    input.addClass('is-valid');
+    input.removeClass('is-invalid');
+}
+
 const setValidity = (input, message) => {
     if (message) {
         setErrorFor(input, message);
-        valid = false;
+        return false;
     }
-    else setSuccessFor(input);
+    else 
+    {
+        setSuccessFor(input);
+        return true;
+    }
 }

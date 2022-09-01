@@ -7,7 +7,11 @@ require 'templates/header.php';
     <div class="row">
         <div class="col-12 order-2 order-md-1 col-md-7 d-flex align-items-center">
             <div class="hero-container">
-                <img src="media/svg/logo.svg" alt="" class="pb-5 pt-5 pt-md-0 w-100 h-100">
+                <class class="w-100 d-flex justify-content-center">
+                    <div class="logo">
+                        <img src="media/svg/logo.svg" alt="" class="pb-5 pt-5 pt-md-0 w-100 h-100">
+                    </div>
+                </class>
                 <!-- Please note the indentation is intentional to preserve correct tab amounts -->
                 <pre class="rounded shadow text-white lighter-gray p-1 p-md-3 pe-md-5" id="code-container">
                     <code class="fs-5">
@@ -25,9 +29,11 @@ require 'templates/header.php';
     }
                     </code>
                 </pre>
-                <a href="register.php">
-                    <div class="btn btn-primary btn-lg">>_run.sh</div>
-                </a>
+                <div class="w-100 d-flex d-md-block justify-content-center">
+                    <a href="register.php">
+                        <div class="btn btn-primary btn-lg">>_run.sh</div>
+                    </a>
+                </div>
 
             </div>
         </div>

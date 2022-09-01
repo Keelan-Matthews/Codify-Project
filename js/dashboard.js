@@ -108,6 +108,8 @@ const checkInputs = () => {
     const eventCategory = $('#eventCategory').val();
     const eventDescription = $('#eventDescription').val();
 
+    console.log(eventName, eventDate, eventLocation, eventImg, eventCategory, eventDescription);
+
     let valid = true;
 
     let nameErrorMessage = '';
@@ -177,5 +179,9 @@ const setValidity = (input, message) => {
         setErrorFor(input, message);
         return false;
     }
-    else setSuccessFor(input);
+    else 
+    {
+        setSuccessFor(input);
+        return true;
+    }
 }

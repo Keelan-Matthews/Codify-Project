@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return;
     }
 
-    $reqTypes = ["home", "explore", "login", "rate", "chat", "add_event"];
+    $reqTypes = ["home", "explore", "login", "register", "rate", "chat", "add_event"];
     if (!in_array($type, $reqTypes)) {
         echo json_encode($api->error("Incorrect type parameter has been specified."));
         return;
@@ -29,6 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $password = test_input($data->password);
 
             $instance->returnUser($email, $password);
+            break;
+
+        case "register":
+            $email = test_input($data->email);
+            $password = test_input($data->password);
+            $username = test_input($data->username);
+
+            $instance->addUser($username,$email, $password);
             break;
 
         case "add_event":

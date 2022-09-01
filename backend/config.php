@@ -25,10 +25,10 @@ class Database
     private $connection;
 
     private $servername = "localhost";
-    // private $username = "u21549967";
-    private $username = "root";
-    // private $password = "deoqtvvm";
-    private $password = "";
+    private $username = "u21549967";
+    // private $username = "root";
+    private $password = "deoqtvvm";
+    // private $password = "";
     private $db = "u21549967";
 
     private function __construct()
@@ -60,13 +60,52 @@ class Database
 
     public function addUser($username, $email, $password)
     {
+        if (empty($username) !== false) {
+            header('Location: register.php?error=emptyusername');
+            exit();
+        }
+
+        if (invalidUsername($username) !== false) {
+            header('Location: register.php?error=invalidusername');
+            exit();
+        }
+
+        if (empty($email) !== false) {
+            header('Location: register.php?error=emptyemail');
+            exit();
+        }
+
+        if (invalidEmail($email) !== false) {
+            header('Location: register.php?error=invalidemail');
+            exit();
+        }
+
+        if (empty($password) !== false) {
+            header('Location: register.php?error=emptypassword');
+            exit();
+        }
+
+        if (invalidPassword($password) !== false) {
+            header('Location: register.php?error=invalidpassword');
+            exit();
+        }
+
+        $instance = Database::getInstance();
+        $conn = $instance->getConnection();
+
+        if (emailExists($conn,$email)) {
+            header('HTTP/1.1 400 Bad Request');
+            echo json_encode($this->error("Email already exists"));
+            exit();
+        }
         $stmt = $this->connection->prepare("INSERT INTO dbusers (`username`, `email`, `password`) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $username, $email, $password);
 
         if ($stmt->execute()) {
-            return $this->getConnection()->insert_id;
+            $_SESSION["signed_in"] = true;
+            echo json_encode($this->success("User added successfully"));
         } else {
-            return false;
+            echo json_encode($this->error("An error occured while adding user"));
         }
     }
 
@@ -256,56 +295,14 @@ function invalidPassword($password)
 
 function emailExists($conn, $email)
 {
-    $sql = "SELECT * FROM dbusers WHERE email = ?;";
-    $stmt = mysqli_stmt_init($conn);
-    if (!mysqli_stmt_prepare($stmt, $sql)) {
-        header('Location: ../signup.php?error=stmtfailed');
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt, "s", $email);
-    mysqli_stmt_execute($stmt);
-
-    $resultData = mysqli_stmt_get_result($stmt);
-
-    if ($row = mysqli_fetch_assoc($resultData)) {
-        return $row;
+    $sql = "SELECT * FROM dbusers WHERE email = '$email'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        return true;
     } else {
-        $result = false;
-        return $result;
+        return false;
     }
-
-    mysqli_stmt_close($stmt);
 }
-
-// function apiCall($data) {
-//     $url = "localhost/IMY220/api.php";
-//     $ch = curl_init();
-//     curl_setopt($ch, CURLOPT_URL, $url);
-//     curl_setopt($ch, CURLOPT_POST, 1);
-//     curl_setopt($ch, CURLOPT_USERPWD, "u21549967" . ":" . "deoqtvvm");
-
-//     curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-//     curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-//     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-//     $res = curl_exec($ch);
-
-//     if (curl_errno($ch)) {
-//         die('Couldn\'t send request: ' . curl_error($ch));
-//     } else {
-//         $resultStatus = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//         if ($resultStatus == 200) {
-//             echo "<script>console.log('Call was successful')</script>";
-//         } else {
-//             echo "<script>console.log('Unsuccessful call')</script>";
-
-//             die('Request failed: HTTP status code: ' . $resultStatus);
-//         }
-//     }
-
-//     return json_decode($res,true);
-// }
 
 function test_input($data)
 {
