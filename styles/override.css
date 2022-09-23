@@ -126,11 +126,11 @@ label {
     color: #fff;
 }
 
-.events::-webkit-scrollbar {
-    width: 0.2em;
+.events::-webkit-scrollbar, .event-details::-webkit-scrollbar {
+    width: 0.01em;
 }
 
-.events::-webkit-scrollbar-thumb {
+.events::-webkit-scrollbar-thumb, .event-details::-webkit-scrollbar-thumb {
     background-color: var(--primary);
 }
 

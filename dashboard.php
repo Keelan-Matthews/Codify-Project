@@ -131,18 +131,18 @@ if (isset($_GET["error"])) {
     <div class="row">
         <div class="col-12 col-md-10">
             <div class="container mt-5 pb-5 pb-md-0">
-                <div class="d-none">
+                <div class="" id="events-container">
                     <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
                     <div class="events row">
                     </div>
                 </div>
-                <div class="d-block">
+                <div class="d-none" id="event-details-container">
                     <h5 class="border-bottom border-4 text-white pb-3 mb-4 border-color">Home feed / <span class="text-muted">Crazy Event Title Name</span></h5>
-                    <div class="d-flex text-white align-items-center mb-4 fw-bold">
-                        <i class="fas fa-arrow-left pe-2"></i>
-                        <p class="mb-0">Go Back</p>
-                    </div>
                     <div class="event-details">
+                        <button class="d-flex text-white align-items-center mb-4 fw-bold btn" id="go-back-event-details">
+                            <i class="fas fa-arrow-left pe-2"></i>
+                            <p class="mb-0">Go Back</p>
+                        </button>
                         <div class="row lighter-gray rounded p-4">
                             <div class="col-12 col-md-7">
                                 <img src="./media/events/2.5dgamejam3game_jam.jpg" alt="" class="rounded w-100">

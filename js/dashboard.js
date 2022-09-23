@@ -1,5 +1,5 @@
-const eventCard = ({ name, date, location, image, profile_photo }) => `
-    <div class="p-3 col-12 col-md-6 col-lg-4">
+const eventCard = ({ name, date, location, image, profile_photo, event_id }) => `
+    <div class="p-3 col-12 col-md-6 col-lg-4" id="${event_id}">
         <div class="card lighter-gray shadow rounded event-card">
             <div class="d-flex p-3">
                 <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
@@ -184,3 +184,34 @@ const setValidity = (input, message) => {
         return true;
     }
 }
+
+$(".events").on('click', '.event-card', function() {
+    $("#events-container").toggleClass('d-none');
+    $("#event-details-container").toggleClass('d-none');
+
+    let event_id = $(this).attr('id');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "event-details",
+            "event_id": event_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            let data = res.data;
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false
+    })
+});
+
+$("#go-back-event-details").on('click', () => {
+    $("#events-container").toggleClass('d-none');
+    $("#event-details-container").toggleClass('d-none');
+});
