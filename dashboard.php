@@ -3,9 +3,9 @@ $pageTitle = "Dashboard";
 $stylesheet = "dashboard.css";
 require 'templates/header.php';
 
-if ($_SESSION["signed_in"] == false) {
-    header("Location: ./index.php");
-}
+// if ($_SESSION["signed_in"] == false) {
+//     header("Location: ./index.php");
+// }
 
 $nameError = "";
 $locationError = "";
@@ -131,8 +131,165 @@ if (isset($_GET["error"])) {
     <div class="row">
         <div class="col-12 col-md-10">
             <div class="container mt-5 pb-5 pb-md-0">
-                <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
-                <div class="events row">
+                <div class="d-none">
+                    <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
+                    <div class="events row">
+                    </div>
+                </div>
+                <div class="d-block">
+                    <h5 class="border-bottom border-4 text-white pb-3 mb-4 border-color">Home feed / <span class="text-muted">Crazy Event Title Name</span></h5>
+                    <div class="d-flex text-white align-items-center mb-4 fw-bold">
+                        <i class="fas fa-arrow-left pe-2"></i>
+                        <p class="mb-0">Go Back</p>
+                    </div>
+                    <div class="event-details">
+                        <div class="row lighter-gray rounded p-4">
+                            <div class="col-12 col-md-7">
+                                <img src="./media/events/2.5dgamejam3game_jam.jpg" alt="" class="rounded w-100">
+                                <div class="d-flex align-items-start justify-content-between mt-4">
+                                    <div>
+                                        <h3 class="text-white">Crazy Event Title Name</h3>
+                                        <div class="d-flex align-items-center">
+                                            <h5 class="text-primary">
+                                                <i class="fas fa-tag pe-2"></i>
+                                                Hackathon
+                                            </h5>
+                                            <h5 class="text-primary mx-4">
+                                                <i class="fas fa-location-pin pe-2"></i>
+                                                Online
+                                            </h5>
+                                            <h5 class="text-primary">
+                                                <i class="fas fa-calendar pe-2"></i>
+                                                10/10/2022
+                                            </h5>
+                                        </div>
+                                        <div class="text-white d-flex mt-2">
+                                            <div class="p-2 rounded bg-dark me-2">
+                                                <small><span class="fw-bold"># </span>Competitive</small>
+                                            </div>
+                                            <div class="p-2 rounded bg-dark me-2">
+                                                <small><span class="fw-bold"># </span>Speedrun</small>
+                                            </div>
+                                            <div class="p-2 rounded bg-dark me-2">
+                                                <small><span class="fw-bold"># </span>Seminar</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btn btn-primary btn-lg">
+                                        Attend
+                                    </div>
+                                </div>
+
+                                <p class="text-white mt-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est quos, esse facere, tempora, labore cumque quisquam inventore temporibus placeat similique voluptas. At, officiis nihil? Tempore, quae. Eius repellendus et reprehenderit iusto nostrum, voluptas similique inventore cum numquam enim temporibus provident reiciendis ex, rem, quibusdam unde laudantium? Facilis molestias facere, beatae id rerum vitae. Porro aliquid repellendus reiciendis distinctio vel non dolores voluptate nisi, sed cupiditate nulla officiis in, eligendi tenetur autem quae corrupti odit obcaecati quo, commodi expedita assumenda? Quod sed laborum saepe, hic asperiores, amet quisquam odit nam sequi ipsam atque harum placeat. Totam accusantium itaque libero suscipit molestiae.</p>
+                            </div>
+                            <div class="col-12 col-md-5 ps-4">
+                                <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row">
+                                    <div class="col-2">
+                                        <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                    </div>
+                                    <div class="col-5">
+                                        <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                        <small class="text-primary">Organizer</small>
+                                    </div>
+                                    <div class="col-5 d-flex align-items-start justify-content-end">
+                                        <div class="btn btn-primary me-2">
+                                            Follow
+                                        </div>
+                                        <div class="btn btn-primary">
+                                            Message
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-5 pt-5">
+                                    <h4 class="text-white">Reviews</h4>
+                                    <div class="reviews">
+                                        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+                                            <div class="col-2">
+                                                <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                                <p class="rating">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </p>
+                                            </div>
+                                            <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
+                                        </div>
+                                        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+                                            <div class="col-2">
+                                                <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                                <p class="rating">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </p>
+                                            </div>
+                                            <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
+                                        </div>
+                                        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+                                            <div class="col-2">
+                                                <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                                <p class="rating">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </p>
+                                            </div>
+                                            <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
+                                        </div>
+                                        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+                                            <div class="col-2">
+                                                <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                                <p class="rating">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </p>
+                                            </div>
+                                            <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
+                                        </div>
+                                        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+                                            <div class="col-2">
+                                                <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                            </div>
+                                            <div class="col-10">
+                                                <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                                <p class="rating">
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                    <i class="fas fa-star text-warning"></i>
+                                                </p>
+                                            </div>
+                                            <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

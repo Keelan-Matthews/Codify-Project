@@ -22,6 +22,10 @@ main {
     background-color: #2C2C2C;
 }
 
+.lighter-gray-2 {
+    background-color: #383838;
+}
+
 a {
     color: var(--primary);
     text-decoration: none;
@@ -45,6 +49,10 @@ a {
     transition: all 0.2s ease;
 }
 
+bg-dark {
+    background-color: var(--background);
+}
+
 .btn:hover {
     background-color: var(--secondary);
     transform: scale(1.02);
@@ -63,8 +71,16 @@ a>div:hover p {
     background-color: var(--primary) !important;
 }
 
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+
 .text-secondary {
     color: var(--secondary) !important;
+}
+
+.text-primary {
+    color: var(--primary) !important;
 }
 
 .btn-secondary {
