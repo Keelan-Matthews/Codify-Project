@@ -193,6 +193,25 @@ class Database
         }
     }
 
+    function returnEventDetails($event_id)
+    {
+        $sql = "SELECT * FROM dbevents WHERE event_id = '$event_id'";
+        $result = $this->getConnection()->query($sql);
+
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $event = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($event));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No events found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     function returnUser($email, $password)
     {
         if (empty($email) !== false) {

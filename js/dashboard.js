@@ -1,6 +1,6 @@
 const eventCard = ({ name, date, location, image, profile_photo, event_id }) => `
-    <div class="p-3 col-12 col-md-6 col-lg-4" id="${event_id}">
-        <div class="card lighter-gray shadow rounded event-card">
+    <div class="p-3 col-12 col-md-6 col-lg-4">
+        <div class="card lighter-gray shadow rounded event-card" id="${event_id}">
             <div class="d-flex p-3">
                 <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
                 <div class="text-white">
@@ -11,6 +11,12 @@ const eventCard = ({ name, date, location, image, profile_photo, event_id }) => 
             <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
         </div>
+    </div>
+`;
+
+const eventTag = (tag_name) => `
+    <div class="p-2 rounded bg-dark me-2">
+        <small><span class="fw-bold"># </span>${tag_name}</small>
     </div>
 `;
 
@@ -65,7 +71,7 @@ const resize = () => {
     }
 }
 
-$('form').submit((e) => { 
+$('form').submit((e) => {
     e.preventDefault();
     if (!checkInputs()) {
         console.log('invalid inputs');
@@ -76,9 +82,9 @@ $('form').submit((e) => {
         let formData = new FormData(form);
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
-    
+
         for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
+            console.log(pair[0] + ', ' + pair[1]);
         }
 
         $.ajax({
@@ -96,7 +102,7 @@ $('form').submit((e) => {
                 console.log('An error occurred during the api call');
                 $('#createEvent').modal('show');
             }
-    
+
         })
     }
 });
@@ -113,46 +119,46 @@ const checkInputs = () => {
 
     let nameErrorMessage = '';
 
-    if(eventName === '') {
+    if (eventName === '') {
         nameErrorMessage = 'Event name is required';
-    } else if(eventName.length > 30) 
+    } else if (eventName.length > 30)
         nameErrorMessage = 'Event name must be less than 30 characters';
 
     if (!setValidity($('#eventName'), nameErrorMessage)) valid = false;
 
     let dateErrorMessage = '';
-    if(eventDate === undefined) {
+    if (eventDate === undefined) {
         dateErrorMessage = 'Event date is required';
     }
 
     if (!setValidity($('#eventDate'), dateErrorMessage)) valid = false;
 
     let locationErrorMessage = '';
-    if(eventLocation === '') {
+    if (eventLocation === '') {
         locationErrorMessage = 'Event location is required';
     }
-    else if(eventLocation.length > 20) {
+    else if (eventLocation.length > 20) {
         locationErrorMessage = 'Event location must be less than 20 characters';
     }
 
     if (!setValidity($('#eventLocation'), locationErrorMessage)) valid = false;
 
     let imgErrorMessage = '';
-    if(eventImg === 0) {
+    if (eventImg === 0) {
         imgErrorMessage = 'Event image is required';
     }
 
     if (!setValidity($('#eventImage'), imgErrorMessage)) valid = false;
 
     let categoryErrorMessage = '';
-    if(eventCategory === 'Select Category') {
+    if (eventCategory === 'Select Category') {
         categoryErrorMessage = 'Event category is required';
     }
 
     if (!setValidity($('#eventCategory'), categoryErrorMessage)) valid = false;
 
     let descriptionErrorMessage = '';
-    if(eventDescription === '') {
+    if (eventDescription === '') {
         descriptionErrorMessage = 'Event description is required';
     }
 
@@ -178,14 +184,13 @@ const setValidity = (input, message) => {
         setErrorFor(input, message);
         return false;
     }
-    else 
-    {
+    else {
         setSuccessFor(input);
         return true;
     }
 }
 
-$(".events").on('click', '.event-card', function() {
+$(".events").on('click', '.event-card', function () {
     $("#events-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
 
@@ -200,9 +205,22 @@ $(".events").on('click', '.event-card', function() {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
-
             let data = res.data;
+
+            $('.event-title').text(data.name);
+            $('.event-date').text(data.date);
+            $('.event-location').text(data.location);
+            $('.event-description').text(data.description);
+            $('.event-image').attr('src', data.image);
+            $('.event-image').attr('class', "rounded w-100");
+            $('.event-category').text(data.category);
+            
+            let tags = [];
+            if (data.tag1 !== null) tags.push(data.tag1);
+            if (data.tag2 !== null) tags.push(data.tag2);
+            if (data.tag3 !== null) tags.push(data.tag3);
+
+            $('.event-tags').html(tags.map(eventTag).join(''));
         },
         error: (res) => {
             console.log(res);

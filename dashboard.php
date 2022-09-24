@@ -53,10 +53,10 @@ if (isset($_GET["error"])) {
                         <div class="form-floating mb-5">
                             <select class="form-select mb-4 <?php echo ($categoryError === "") ? '' : 'is-invalid' ?>" id="eventCategory" name="category">
                                 <option>Select Category</option>
-                                <option value="hackathon">Hackathon</option>
-                                <option value="game_jam">Game Jam</option>
-                                <option value="speedrun">Speedrun</option>
-                                <option value="other">Other</option>
+                                <option value="Hackathon">Hackathon</option>
+                                <option value="Game Jam">Game Jam</option>
+                                <option value="Speedrun">Speedrun</option>
+                                <option value="Other">Other</option>
                             </select>
                             <label for="eventCategory">Event Category</label>
                             <small><?php echo $categoryError ?></small>
@@ -75,43 +75,43 @@ if (isset($_GET["error"])) {
                         <div class="form-group">
                             <div class="d-flex flex-wrap justify-content-start">
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Competitive">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox1">Competitive</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Casual">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox2">Casual</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="option3">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Teamwork">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox3">Teamwork</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="option4">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Solo">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox4">Solo</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="option5">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Online">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox5">Online</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check-inline me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="option6">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Speedrun">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox6">Speedrun</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-check- me-2 mb-2">
-                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="option7">
+                                    <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="Educational">
                                     <div class="tags">
                                         <label class="form-check-label" for="inlineCheckbox7">Educational</label>
                                     </div>
@@ -137,7 +137,7 @@ if (isset($_GET["error"])) {
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">
-                    <h5 class="border-bottom border-4 text-white pb-3 mb-4 border-color">Home feed / <span class="text-muted">Crazy Event Title Name</span></h5>
+                    <h5 class="border-bottom border-4 text-white pb-3 mb-4 border-color">Home feed / <span class="text-muted event-title"></span></h5>
                     <div class="event-details">
                         <button class="d-flex text-white align-items-center mb-4 fw-bold btn" id="go-back-event-details">
                             <i class="fas fa-arrow-left pe-2"></i>
@@ -145,34 +145,26 @@ if (isset($_GET["error"])) {
                         </button>
                         <div class="row lighter-gray rounded p-4">
                             <div class="col-12 col-md-7">
-                                <img src="./media/events/2.5dgamejam3game_jam.jpg" alt="" class="rounded w-100">
+                                <img class="event-image" src="" alt="">
                                 <div class="d-flex align-items-start justify-content-between mt-4">
                                     <div>
-                                        <h3 class="text-white">Crazy Event Title Name</h3>
+                                        <h3 class="text-white event-title"></h3>
                                         <div class="d-flex align-items-center">
                                             <h5 class="text-primary">
                                                 <i class="fas fa-tag pe-2"></i>
-                                                Hackathon
+                                                <span class="event-category"></span>
                                             </h5>
                                             <h5 class="text-primary mx-4">
                                                 <i class="fas fa-location-pin pe-2"></i>
-                                                Online
+                                                <span class="event-location"></span>
                                             </h5>
                                             <h5 class="text-primary">
                                                 <i class="fas fa-calendar pe-2"></i>
-                                                10/10/2022
+                                                <span class="event-date"></span>
                                             </h5>
                                         </div>
-                                        <div class="text-white d-flex mt-2">
-                                            <div class="p-2 rounded bg-dark me-2">
-                                                <small><span class="fw-bold"># </span>Competitive</small>
-                                            </div>
-                                            <div class="p-2 rounded bg-dark me-2">
-                                                <small><span class="fw-bold"># </span>Speedrun</small>
-                                            </div>
-                                            <div class="p-2 rounded bg-dark me-2">
-                                                <small><span class="fw-bold"># </span>Seminar</small>
-                                            </div>
+                                        <div class="text-white d-flex mt-2 event-tags">
+
                                         </div>
                                     </div>
                                     <div class="btn btn-primary btn-lg">
@@ -180,7 +172,7 @@ if (isset($_GET["error"])) {
                                     </div>
                                 </div>
 
-                                <p class="text-white mt-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Est quos, esse facere, tempora, labore cumque quisquam inventore temporibus placeat similique voluptas. At, officiis nihil? Tempore, quae. Eius repellendus et reprehenderit iusto nostrum, voluptas similique inventore cum numquam enim temporibus provident reiciendis ex, rem, quibusdam unde laudantium? Facilis molestias facere, beatae id rerum vitae. Porro aliquid repellendus reiciendis distinctio vel non dolores voluptate nisi, sed cupiditate nulla officiis in, eligendi tenetur autem quae corrupti odit obcaecati quo, commodi expedita assumenda? Quod sed laborum saepe, hic asperiores, amet quisquam odit nam sequi ipsam atque harum placeat. Totam accusantium itaque libero suscipit molestiae.</p>
+                                <p class="text-white mt-5 event-description"></p>
                             </div>
                             <div class="col-12 col-md-5 ps-4">
                                 <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row">
