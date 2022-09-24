@@ -132,12 +132,12 @@ if (isset($_GET["error"])) {
         <div class="col-12 col-md-10">
             <div class="container mt-5 pb-5 pb-md-0">
                 <div class="" id="events-container">
-                    <h5 class="border-bottom border-4 text-white pb-3 border-color">Home feed</h5>
+                    <h4 class="border-bottom border-4 text-white pb-3 border-color fw-bold">Home feed</h4>
                     <div class="events row">
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">
-                    <h5 class="border-bottom border-4 text-white pb-3 mb-4 border-color">Home feed / <span class="text-muted event-title"></span></h5>
+                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold">Home feed</span> / <span class="text-muted event-title"></span></h4>
                     <div class="event-details">
                         <button class="d-flex text-white align-items-center mb-4 fw-bold btn" id="go-back-event-details">
                             <i class="fas fa-arrow-left pe-2"></i>
@@ -298,7 +298,7 @@ if (isset($_GET["error"])) {
                 <div class="w-100">
                     <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation ms-md-4 ps-md-5">
                         <li class="fs-4 fw-light my-4 home-link active">
-                            <a href="index.php" class="d-flex align-items-center text-white">
+                            <a href="dashboard.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-home pe-2"></i>
                                 <span class="navtext-hide">Home</span>
                             </a>
@@ -317,13 +317,13 @@ if (isset($_GET["error"])) {
                             </li>
                         </div>
                         <li class="fs-4 fw-light my-4">
-                            <a href="profile.php" class="d-flex align-items-center text-white">
+                            <a href="messages.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-comment-dots pe-2"></i>
                                 <span class="navtext-hide">Messages</span>
                             </a>
                         </li>
                         <li class="fs-4 fw-light my-4">
-                            <a href="settings.php" class="d-flex align-items-center text-white">
+                            <a href="profile.php" class="d-flex align-items-center text-white">
                                 <i class="fas fa-user pe-2"></i>
                                 <span class="navtext-hide">Profile</span>
                             </a>

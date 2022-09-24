@@ -174,7 +174,7 @@ class Database
         }
     }
 
-    function returnHome($user_id)
+    function returnUserEvents($user_id)
     {
         $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
         $result = $this->getConnection()->query($sql);
@@ -191,6 +191,12 @@ class Database
             echo json_encode($this->error("No events found"));
             header("HTTP/1.1 404 Not Found");
         }
+    }
+
+    function returnHome($user_id)
+    {
+        // Return all events of people that user is following
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollow ON dbfollow.following_id = dbevents.user_id WHERE dbfollow.follower_id = '$user_id'";
     }
 
     function returnEventDetails($event_id)

@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return;
     }
 
-    $reqTypes = ["home", "explore", "login", "register", "rate", "chat", "add_event", "event-details"];
+    $reqTypes = ["home", "explore", "login", "register", "rate", "chat", "add_event", "event-details", "user-events"];
     if (!in_array($type, $reqTypes)) {
         echo json_encode($api->error("Incorrect type parameter has been specified."));
         return;
@@ -52,6 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         case "home":
             $instance->returnHome($data->user_id);
+            break;
+
+        case "user-events":
+            $instance->returnUserEvents($data->user_id);
             break;
 
         case "event-details":

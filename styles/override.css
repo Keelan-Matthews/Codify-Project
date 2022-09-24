@@ -180,3 +180,24 @@ select:-webkit-autofill:focus {
 .form-check-input:checked~.tags>.form-check-label {
     color: white;
 }
+
+@media screen and (min-width: 768px) {
+    .navigation {
+        height: 60vh;
+    }
+
+    .vh-md-100 {
+        height: 100vh;
+    }
+}
+
+.border-color {
+    border-color: #2C2C2C !important;
+}
+
+@media screen and (max-width: 767px) {
+    .mobile-nav {
+        position: fixed;
+        bottom: 0px;
+    }
+}
