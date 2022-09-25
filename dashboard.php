@@ -177,18 +177,18 @@ if (isset($_GET["error"])) {
                             <div class="col-12 col-md-5 ps-4">
                                 <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row">
                                     <div class="col-2">
-                                        <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                        <img src="" alt="" class="rounded-circle w-100" id="event-user-photo">
                                     </div>
                                     <div class="col-5">
-                                        <p class="text-white fw-bold mb-0">Keelan Matthews</p>
+                                        <p class="text-white fw-bold mb-0" id="event-user"></p>
                                         <small class="text-primary">Organizer</small>
                                     </div>
                                     <div class="col-5 d-flex align-items-start justify-content-end">
-                                        <div class="btn btn-primary me-2">
-                                            Follow
+                                        <div class="btn btn-primary me-2" id="view-profile">
+                                            View
                                         </div>
                                         <div class="btn btn-primary">
-                                            Message
+                                            <i class="fas fa-comment-dots"></i>
                                         </div>
                                     </div>
                                 </div>

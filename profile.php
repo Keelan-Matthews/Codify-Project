@@ -16,19 +16,19 @@ require 'templates/header.php';
                         <div class="row lighter-gray rounded">
                             <div class="row p-4">
                                 <div class="col-2">
-                                    <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
+                                    <img src="" alt="" class="rounded-circle w-100" id="user-profile-photo">
                                 </div>
                                 <div class="col-6 d-flex flex-column justify-content-center mb-4">
-                                    <h2 class="text-white fw-bold mb-0">Keelan Matthews</h2>
+                                    <h2 class="text-white fw-bold mb-0" id="username"></h2>
                                     <h4 class="text-primary mt-2 mb-0">12 Followers</h4>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end">
-                                    <div class="btn btn-primary btn-lg me-2 w-50">
-                                        <i class="fas fa-user-plus me-2"></i>
-                                        Follow
+                                    <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">
+                                        <i class="fas fa-user-plus me-2" id="follow-icon"></i>
+                                        <span>Follow</span>
                                     </div>
-                                    <div class="btn btn-outline text-white border-white btn-lg w-50">
-                                        <i class="fas fa-envelope me-2"></i>
+                                    <div class="btn btn-outline text-white border-white btn-lg w-50" id="message-button">
+                                        <i class="fas fa-comment-dots me-2"></i>
                                         Message
                                     </div>
                                 </div>

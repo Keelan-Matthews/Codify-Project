@@ -176,7 +176,7 @@ class Database
 
     function returnUserEvents($user_id)
     {
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
@@ -195,13 +195,27 @@ class Database
 
     function returnHome($user_id)
     {
-        // Return all events of people that user is following
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollow ON dbfollow.following_id = dbevents.user_id WHERE dbfollow.follower_id = '$user_id'";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id'";
+        $result = $this->getConnection()->query($sql);
+        $events = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $events[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($events));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No events found"));
+            header("HTTP/1.1 404 Not Found");
+        }
     }
 
     function returnEventDetails($event_id)
     {
-        $sql = "SELECT * FROM dbevents WHERE event_id = '$event_id'";
+        // Return all event details and user details of event
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.event_id = '$event_id'";
         $result = $this->getConnection()->query($sql);
 
         if ($result->num_rows > 0) {

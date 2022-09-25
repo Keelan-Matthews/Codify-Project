@@ -49,13 +49,30 @@ const eventTag = (tag_name) => `
     </div>
 `;
 
+const getUrlParameter = (sParam) => {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};
+
 const populateUserEvents = () => {
+    const profile_id = getUrlParameter('user_id');
 
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify({
             "type": "user-events",
-            "user_id": user_id
+            "user_id": profile_id
         }),
         url: 'api.php',
         type: 'POST',
@@ -63,6 +80,8 @@ const populateUserEvents = () => {
             console.log(res);
 
             $('.events').html(res.data.map(eventCard).join(''));
+            $('#username').html(res.data[0].username);
+            $('#user-profile-photo').attr('src', res.data[0].profile_photo);
         },
         error: (res) => {
             console.log(res);
@@ -113,4 +132,37 @@ $(".events").on('click', '.event-card', function () {
 $("#go-back-event-details").on('click', () => {
     $("#profile-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
+});
+
+$("#follow-button").on('click', function() {
+    $(this).toggleClass('btn-primary');
+    $(this).toggleClass('bg-white');
+    $(this).toggleClass('text-black');
+    $("#follow-icon").toggleClass('fa-user-plus');
+    $("#follow-icon").toggleClass('fa-check');
+    $("#follow-icon").toggleClass('text-black');
+
+    if ($(this).hasClass('btn-primary')) {
+        $(this).children('span').text('Follow');
+    }
+    else {
+        $(this).children('span').text('Following');
+    }
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "follow",
+            "user_id": user_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false
+    })
 });

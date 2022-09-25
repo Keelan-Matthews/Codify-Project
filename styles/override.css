@@ -83,6 +83,10 @@ a>div:hover p {
     color: var(--primary) !important;
 }
 
+.text-black {
+    color: var(--background) !important;
+}
+
 .btn-secondary {
     background-color: var(--background);
     border: 0;

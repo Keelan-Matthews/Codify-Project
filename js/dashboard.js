@@ -1,6 +1,6 @@
-const eventCard = ({ name, date, location, image, profile_photo, event_id }) => `
+const eventCard = ({ name, date, location, image, profile_photo, event_id, user_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
-        <div class="card lighter-gray shadow rounded event-card" id="${event_id}">
+        <div class="card lighter-gray shadow rounded event-card" id="${event_id}" data-user-id="${user_id}">
             <div class="d-flex p-3">
                 <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
                 <div class="text-white">
@@ -214,6 +214,8 @@ $(".events").on('click', '.event-card', function () {
             $('.event-image').attr('src', data.image);
             $('.event-image').attr('class', "rounded w-100");
             $('.event-category').text(data.category);
+            $('#event-user').text(data.username);
+            $('#event-user-photo').attr('src', data.profile_photo);
             
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
@@ -232,4 +234,8 @@ $(".events").on('click', '.event-card', function () {
 $("#go-back-event-details").on('click', () => {
     $("#events-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
+});
+
+$("#view-profile").on('click', () => {
+    window.location.href = 'profile.php?user_id=' + user_id;
 });
