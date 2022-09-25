@@ -27,11 +27,10 @@ const resize = () => {
     }
 }
 
-const eventCard = ({ name, date, location, image, profile_photo, event_id }) => `
+const eventCard = ({ name, date, location, image, event_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded event-card" id="${event_id}">
             <div class="d-flex p-3">
-                <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
                 <div class="text-white">
                     <h5 class="my-0">${name}</h5>
                     <small>${location}</small>
@@ -79,9 +78,15 @@ const populateUserEvents = () => {
         success: (res) => {
             console.log(res);
 
-            $('.events').html(res.data.map(eventCard).join(''));
+            if (res.data[0].name != null) 
+                $('.events').html(res.data.map(eventCard).join(''));
+
             $('#username').html(res.data[0].username);
-            $('#user-profile-photo').attr('src', res.data[0].profile_photo);
+
+            if (res.data[0].profile_photo != "")
+                $('#user-profile-photo').attr('src', res.data[0].profile_photo);
+            else 
+                $('#user-profile-photo').attr('src', 'media/profile_photos/default.png');
         },
         error: (res) => {
             console.log(res);
@@ -149,11 +154,14 @@ $("#follow-button").on('click', function() {
         $(this).children('span').text('Following');
     }
 
+    const profile_id = getUrlParameter('user_id');
+
     $.ajax({
         contentType: 'application/json',
         data: JSON.stringify({
             "type": "follow",
-            "user_id": user_id
+            "user_id": user_id,
+            "profile_id": profile_id
         }),
         url: 'api.php',
         type: 'POST',

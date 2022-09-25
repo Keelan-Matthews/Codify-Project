@@ -6,6 +6,22 @@ require 'templates/header.php';
 // if ($_SESSION["signed_in"] == false) {
 //     header("Location: ./index.php");
 // }
+
+$nameError = "";
+$locationError = "";
+$dateError = "";
+$categoryError = "";
+$descriptionError = "";
+$imageError = "";
+
+if (isset($_GET["error"])) {
+    if ($_GET["error"] == "emptyname")  $nameError = "Name cannot be blank";
+    if ($_GET["error"] == "emptylocation")  $locationError = "Location cannot be blank";
+    if ($_GET["error"] == "emptydate")  $dateError = "Please select a date";
+    if ($_GET["error"] == "emptycategory")  $categoryError = "Please select a category";
+    if ($_GET["error"] == "emptydescription")  $descriptionError = "Description cannot be blank";
+    if ($_GET["error"] == "emptyimage")  $imageError = "Please upload an image";
+}
 ?>
 <main class="overflow-hidden">
     <div class="row">
@@ -202,54 +218,7 @@ require 'templates/header.php';
             </div>
             
         </div>
-        <div class="col-12 col-md-2 lighter-gray shadow d-flex flex-column align-items-center mobile-nav p-0 vh-md-100">
-            <div class="w-100 text-end pe-4 py-4 mobile-hide">
-                <a href="backend/logout.php" class="nav-link text-white">
-                    <i class="fas fa-sign-out-alt"></i>
-                </a>
-            </div>
-            <nav class="d-flex flex-md-column w-100">
-                <a href="index.php" class="text-center mobile-hide">
-                    <img src="media/svg/logo.svg" alt="" class="w-50">
-                </a>
-                <div class="w-100">
-                    <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation ms-md-4 ps-md-5">
-                        <li class="fs-4 fw-light my-4 home-link active">
-                            <a href="dashboard.php" class="d-flex align-items-center text-white">
-                                <i class="fas fa-home pe-2"></i>
-                                <span class="navtext-hide">Home</span>
-                            </a>
-                        </li>
-                        <li class="fs-4 fw-light my-4 explore-link">
-                            <a href="dashboard.php" class="d-flex align-items-center text-white">
-                                <i class="fas fa-globe pe-2"></i>
-                                <span class="navtext-hide">Explore</span>
-                            </a>
-                        </li>
-                        <div class="mobile-show" data-bs-toggle="modal" data-bs-target="#createEvent">
-                            <li class="fs-4 fw-light my-4 rounded-circle bg-primary d-flex justify-content-center align-items-center px-2">
-                                <div class="text-white">
-                                    <i class="fas fa-plus"></i>
-                                </div>
-                            </li>
-                        </div>
-                        <li class="fs-4 fw-light my-4">
-                            <a href="messages.php" class="d-flex align-items-center text-white">
-                                <i class="fas fa-comment-dots pe-2"></i>
-                                <span class="navtext-hide">Messages</span>
-                            </a>
-                        </li>
-                        <li class="fs-4 fw-light my-4">
-                            <a href="profile.php" class="d-flex align-items-center text-white">
-                                <i class="fas fa-user pe-2"></i>
-                                <span class="navtext-hide">Profile</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-            <div class="btn btn-primary btn-lg mt-3 w-75 mobile-hide" data-bs-toggle="modal" data-bs-target="#createEvent">Create Event</div>
-        </div>
+        <?php require 'templates/nav.php' ?>
     </div>
 </main>
 <?php

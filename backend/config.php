@@ -93,12 +93,12 @@ class Database
         $instance = Database::getInstance();
         $conn = $instance->getConnection();
 
-        if (emailExists($conn,$email)) {
+        if (emailExists($conn, $email)) {
             header('HTTP/1.1 400 Bad Request');
             echo json_encode($this->error("Email already exists"));
             exit();
         }
-        
+
         $stmt = $this->connection->prepare("INSERT INTO dbusers (`username`, `email`, `password`, `profile_photo`) VALUES (?, ?, ?, ?)");
         $default_profile = "media/profile_photos/default.png";
         $stmt->bind_param("ssss", $username, $email, $password, $default_profile);
@@ -165,7 +165,7 @@ class Database
         }
         $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image_path, $user_id);
-        
+
         if ($stmt->execute()) {
             header('HTTP/1.1 200 OK');
             echo json_encode($this->success("Event added successfully"));
@@ -176,8 +176,17 @@ class Database
 
     function returnUserEvents($user_id)
     {
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
-        $result = $this->getConnection()->query($sql);
+        // See if user has events
+        $sql = "SELECT * FROM dbevents WHERE user_id = $user_id";
+        $result = $this->connection->query($sql);
+        if ($result->num_rows > 0) {
+            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
+            $result = $this->getConnection()->query($sql);
+        } else {
+            $sql = "SELECT username, profile_photo FROM dbusers WHERE user_id = '$user_id'";
+            $result = $this->getConnection()->query($sql);
+        }
+
         $events = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -298,6 +307,21 @@ class Database
             }
         } else {
             return false;
+        }
+    }
+
+    function follow($user_id, $following_id)
+    {
+        $sql = "INSERT INTO dbfollowing (user_id, following_id) VALUES ('$user_id', '$following_id')";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Followed user"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while following user"));
+            header("HTTP/1.1 404 Not Found");
         }
     }
 
