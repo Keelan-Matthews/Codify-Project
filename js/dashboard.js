@@ -216,6 +216,7 @@ $(".events").on('click', '.event-card', function () {
             $('.event-category').text(data.category);
             $('#event-user').text(data.username);
             $('#event-user-photo').attr('src', data.profile_photo);
+            $('#view-profile').attr('href', 'profile.php?user_id=' + data.user_id);
             
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
@@ -236,6 +237,6 @@ $("#go-back-event-details").on('click', () => {
     $("#event-details-container").toggleClass('d-none');
 });
 
-$("#view-profile").on('click', () => {
-    window.location.href = 'profile.php?user_id=' + user_id;
-});
+// $("#view-profile").on('click', () => {
+//     window.location.href = 'profile.php?user_id=' + user_id;
+// });

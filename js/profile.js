@@ -77,9 +77,11 @@ const populateUserEvents = () => {
         type: 'POST',
         success: (res) => {
             console.log(res);
+            $('#user-followers').html(res.data[0].followers);
 
-            if (res.data[0].name != null) 
+            if (res.data[0].name != null) {
                 $('.events').html(res.data.map(eventCard).join(''));
+            }
 
             $('#username').html(res.data[0].username);
 

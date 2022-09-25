@@ -81,8 +81,8 @@ if (isset($_GET["error"])) {
                                         <small class="text-primary">Organizer</small>
                                     </div>
                                     <div class="col-5 d-flex align-items-start justify-content-end">
-                                        <div class="btn btn-primary me-2" id="view-profile">
-                                            View
+                                        <div class="btn btn-primary me-2">
+                                            <a href="" id="view-profile"><span class="text-white">View</span></a>   
                                         </div>
                                         <div class="btn btn-primary">
                                             <i class="fas fa-comment-dots"></i>

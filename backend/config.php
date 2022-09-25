@@ -176,7 +176,6 @@ class Database
 
     function returnUserEvents($user_id)
     {
-        // See if user has events
         $sql = "SELECT * FROM dbevents WHERE user_id = $user_id";
         $result = $this->connection->query($sql);
         if ($result->num_rows > 0) {
@@ -187,10 +186,17 @@ class Database
             $result = $this->getConnection()->query($sql);
         }
 
+        // count number of followers a user has
+        $sql2 = "SELECT COUNT(*) AS followers FROM dbfollowing WHERE following_id = '$user_id'";
+        $result2 = $this->getConnection()->query($sql2);
+        $row2 = $result2->fetch_assoc();
+        $followers = $row2['followers'];
+
         $events = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $events[] = $row;
+                $events[0]['followers'] = $followers;
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");

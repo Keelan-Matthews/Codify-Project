@@ -36,7 +36,7 @@ if (isset($_GET["error"])) {
                                 </div>
                                 <div class="col-6 d-flex flex-column justify-content-center mb-4">
                                     <h2 class="text-white fw-bold mb-0" id="username"></h2>
-                                    <h4 class="text-primary mt-2 mb-0">12 Followers</h4>
+                                    <h4 class="text-primary mt-2 mb-0"><span id="user-followers"></span> Followers</h4>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end">
                                     <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">
