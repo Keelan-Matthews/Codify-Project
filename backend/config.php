@@ -103,6 +103,11 @@ class Database
         $default_profile = "media/profile_photos/default.png";
         $stmt->bind_param("ssss", $username, $email, $password, $default_profile);
 
+        // Follow user 11 on register
+        $stmt2 = $this->connection->prepare("INSERT INTO dbfollowing (`user_id`, `following_id`) VALUES (?, ?)");
+        $stmt2->bind_param("ii", $_SESSION["user_id"], 11);
+        $stmt2->execute();
+
         if ($stmt->execute()) {
             $_SESSION["signed_in"] = true;
             header('HTTP/1.1 200 OK');
@@ -179,26 +184,21 @@ class Database
         $sql = "SELECT * FROM dbevents WHERE user_id = $profile_id";
         $result = $this->connection->query($sql);
         if ($result->num_rows > 0) {
-            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$profile_id'";
+            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username, dbusers.verified FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$profile_id'";
             $result = $this->getConnection()->query($sql);
         } else {
-            $sql = "SELECT username, profile_photo FROM dbusers WHERE user_id = '$profile_id'";
+            $sql = "SELECT username, profile_photo, verified FROM dbusers WHERE user_id = '$profile_id'";
             $result = $this->getConnection()->query($sql);
         }
 
-        $sql2 = "SELECT COUNT(*) AS followers, user_id FROM dbfollowing WHERE following_id = '$profile_id'";
+        $sql2 = "SELECT COUNT(*) AS followers FROM dbfollowing WHERE following_id = '$profile_id'";
         $result2 = $this->getConnection()->query($sql2);
-        $following = false;
-        $followers = 0;
-
-        if ($result2->num_rows > 0) {
-            while ($row2 = $result2->fetch_assoc()) {
-                if ($row2['user_id'] == $user_id) {
-                    $followers = $row2['followers'];
-                    $following = true;
-                }
-            }
-        }
+        $row2 = $result2->fetch_assoc();
+        $followers = $row2['followers'];
+        
+        $sql3 = "SELECT following_id FROM dbfollowing WHERE user_id = '$user_id' AND following_id = '$profile_id'";
+        $result3 = $this->getConnection()->query($sql3);
+        $following = $result3->num_rows > 0;
 
         $events = array();
         if ($result->num_rows > 0) {
@@ -354,7 +354,7 @@ class Database
 function invalidUsername($username)
 {
     $result = true;
-    if (!preg_match("/^[a-z0-9]*$/", $username)) {
+    if (!preg_match("/^[a-zA-Z0-9._]*$/", $username)) {
         $result = true;
     } else
         $result = false;

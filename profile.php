@@ -35,7 +35,10 @@ if (isset($_GET["error"])) {
                                     <img src="" alt="" class="rounded-circle w-100" id="user-profile-photo">
                                 </div>
                                 <div class="col-6 d-flex flex-column justify-content-center mb-4">
-                                    <h2 class="text-white fw-bold mb-0" id="username"></h2>
+                                    <div class="d-flex align-items-center" id="username-verified">
+                                        <h2 class="text-white fw-bold mb-0 me-2" id="username"></h2>
+                                    </div>
+                                    
                                     <h4 class="text-primary mt-2 mb-0"><span id="user-followers"></span> Followers</h4>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end" id="profile-actions">
@@ -83,7 +86,7 @@ if (isset($_GET["error"])) {
                         </button>
                         <div class="row lighter-gray rounded p-4">
                             <div class="col-12 col-md-7">
-                                <img class="event-image" src="" alt="">
+                                <div id="event-image"></div>
                                 <div class="d-flex align-items-start justify-content-between mt-4">
                                     <div>
                                         <h3 class="text-white event-title"></h3>
@@ -113,25 +116,8 @@ if (isset($_GET["error"])) {
                                 <p class="text-white mt-5 event-description"></p>
                             </div>
                             <div class="col-12 col-md-5 ps-4">
-                                <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row">
-                                    <div class="col-2">
-                                        <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
-                                    </div>
-                                    <div class="col-5">
-                                        <p class="text-white fw-bold mb-0">Keelan Matthews</p>
-                                        <small class="text-primary">Organizer</small>
-                                    </div>
-                                    <div class="col-5 d-flex align-items-start justify-content-end">
-                                        <div class="btn btn-primary me-2">
-                                            Follow
-                                        </div>
-                                        <div class="btn btn-primary">
-                                            Message
-                                        </div>
-                                    </div>
-                                </div>
 
-                                <div class="mt-5 pt-5">
+                                <div class="mt-4">
                                     <h4 class="text-white">Reviews</h4>
                                     <div class="reviews">
                                         <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">

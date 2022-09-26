@@ -94,7 +94,7 @@ const isStrongPassword = password => {
 }
 
 const isUsername = word => {
-    return /^[a-z0-9]+$/.test(word);
+    return /^[a-zA-Z0-9._]+$/.test(word);
 }
 
 const setErrorFor = (input, message) => {

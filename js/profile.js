@@ -113,6 +113,10 @@ const populateUserEvents = () => {
                 $("#follow-icon").addClass('text-black');
                 $('#follow-button').children('span').text('Following');
             }
+
+            if (res.data[0].verified == 1) {
+                $('#username-verified').append('<img src="./media/svg/verified.svg" alt="Verified" width="20" height="20">');
+            }
         },
         error: (res) => {
             console.log(res);
@@ -138,14 +142,25 @@ $(".events").on('click', '.event-card', function () {
         success: (res) => {
             let data = res.data;
 
+            if ($('#event-image').children().length > 0) {
+                $('#event-image').children().remove();
+            }
+
             $('.event-title').text(data.name);
             $('.event-date').text(data.date);
             $('.event-location').text(data.location);
             $('.event-description').text(data.description);
-            $('.event-image').attr('src', data.image);
-            $('.event-image').attr('class', "rounded w-100");
-            $('.event-category').text(data.category);
 
+            $('<img/>')
+                .attr('src', data.image)
+                .attr('alt', data.name)
+                .attr('class', 'rounded w-100')
+                .appendTo('#event-image');
+            $('.event-category').text(data.category);
+            $('#event-user').text(data.username);
+            $('#event-user-photo').attr('src', data.profile_photo);
+            $('#view-profile').attr('href', 'profile.php?user_id=' + data.user_id);
+            
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
@@ -326,3 +341,36 @@ const setValidity = (input, message) => {
         return true;
     }
 }
+
+let numTags = 0;
+$('.form-check-input').on('change', function () {
+    
+    if (this.checked) {
+        numTags++;
+        if (numTags > 3) {
+            this.checked = false;
+            numTags--;
+            return;
+        }
+    }
+    else {
+        numTags--;
+    }
+
+    if (numTags === 3) {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', true);
+                $('.tags').addClass('disabled-tags');
+            }
+        })
+    }
+    else {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', false);
+                $('.tags').removeClass('disabled-tags');
+            }
+        })
+    }
+});

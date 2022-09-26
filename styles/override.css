@@ -213,3 +213,11 @@ select:-webkit-autofill:focus {
         bottom: 0px;
     }
 }
+
+.event-card:hover {
+    transform: scale(1.02);
+}
+
+.event-card {
+    transition: all 0.2s ease;
+}
