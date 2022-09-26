@@ -22,10 +22,6 @@ main {
     background-color: #2C2C2C;
 }
 
-.lighter-gray-2 {
-    background-color: #383838;
-}
-
 a {
     color: var(--primary);
     text-decoration: none;
@@ -108,38 +104,43 @@ a>div:hover p {
     color: rgb(195, 70, 63);
 }
 
-.form-control, .form-select {
+.form-control,
+.form-select {
     border-color: #3b3b3b;
     background-color: #3b3b3b;
     color: white;
 }
 
-.form-control:focus, .form-select:focus {
+.form-control:focus,
+.form-select:focus {
     border: 0;
     background-color: #3b3b3b;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px var(--primary);
     color: white;
 }
 
-.form-control:not(:placeholder-shown) + label, .form-select:not(:placeholder-shown) + label {
-     color: var(--primary);
-     font-weight: bold;
-  }
+.form-control:not(:placeholder-shown)+label,
+.form-select:not(:placeholder-shown)+label {
+    color: var(--primary);
+    font-weight: bold;
+}
 
 label {
     color: #fff;
 }
 
-.events::-webkit-scrollbar, .event-details::-webkit-scrollbar {
+.events::-webkit-scrollbar,
+.event-details::-webkit-scrollbar {
     width: 0.01em;
 }
 
-.events::-webkit-scrollbar-thumb, .event-details::-webkit-scrollbar-thumb {
+.events::-webkit-scrollbar-thumb,
+.event-details::-webkit-scrollbar-thumb {
     background-color: var(--primary);
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
+input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
@@ -147,11 +148,11 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border: 1px solid var(--primary);
-  -webkit-text-fill-color: white;
-  -webkit-box-shadow: 0 0 0px 1000px #3b3b3b inset;
-  box-shadow: 0 0 0px 1000px #3b3b3b inset;
-  transition: background-color 5000s ease-in-out 0s;
+    border: 1px solid var(--primary);
+    -webkit-text-fill-color: white;
+    -webkit-box-shadow: 0 0 0px 1000px #3b3b3b inset;
+    box-shadow: 0 0 0px 1000px #3b3b3b inset;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-check-input {
@@ -220,4 +221,31 @@ select:-webkit-autofill:focus {
 
 .event-card {
     transition: all 0.2s ease;
+}
+
+/* Tooltip text */
+.tooltiptext {
+    opacity: 0;
+    width: 200px;
+    background-color: var(--background);
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    left: -60px;
+    top: -50px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1000;
+    transition: 0.2s ease;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.add-tip:hover .tooltiptext {
+    opacity: 1;
+}
+
+.lighter-gray-2 {
+    background-color: #383838 !important;
 }

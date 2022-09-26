@@ -157,9 +157,7 @@ $(".events").on('click', '.event-card', function () {
                 .attr('class', 'rounded w-100')
                 .appendTo('#event-image');
             $('.event-category').text(data.category);
-            $('#event-user').text(data.username);
-            $('#event-user-photo').attr('src', data.profile_photo);
-            $('#view-profile').attr('href', 'profile.php?user_id=' + data.user_id);
+            $('#event-details-user').addClass('d-none');
             
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
@@ -374,3 +372,18 @@ $('.form-check-input').on('change', function () {
         })
     }
 });
+
+$('#events-toggle').on('click', () => {
+    $('#events-container').removeClass('d-none');
+    $('#events-toggle').addClass('lighter-gray-2');
+
+    $('#lists-container').addClass('d-none');
+    $('#lists-toggle').removeClass('lighter-gray-2');
+})
+
+$('#lists-toggle').on('click', () => {
+    $('#lists-container').removeClass('d-none');
+    $('#lists-toggle').addClass('lighter-gray-2');
+    $('#events-container').addClass('d-none');
+    $('#events-toggle').removeClass('lighter-gray-2');
+})

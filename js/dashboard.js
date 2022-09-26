@@ -237,16 +237,27 @@ $(".events").on('click', '.event-card', function () {
         success: (res) => {
             let data = res.data;
 
+            if ($('#event-image').children().length > 0) {
+                $('#event-image').children().remove();
+            }
+
             $('.event-title').text(data.name);
             $('.event-date').text(data.date);
             $('.event-location').text(data.location);
             $('.event-description').text(data.description);
-            $('.event-image').attr('src', data.image);
-            $('.event-image').attr('class', "rounded w-100");
+            $('<img/>')
+                .attr('src', data.image)
+                .attr('alt', data.name)
+                .attr('class', 'rounded w-100')
+                .appendTo('#event-image');
             $('.event-category').text(data.category);
             $('#event-user').text(data.username);
             $('#event-user-photo').attr('src', data.profile_photo);
             $('#view-profile').attr('href', 'profile.php?user_id=' + data.user_id);
+
+            if ($('#event-details-user').hasClass('d-none')) {
+                $('#event-details-user').removeClass('d-none');
+            }
             
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
