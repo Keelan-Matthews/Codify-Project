@@ -177,6 +177,14 @@ select:-webkit-autofill:focus {
     transition: all 0.2s ease;
 }
 
+.disabled-tags {
+    border: 3px solid #3b3b3b;
+    border-radius: 5px;
+    padding: 8px;
+    transition: all 0.2s ease;
+    color: #3b3b3b;
+}
+
 .form-check-input:checked~.tags {
     background-color: var(--secondary);
 }

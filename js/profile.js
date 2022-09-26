@@ -176,3 +176,122 @@ $("#follow-button").on('click', function() {
         processData: false
     })
 });
+
+$('form').submit((e) => {
+    e.preventDefault();
+    if (!checkInputs()) {
+        console.log('invalid inputs');
+        $('#createEvent').modal('show');
+    }
+    else {
+        let form = $('form')[0];
+        let formData = new FormData(form);
+        formData.append('type', 'add_event');
+        formData.append('user_id', user_id);
+
+        for (var pair of formData.entries()) {
+            console.log(pair[0] + ', ' + pair[1]);
+        }
+
+        $.ajax({
+            url: 'api.php',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: (res) => {
+                console.log(res);
+                populateHomeEvents();
+                $('#createEvent').modal('hide');
+            },
+            error: () => {
+                console.log('An error occurred during the api call');
+                $('#createEvent').modal('show');
+            }
+
+        })
+    }
+});
+
+const checkInputs = () => {
+    const eventName = $('#eventName').val();
+    const eventDate = $('#eventDate').val();
+    const eventLocation = $('#eventLocation').val();
+    const eventImg = $('#eventImage').get(0).files.length;
+    const eventCategory = $('#eventCategory').val();
+    const eventDescription = $('#eventDescription').val();
+
+    let valid = true;
+
+    let nameErrorMessage = '';
+
+    if (eventName === '') {
+        nameErrorMessage = 'Event name is required';
+    } else if (eventName.length > 30)
+        nameErrorMessage = 'Event name must be less than 30 characters';
+
+    if (!setValidity($('#eventName'), nameErrorMessage)) valid = false;
+
+    let dateErrorMessage = '';
+    if (eventDate === undefined) {
+        dateErrorMessage = 'Event date is required';
+    }
+
+    if (!setValidity($('#eventDate'), dateErrorMessage)) valid = false;
+
+    let locationErrorMessage = '';
+    if (eventLocation === '') {
+        locationErrorMessage = 'Event location is required';
+    }
+    else if (eventLocation.length > 20) {
+        locationErrorMessage = 'Event location must be less than 20 characters';
+    }
+
+    if (!setValidity($('#eventLocation'), locationErrorMessage)) valid = false;
+
+    let imgErrorMessage = '';
+    if (eventImg === 0) {
+        imgErrorMessage = 'Event image is required';
+    }
+
+    if (!setValidity($('#eventImage'), imgErrorMessage)) valid = false;
+
+    let categoryErrorMessage = '';
+    if (eventCategory === 'Select Category') {
+        categoryErrorMessage = 'Event category is required';
+    }
+
+    if (!setValidity($('#eventCategory'), categoryErrorMessage)) valid = false;
+
+    let descriptionErrorMessage = '';
+    if (eventDescription === '') {
+        descriptionErrorMessage = 'Event description is required';
+    }
+
+    if (!setValidity($('#eventDescription'), descriptionErrorMessage)) valid = false;
+
+    return valid;
+}
+
+const setErrorFor = (input, message) => {
+    const small = input.siblings('small');
+
+    small.text(message);
+    input.addClass('is-invalid');
+}
+
+const setSuccessFor = input => {
+    input.addClass('is-valid');
+    input.removeClass('is-invalid');
+}
+
+const setValidity = (input, message) => {
+    if (message) {
+        setErrorFor(input, message);
+        return false;
+    }
+    else {
+        setSuccessFor(input);
+        return true;
+    }
+}

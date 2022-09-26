@@ -1,4 +1,4 @@
-<div class="col-12 col-md-2 lighter-gray shadow d-flex flex-column align-items-center mobile-nav p-0 vh-md-100">
+<div class="col-12 col-md-2 lighter-gray shadow d-flex flex-column align-items-center mobile-nav p-0 vh-md-100">`
     <div class="w-100 text-end pe-4 py-4 mobile-hide">
         <a href="backend/logout.php" class="nav-link text-white">
             <i class="fas fa-sign-out-alt"></i>
@@ -98,45 +98,45 @@
                     <div class="form-group">
                         <div class="d-flex flex-wrap justify-content-start">
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="Competitive">
+                                <input class="form-check-input" type="checkbox" id="tag1" value="Competitive">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox1">Competitive</label>
+                                    <label class="form-check-label" for="tag1">Competitive</label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="Casual">
+                                <input class="form-check-input" type="checkbox" id="tag2" value="Casual">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox2">Casual</label>
+                                    <label class="form-check-label" for="tag2">Casual</label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="Teamwork">
+                                <input class="form-check-input" type="checkbox" id="tag3" value="Teamwork">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox3">Teamwork</label>
+                                    <label class="form-check-label" for="tag3">Teamwork</label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox4" value="Solo">
+                                <input class="form-check-input" type="checkbox" id="tag4" value="Solo">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox4">Solo</label>
+                                    <label class="form-check-label" for="tag4">Solo</label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox5" value="Online">
+                                <input class="form-check-input" type="checkbox" id="tag5" value="Online">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox5">Online</label>
+                                    <label class="form-check-label" for="tag5">Online</label>
                                 </div>
                             </div>
                             <div class="form-check form-check-inline me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox6" value="Speedrun">
+                                <input class="form-check-input" type="checkbox" id="tag6" value="Speedrun">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox6">Speedrun</label>
+                                    <label class="form-check-label" for="tag6">Speedrun</label>
                                 </div>
                             </div>
                             <div class="form-check form-check- me-2 mb-2">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox7" value="Educational">
+                                <input class="form-check-input" type="checkbox" id="tag7" value="Educational">
                                 <div class="tags">
-                                    <label class="form-check-label" for="inlineCheckbox7">Educational</label>
+                                    <label class="form-check-label" for="tag7">Educational</label>
                                 </div>
                             </div>
                         </div>

@@ -2,6 +2,11 @@
 $pageTitle = "Welcome";
 $stylesheet = "splash.css";
 require 'templates/header.php';
+
+if ($_SESSION["signed_in"] == true) {
+    header("Location: ./dashboard.php");
+}
+
 ?>
 <main>
     <div class="row">

@@ -116,7 +116,7 @@ class Database
         }
     }
 
-    public function addEvent($name, $description, $date, $location, $category, $image, $user_id)
+    public function addEvent($name, $description, $date, $location, $category, $image, $user_id, $tag1, $tag2, $tag3)
     {
         $filename = $image['name'];
 
@@ -163,8 +163,8 @@ class Database
             header('Location: dashboard.php?error=incorrectimage');
             exit();
         }
-        $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`) VALUES (?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssssi", $name, $description, $date, $location, $category, $image_path, $user_id);
+        $stmt = $this->connection->prepare("INSERT INTO dbevents (`name`, `description`, `date`, `location`, `category`, `image`, `user_id`, `tag1`, `tag2`, `tag3`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("ssssssisss", $name, $description, $date, $location, $category, $image_path, $user_id, $tag1, $tag2, $tag3);
 
         if ($stmt->execute()) {
             header('HTTP/1.1 200 OK');

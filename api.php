@@ -47,7 +47,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
             $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
-            $instance->addEvent($name, $description, $date, $location, $category, $image, $user_id);
+            $tag1 = isset($_POST["tag1"]) ? test_input($_POST["tag1"]) : null;
+            $tag2 = isset($_POST["tag2"]) ? test_input($_POST["tag2"]) : null;
+            $tag3 = isset($_POST["tag3"]) ? test_input($_POST["tag3"]) : null;
+            $instance->addEvent($name, $description, $date, $location, $category, $image, $user_id, $tag1, $tag2, $tag3);
             break;
 
         case "home":

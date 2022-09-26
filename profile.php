@@ -3,9 +3,9 @@ $pageTitle = "Profile";
 $stylesheet = "profile.css";
 require 'templates/header.php';
 
-// if ($_SESSION["signed_in"] == false) {
-//     header("Location: ./index.php");
-// }
+if ($_SESSION["signed_in"] == false) {
+    header("Location: ./index.php");
+}
 
 $nameError = "";
 $locationError = "";

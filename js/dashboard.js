@@ -83,6 +83,11 @@ $('form').submit((e) => {
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
 
+        let tagCounter = 1;
+        $('input[type=checkbox]:checked').each(function () {
+            formData.append(`tag${tagCounter++}`, $(this).val());
+        });
+
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);
         }
@@ -240,3 +245,36 @@ $("#go-back-event-details").on('click', () => {
 // $("#view-profile").on('click', () => {
 //     window.location.href = 'profile.php?user_id=' + user_id;
 // });
+
+let numTags = 0;
+$('.form-check-input').on('change', function () {
+    
+    if (this.checked) {
+        numTags++;
+        if (numTags > 3) {
+            this.checked = false;
+            numTags--;
+            return;
+        }
+    }
+    else {
+        numTags--;
+    }
+
+    if (numTags === 3) {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', true);
+                $('.tags').addClass('disabled-tags');
+            }
+        })
+    }
+    else {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', false);
+                $('.tags').removeClass('disabled-tags');
+            }
+        })
+    }
+});
