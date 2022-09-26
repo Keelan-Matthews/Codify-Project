@@ -174,29 +174,38 @@ class Database
         }
     }
 
-    function returnUserEvents($user_id)
+    function returnUserEvents($user_id, $profile_id)
     {
-        $sql = "SELECT * FROM dbevents WHERE user_id = $user_id";
+        $sql = "SELECT * FROM dbevents WHERE user_id = $profile_id";
         $result = $this->connection->query($sql);
         if ($result->num_rows > 0) {
-            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$user_id'";
+            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$profile_id'";
             $result = $this->getConnection()->query($sql);
         } else {
-            $sql = "SELECT username, profile_photo FROM dbusers WHERE user_id = '$user_id'";
+            $sql = "SELECT username, profile_photo FROM dbusers WHERE user_id = '$profile_id'";
             $result = $this->getConnection()->query($sql);
         }
 
-        // count number of followers a user has
-        $sql2 = "SELECT COUNT(*) AS followers FROM dbfollowing WHERE following_id = '$user_id'";
+        $sql2 = "SELECT COUNT(*) AS followers, user_id FROM dbfollowing WHERE following_id = '$profile_id'";
         $result2 = $this->getConnection()->query($sql2);
-        $row2 = $result2->fetch_assoc();
-        $followers = $row2['followers'];
+        $following = false;
+        $followers = 0;
+
+        if ($result2->num_rows > 0) {
+            while ($row2 = $result2->fetch_assoc()) {
+                if ($row2['user_id'] == $user_id) {
+                    $followers = $row2['followers'];
+                    $following = true;
+                }
+            }
+        }
 
         $events = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $events[] = $row;
                 $events[0]['followers'] = $followers;
+                $events[0]['following'] = $following;
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");

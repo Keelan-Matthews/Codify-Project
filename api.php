@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "user-events":
-            $instance->returnUserEvents($data->user_id);
+            $instance->returnUserEvents($data->user_id, $data->profile_id);
             break;
 
         case "event-details":

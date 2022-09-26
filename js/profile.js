@@ -1,3 +1,5 @@
+let followingUser = false;
+
 $(document).ready(() => {
     populateUserEvents();
     resize();
@@ -71,7 +73,8 @@ const populateUserEvents = () => {
         contentType: 'application/json',
         data: JSON.stringify({
             "type": "user-events",
-            "user_id": profile_id
+            "user_id": user_id,
+            "profile_id": profile_id
         }),
         url: 'api.php',
         type: 'POST',
@@ -87,8 +90,29 @@ const populateUserEvents = () => {
 
             if (res.data[0].profile_photo != "")
                 $('#user-profile-photo').attr('src', res.data[0].profile_photo);
-            else 
+            else
                 $('#user-profile-photo').attr('src', 'media/profile_photos/default.png');
+
+            if (user_id == profile_id) {
+                $('#profile-actions').addClass('d-none');
+                $('#edit-actions').removeClass('d-none');
+            }
+            else {
+                $('#edit-actions').addClass('d-none');
+                $('#profile-actions').removeClass('d-none');
+            }
+
+            followingUser = res.data[0].following;
+
+            if (followingUser) {
+                $('#follow-button').removeClass('btn-primary');
+                $('#follow-button').addClass('bg-white');
+                $('#follow-button').addClass('text-black');
+                $("#follow-icon").removeClass('fa-user-plus');
+                $("#follow-icon").addClass('fa-check');
+                $("#follow-icon").addClass('text-black');
+                $('#follow-button').children('span').text('Following');
+            }
         },
         error: (res) => {
             console.log(res);
@@ -121,7 +145,7 @@ $(".events").on('click', '.event-card', function () {
             $('.event-image').attr('src', data.image);
             $('.event-image').attr('class', "rounded w-100");
             $('.event-category').text(data.category);
-            
+
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
@@ -141,7 +165,9 @@ $("#go-back-event-details").on('click', () => {
     $("#event-details-container").toggleClass('d-none');
 });
 
-$("#follow-button").on('click', function() {
+// Remember to update followingUser and update friendship !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+$("#follow-button").on('click', function () {
     $(this).toggleClass('btn-primary');
     $(this).toggleClass('bg-white');
     $(this).toggleClass('text-black');
@@ -188,6 +214,11 @@ $('form').submit((e) => {
         let formData = new FormData(form);
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
+
+        let tagCounter = 1;
+        $('input[type=checkbox]:checked').each(function () {
+            formData.append(`tag${tagCounter++}`, $(this).val());
+        });
 
         for (var pair of formData.entries()) {
             console.log(pair[0] + ', ' + pair[1]);

@@ -31,8 +31,8 @@
                 </div>
                 <li class="fs-4 fw-light my-4">
                     <a href="messages.php" class="d-flex align-items-center text-white">
-                        <i class="fas fa-comment-dots pe-2"></i>
-                        <span class="navtext-hide">Messages</span>
+                        <i class="fas fa-inbox pe-2"></i>
+                        <span class="navtext-hide">Inbox</span>
                     </a>
                 </li>
                 <li class="fs-4 fw-light my-4">
