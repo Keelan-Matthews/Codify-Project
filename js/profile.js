@@ -2,6 +2,7 @@ let followingUser = false;
 
 $(document).ready(() => {
     populateUserEvents();
+    populateUserLists();
     resize();
 });
 
@@ -40,6 +41,29 @@ const eventCard = ({ name, date, location, image, event_id }) => `
             </div>
             <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
+        </div>
+    </div>
+`;
+
+const listCard = ({ name, count, image, list_id }) => `
+    <div class="p-3 col-12 col-md-6 col-lg-4">
+        <div class="card lighter-gray shadow rounded list-card" id="${list_id}">
+            <div class="d-flex p-3">
+                <div class="text-white">
+                    <h5 class="my-0">${name}</h5>
+                    <small>${count} events</small>
+                </div>
+            </div>
+            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
+        </div>
+    </div>
+`;
+
+const addList = () => `
+    <div class="p-3 col-12 col-md-6 col-lg-4">
+        <div class="card lighter-gray shadow rounded add-list d-flex flex-column align-items-center justify-content-center text-white">
+            <i class="fas fa-plus me-2 fs-1 fw-bold"></i>
+            <span class="fw-bold">New list</span>
         </div>
     </div>
 `;
@@ -123,6 +147,10 @@ const populateUserEvents = () => {
         },
         processData: false,
     })
+}
+
+const populateUserLists = () => {
+    $('#lists-container').append(addList);
 }
 
 $(".events").on('click', '.event-card', function () {
