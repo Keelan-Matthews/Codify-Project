@@ -42,9 +42,34 @@ const populateHomeEvents = () => {
     })
 }
 
+const populateExploreEvents = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "explore"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            $('.events').html(res.data.map(eventCard).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
 $(document).ready(() => {
     populateHomeEvents();
     resize();
+});
+
+$('#explore-nav').on('click', () => {
+    console.log('explore');
+    populateExploreEvents();
 });
 
 $(window).resize(() => {

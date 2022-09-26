@@ -184,7 +184,7 @@ class Database
         $sql = "SELECT * FROM dbevents WHERE user_id = $profile_id";
         $result = $this->connection->query($sql);
         if ($result->num_rows > 0) {
-            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username, dbusers.verified FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$profile_id'";
+            $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.username, dbusers.verified FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.user_id = '$profile_id' ORDER BY dbevents.date DESC";
             $result = $this->getConnection()->query($sql);
         } else {
             $sql = "SELECT username, profile_photo, verified FROM dbusers WHERE user_id = '$profile_id'";
@@ -219,7 +219,7 @@ class Database
 
     function returnHome($user_id)
     {
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id'";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id' ORDER BY dbevents.date DESC";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
@@ -322,6 +322,25 @@ class Database
             }
         } else {
             return false;
+        }
+    }
+
+    function returnExplore()
+    {
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id ORDER BY dbevents.date DESC";
+        $result = $this->getConnection()->query($sql);
+        $events = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $events[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($events));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No events found"));
+            header("HTTP/1.1 404 Not Found");
         }
     }
 

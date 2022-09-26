@@ -195,7 +195,7 @@ select:-webkit-autofill:focus {
 
 @media screen and (min-width: 768px) {
     .navigation {
-        height: 60vh;
+        height: 40vh;
     }
 
     .vh-md-100 {

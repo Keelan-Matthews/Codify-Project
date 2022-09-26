@@ -69,6 +69,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->follow($data->user_id, $data->event_id);
             break;
 
+        case "explore":
+            $instance->returnExplore();
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }
