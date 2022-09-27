@@ -45,6 +45,21 @@ const eventCard = ({ name, date, location, image, event_id }) => `
     </div>
 `;
 
+const eventCardLight = ({ name, date, location, image, event_id }) => `
+    <div class="p-3 col-12 col-md-6 col-lg-4">
+        <div class="card lighter-gray-2 shadow rounded event-card" id="${event_id}">
+            <div class="d-flex p-3">
+                <div class="text-white">
+                    <h5 class="my-0">${name}</h5>
+                    <small>${location}</small>
+                </div>
+            </div>
+            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
+            <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
+        </div>
+    </div>
+`;
+
 const listCard = ({ name, count, images, list_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded list-card" id="${list_id}">
@@ -70,11 +85,20 @@ const listCard = ({ name, count, images, list_id }) => `
 const listGallery = (images) => {
     let gallery = '';
 
-    for (let i = 0; i < images.length; i++) {
-        gallery += `<img src="${images[i]}" alt="event" class="w-100 col-6 rounded">`;
+    for (let i = 0; i < 4; i++) {
+        if (images[i]) {
+            gallery += `
+                <img src="${images[i]}" alt="event" class="col-6 rounded-3 mb-3" style="height: 101px">
+            `;
+        }
+        else {
+            gallery += `
+                <div class="col-6 mb-3" style="height: 101px"></div>
+            `;
+        }
     }
 
-    return `<div class="row">${gallery}</div>`;
+    return `<div class="row p-3">${gallery}</div>`;
 }
 
 const listItem = ({list_id, name}) => `
@@ -130,6 +154,13 @@ const populateUserEvents = () => {
 
             if (res.data[0].name != null) {
                 $('.events').html(res.data.map(eventCard).join(''));
+            }
+            else {
+                $('.events').html(`
+                    <div class="mt-5 col-12 d-flex justify-content-center align-items-center">
+                        <span class="fw-bold text-white fs-1">No events</span>
+                    </div>
+                `);
             }
 
             $('#username').html(res.data[0].username);
@@ -188,7 +219,17 @@ const populateUserLists = () => {
             if (!res.data.message) {
                 $('.lists').html(res.data.map(listCard).join(''));
             }
-            $('#lists-container').append(addList);
+
+            if (user_id == profile_id) 
+                $('#lists-container').append(addList);
+
+            if (res.data.message && user_id != profile_id) {
+                $('.lists').html(`
+                    <div class="mt-5 col-12 d-flex justify-content-center align-items-center">
+                        <span class="fw-bold text-white fs-1">No lists</span>
+                    </div>
+                `);
+            }
         },
         error: (res) => {
             console.log(res);
@@ -256,6 +297,12 @@ $(".events").on('click', '.event-card', function () {
 $("#go-back-event-details").on('click', () => {
     $("#profile-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
+});
+
+$("#go-back-list-details").on('click', () => {
+    $("#profile-container").toggleClass('d-none');
+    $("#list-details-container").toggleClass('d-none');
+    $("#lists-container").toggleClass('d-none');
 });
 
 // Remember to update followingUser and update friendship !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -522,5 +569,33 @@ $('#list-options').on('click', '.list-group-item', function() {
         error: () => {
             console.log('An error occurred during the api call');
         }
+    })
+});
+
+$('.lists').on('click', '.list-card', function() {
+    let list_id = $(this).attr('id');
+    $('#list-details-container').toggleClass('d-none');
+    $('#lists-container').toggleClass('d-none');
+    $('#profile-container').toggleClass('d-none');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "list_events",
+            "list_id": list_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            $('.list-events').html(res.data.map(eventCardLight).join(''));
+            $('.list-title').text(res.data[0].name);
+            $('.list-description').text(res.data[0].description);
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
     })
 });

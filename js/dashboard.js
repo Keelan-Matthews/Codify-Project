@@ -324,3 +324,26 @@ $('.form-check-input').on('change', function () {
         })
     }
 });
+
+$('#list-options').on('click', '.list-group-item', function() {
+    let event_id = $('.event-details').attr('id');
+    let list_id = $(this).attr('id');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "add_to_list",
+            "event_id": event_id,
+            "list_id": list_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        processData: false,
+        success: (res) => {
+            console.log(res);
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
+        }
+    })
+});

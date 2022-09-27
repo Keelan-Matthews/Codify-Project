@@ -37,6 +37,10 @@ if (isset($_GET["error"])) {
                             <input type="text" class="form-control" id="listName" placeholder="Name" name="name">
                             <label for="listName">List Name</label>
                         </div>
+                        <div class="form-floating form-group">
+                            <textarea class="form-control" placeholder="Description" id="listDescription" name="description"></textarea>
+                            <label for="listDescription">Description</label>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer border-0">
@@ -107,6 +111,10 @@ if (isset($_GET["error"])) {
                 <div class="d-none" id="event-details-container">
                     <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold">Keelan Matthews</span> / <span class="text-muted event-title"></span></h4>
                     <?php require 'templates/event-details.php'; ?>
+                </div>
+                <div class="d-none" id="list-details-container">
+                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold">Keelan Matthews</span> / <span class="text-muted list-title"></span></h4>
+                    <?php require 'templates/list-details.php'; ?>
                 </div>
             </div>
 
