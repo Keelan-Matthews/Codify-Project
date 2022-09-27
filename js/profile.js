@@ -283,8 +283,11 @@ $(".events").on('click', '.event-card', function () {
             $('.event-tags').html(tags.map(eventTag).join(''));
 
             let lists = res.data[1];
-            if (lists != null) {
+            if (lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
+            }
+            else {
+                $('#list-options').html('<p class="text-center mb-0">No lists available</p>');
             }
         },
         error: (res) => {

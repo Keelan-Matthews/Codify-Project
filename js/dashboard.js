@@ -267,6 +267,7 @@ $(".events").on('click', '.event-card', function () {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
+            console.log(res);
             let data = res.data[0];
 
             if ($('#event-image').children().length > 0) {
@@ -297,8 +298,11 @@ $(".events").on('click', '.event-card', function () {
             if (data.tag3 !== null) tags.push(data.tag3);
 
             let lists = res.data[1];
-            if (lists != null) {
+            if (lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
+            }
+            else {
+                $('#list-options').html('<p class="text-center mb-0">No lists available</p>');
             }
 
             $('.event-tags').html(tags.map(eventTag).join(''));
