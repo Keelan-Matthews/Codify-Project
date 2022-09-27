@@ -20,6 +20,10 @@ const eventTag = (tag_name) => `
     </div>
 `;
 
+const listItem = ({list_id, name}) => `
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${name}</li>
+`;
+
 const populateHomeEvents = () => {
 
     $.ajax({
@@ -230,12 +234,13 @@ $(".events").on('click', '.event-card', function () {
         contentType: 'application/json',
         data: JSON.stringify({
             "type": "event-details",
-            "event_id": event_id
+            "event_id": event_id,
+            "user_id": user_id
         }),
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            let data = res.data;
+            let data = res.data[0];
 
             if ($('#event-image').children().length > 0) {
                 $('#event-image').children().remove();
@@ -263,6 +268,11 @@ $(".events").on('click', '.event-card', function () {
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
             if (data.tag3 !== null) tags.push(data.tag3);
+
+            let lists = res.data[1];
+            if (lists != null) {
+                $('#list-options').html(lists.map(listItem).join(''));
+            }
 
             $('.event-tags').html(tags.map(eventTag).join(''));
         },

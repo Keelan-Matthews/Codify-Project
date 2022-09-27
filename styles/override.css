@@ -241,6 +241,11 @@ select:-webkit-autofill:focus {
     transition: 0.2s ease;
 }
 
+#list-options {
+    background-color: var(--background);
+    color: white;
+}
+
 /* Show the tooltip text when you mouse over the tooltip container */
 .add-tip:hover .tooltiptext {
     opacity: 1;

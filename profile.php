@@ -24,6 +24,31 @@ if (isset($_GET["error"])) {
 }
 ?>
 <main class="overflow-hidden">
+    <div class="modal fade" id="createList" tabindex="-1" aria-labelledby="createListLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white border-0">
+                    <h5 class="modal-title" id="createListLabel">Create List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="list-form" enctype="multipart/form-data">
+                        <div class="form-floating form-group">
+                            <input type="text" class="form-control" id="listName" placeholder="Name" name="name">
+                            <label for="listName">List Name</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="list-form" name="submit" class="btn btn-primary">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
     <div class="row">
         <div class="col-12 col-md-10">
             <div class="container mt-5 pb-5 pb-md-0 p-0">
@@ -38,7 +63,7 @@ if (isset($_GET["error"])) {
                                     <div class="d-flex align-items-center" id="username-verified">
                                         <h2 class="text-white fw-bold mb-0 me-2" id="username"></h2>
                                     </div>
-                                    
+
                                     <h4 class="text-primary mt-2 mb-0"><span id="user-followers"></span> Followers</h4>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end" id="profile-actions">

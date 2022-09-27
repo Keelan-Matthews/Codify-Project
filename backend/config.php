@@ -217,6 +217,26 @@ class Database
         }
     }
 
+    function returnUserLists($profile_id)
+    {
+        $sql = "SELECT * FROM dblists WHERE user_id = $profile_id";
+        $result = $this->connection->query($sql);
+
+        $lists = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $lists[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($lists));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No lists found"));
+            header("HTTP/1.1 200 OK");
+        }
+    }
+
     function returnHome($user_id)
     {
         $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id' ORDER BY dbevents.date DESC";
@@ -236,11 +256,24 @@ class Database
         }
     }
 
-    function returnEventDetails($event_id)
+    function returnEventDetails($event_id, $user_id)
     {
         // Return all event details and user details of event
         $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.event_id = '$event_id'";
         $result = $this->getConnection()->query($sql);
+
+        $sql2 = "SELECT * FROM dbLists WHERE user_id = '$user_id'";
+        $result2 = $this->getConnection()->query($sql2);
+
+        if ($result2->num_rows > 0) {
+            while ($row = $result2->fetch_assoc()) {
+                $lists = $row;
+            }
+        }
+        else {
+            $lists = null;
+        }
+        
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -248,7 +281,7 @@ class Database
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");
-            echo json_encode($this->success($event));
+            echo json_encode($this->success(array($event, array($lists))));
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("No events found"));
@@ -355,6 +388,40 @@ class Database
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("An error occured while following user"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function addList($user_id, $name) 
+    {
+        $sql = "INSERT INTO dblists (name, user_id) VALUES ('$name', '$user_id')";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Added list"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while adding list"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function addToList($event_id, $list_id) 
+    {
+        $sql = "INSERT INTO dblistitems (list_id, event_id) VALUES ('$list_id', '$event_id')";
+        $result = $this->getConnection()->query($sql);
+
+        $sql2 = "UPDATE dbLists SET count = count + 1 WHERE list_id = '$list_id'";
+        $result2 = $this->getConnection()->query($sql2);
+        
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Added event to list"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while adding event to list"));
             header("HTTP/1.1 404 Not Found");
         }
     }

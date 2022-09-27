@@ -45,7 +45,7 @@ const eventCard = ({ name, date, location, image, event_id }) => `
     </div>
 `;
 
-const listCard = ({ name, count, image, list_id }) => `
+const listCard = ({ name, count, images, list_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded list-card" id="${list_id}">
             <div class="d-flex p-3">
@@ -54,10 +54,32 @@ const listCard = ({ name, count, image, list_id }) => `
                     <small>${count} events</small>
                 </div>
             </div>
-            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
+            <div class="lighter-gray-2">
+            ${
+                images ?
+                    listGallery(images) :
+                    `<div class="d-flex justify-content-center align-items-center" style="height: 270px;">
+                        <h5 class="text-white fw-bold">No events</h5>
+                    </div>`
+            }
+            </div>
         </div>
     </div>
 `;
+
+const listGallery = (images) => {
+    let gallery = '';
+
+    for (let i = 0; i < images.length; i++) {
+        gallery += `<img src="${images[i]}" alt="event" class="w-100 col-6 rounded">`;
+    }
+
+    return `<div class="row">${gallery}</div>`;
+}
+
+const listItem = ({list_id, name}) => `
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${name}</li>
+`
 
 const addList = () => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
@@ -150,7 +172,29 @@ const populateUserEvents = () => {
 }
 
 const populateUserLists = () => {
-    $('#lists-container').append(addList);
+    const profile_id = getUrlParameter('user_id');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "user_lists",
+            "profile_id": profile_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            if (!res.data.message) {
+                $('.lists').html(res.data.map(listCard).join(''));
+            }
+            $('#lists-container').append(addList);
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
 }
 
 $(".events").on('click', '.event-card', function () {
@@ -163,12 +207,14 @@ $(".events").on('click', '.event-card', function () {
         contentType: 'application/json',
         data: JSON.stringify({
             "type": "event-details",
-            "event_id": event_id
+            "event_id": event_id,
+            "user_id": user_id
         }),
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            let data = res.data;
+            console.log(res);
+            let data = res.data[0];
 
             if ($('#event-image').children().length > 0) {
                 $('#event-image').children().remove();
@@ -178,6 +224,7 @@ $(".events").on('click', '.event-card', function () {
             $('.event-date').text(data.date);
             $('.event-location').text(data.location);
             $('.event-description').text(data.description);
+            $('.event-details').attr('id', event_id);
 
             $('<img/>')
                 .attr('src', data.image)
@@ -186,13 +233,18 @@ $(".events").on('click', '.event-card', function () {
                 .appendTo('#event-image');
             $('.event-category').text(data.category);
             $('#event-details-user').addClass('d-none');
-            
+
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
             if (data.tag3 !== null) tags.push(data.tag3);
 
             $('.event-tags').html(tags.map(eventTag).join(''));
+
+            let lists = res.data[1];
+            if (lists != null) {
+                $('#list-options').html(lists.map(listItem).join(''));
+            }
         },
         error: (res) => {
             console.log(res);
@@ -244,14 +296,14 @@ $("#follow-button").on('click', function () {
     })
 });
 
-$('form').submit((e) => {
+$('#event-form').submit((e) => {
     e.preventDefault();
     if (!checkInputs()) {
         console.log('invalid inputs');
         $('#createEvent').modal('show');
     }
     else {
-        let form = $('form')[0];
+        let form = $('form')[1];
         let formData = new FormData(form);
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
@@ -273,7 +325,6 @@ $('form').submit((e) => {
             processData: false,
             success: (res) => {
                 console.log(res);
-                populateHomeEvents();
                 $('#createEvent').modal('hide');
             },
             error: () => {
@@ -370,7 +421,7 @@ const setValidity = (input, message) => {
 
 let numTags = 0;
 $('.form-check-input').on('change', function () {
-    
+
     if (this.checked) {
         numTags++;
         if (numTags > 3) {
@@ -415,3 +466,61 @@ $('#lists-toggle').on('click', () => {
     $('#events-container').addClass('d-none');
     $('#events-toggle').removeClass('lighter-gray-2');
 })
+
+$('#lists-container').on('click', '.add-list', () => {
+    $('#createList').modal('show');
+});
+
+$('#list-form').submit((e) => {
+    e.preventDefault();
+
+    let form = $('form')[0];
+    let formData = new FormData(form);
+    formData.append('type', 'add_list');
+    formData.append('user_id', user_id);
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+            populateUserLists();
+            $('#createList').modal('hide');
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
+            $('#createList').modal('show');
+        }
+
+    })
+});
+
+$('#list-options').on('click', '.list-group-item', function() {
+    let event_id = $('.event-details').attr('id');
+    let list_id = $(this).attr('id');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "add_to_list",
+            "event_id": event_id,
+            "list_id": list_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        processData: false,
+        success: (res) => {
+            console.log(res);
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
+        }
+    })
+});

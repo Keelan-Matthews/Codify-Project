@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         return;
     }
 
-    $reqTypes = ["home", "explore", "login", "register", "rate", "add_event", "event-details", "user-events", "follow"];
+    $reqTypes = ["home", "explore", "login", "register", "rate", "add_event", "event-details", "user-events", "follow", "add_list", "user_lists", "add_to_list"];
     if (!in_array($type, $reqTypes)) {
         echo json_encode($api->error("Incorrect type parameter has been specified."));
         return;
@@ -61,8 +61,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnUserEvents($data->user_id, $data->profile_id);
             break;
 
+        case "user_lists":
+            $instance->returnUserLists($data->profile_id);
+            break;
+
         case "event-details":
-            $instance->returnEventDetails($data->event_id);
+            $instance->returnEventDetails($data->event_id, $data->user_id);
             break;
 
         case "follow":
@@ -71,6 +75,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         case "explore":
             $instance->returnExplore();
+            break;
+
+        case "add_list":
+            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
+            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
+            $instance->addList($user_id, $name);
+            break;
+
+        case "add_to_list":
+            $instance->addToList($data->event_id, $data->list_id);
             break;
 
         default:
