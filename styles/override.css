@@ -130,12 +130,14 @@ label {
 }
 
 .events::-webkit-scrollbar,
-.event-details::-webkit-scrollbar {
+.event-details::-webkit-scrollbar,
+#profile-container::-webkit-scrollbar {
     width: 0.01em;
 }
 
 .events::-webkit-scrollbar-thumb,
-.event-details::-webkit-scrollbar-thumb {
+.event-details::-webkit-scrollbar-thumb,
+#profile-container::-webkit-scrollbar-thumb {
     background-color: var(--primary);
 }
 
@@ -253,4 +255,24 @@ select:-webkit-autofill:focus {
 
 .lighter-gray-2 {
     background-color: #383838 !important;
+}
+
+.event-card {
+    transition: all 0.2s ease;
+}
+
+.event-card:hover {
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+.events {
+    height: 80vh;
+    overflow-y: scroll;
+}
+
+.event-details {
+    height: 85vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

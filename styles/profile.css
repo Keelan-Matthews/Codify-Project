@@ -14,3 +14,9 @@
 .add-list {
     height: 350px;
 }
+
+#profile-container {
+    height: 90vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
