@@ -13,6 +13,11 @@ const eventCard = ({ name, date, location, image, profile_photo, event_id, user_
         </div>
     </div>
 `;
+const userCard = ({user_id, profile_photo, username}) => `
+    <div class="user-card mb-5 position-relative" id="${user_id}" title="${username}">
+        <img src="${profile_photo}" class="rounded-circle me-3 " width="70" height="70" id="user-card-image">
+    </div>
+`;
 
 const eventTag = (tag_name) => `
     <div class="p-2 rounded bg-dark me-2">
@@ -46,6 +51,27 @@ const populateHomeEvents = () => {
     })
 }
 
+const populateHomeUsers = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "home_users",
+            "user_id": user_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            $('.followed-users').html(res.data.map(userCard).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
 const populateExploreEvents = () => {
     $.ajax({
         contentType: 'application/json',
@@ -68,6 +94,7 @@ const populateExploreEvents = () => {
 
 $(document).ready(() => {
     populateHomeEvents();
+    populateHomeUsers();
     resize();
 });
 

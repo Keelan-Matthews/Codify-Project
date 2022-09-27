@@ -26,8 +26,9 @@ if (isset($_GET["error"])) {
 <main class="overflow-hidden">
     <div class="row">
         <div class="col-12 col-md-10">
-            <div class="container mt-5 pb-5 pb-md-0">
+            <div class="container mt-4 pb-5 pb-md-0">
                 <div class="" id="events-container">
+                    <div class="followed-users d-flex"></div>
                     <h4 class="border-bottom border-4 text-white pb-3 border-color fw-bold">Home feed</h4>
                     <div class="events row">
                     </div>

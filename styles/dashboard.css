@@ -9,7 +9,7 @@
 }
 
 .events {
-    height: 90vh;
+    height: 80vh;
     overflow-y: scroll;
 }
 
@@ -17,4 +17,8 @@
     height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+#user-card-image {
+    border: 4px solid #2EAC7C;
 }

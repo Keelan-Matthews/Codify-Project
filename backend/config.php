@@ -370,6 +370,25 @@ class Database
         }
     }
 
+    function returnHomeUsers($user_id)
+    {
+        $sql = "SELECT DISTINCT dbusers.* FROM dbusers LEFT JOIN dbfollowing ON dbfollowing.following_id = dbusers.user_id WHERE dbfollowing.user_id = '$user_id'";
+        $result = $this->getConnection()->query($sql);
+        $users = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($users));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No users found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     public function getUser($email, $password)
     {
         $stmt = $this->connection->prepare("SELECT * FROM dbusers WHERE email=?");
