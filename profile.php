@@ -38,7 +38,7 @@ if (isset($_GET["error"])) {
                             <label for="listName">List Name</label>
                         </div>
                         <div class="form-floating form-group">
-                            <textarea class="form-control" placeholder="Description" id="listDescription" name="description"></textarea>
+                            <textarea class="form-control mt-4" placeholder="Description" id="listDescription" name="description"></textarea>
                             <label for="listDescription">Description</label>
                         </div>
                     </form>

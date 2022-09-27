@@ -25,18 +25,21 @@
                     </div>
                     <div class="text-white d-flex mt-2 event-tags"></div>
                 </div>
-                <div class="d-flex">
-                    <div class="btn btn-primary btn-lg me-2">Attend</div>
+                <div class="d-flex align-items-center">
+                    <div class="btn btn-primary btn-lg me-2" id="attend-event">Attend</div>
                     <div class="add-tip">
                         <span class="tooltiptext">add event to a list</span>
 
                         <div class="dropdown">
-                            <button class="dropdown-toggle btn btn-outline btn-lg text-white " type="button" id="list-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button class="btn btn-outline btn-lg text-white " type="button" id="list-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-plus"></i>
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="list-dropdown" id="list-options">
                             </ul>
                         </div>
+                    </div>
+                    <div class="btn d-none" id="edit-event">
+                        <i class="fas fa-ellipsis text-white fs-5"></i>
                     </div>
                 </div>
             </div>
@@ -62,7 +65,7 @@
                 </div>
             </div>
 
-            <div class="pt-5">
+            <div class="pt-3">
                 <h4 class="text-white">Reviews</h4>
                 <div class="reviews">
                     <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">

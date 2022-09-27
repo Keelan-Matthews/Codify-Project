@@ -444,6 +444,21 @@ class Database
         }
     }
 
+    function unfollow($user_id, $following_id)
+    {
+        $sql = "DELETE FROM dbfollowing WHERE user_id = '$user_id' AND following_id = '$following_id'";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Unfollowed user"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while unfollowing user"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     function addList($user_id, $name, $description) 
     {
         $sql = "INSERT INTO dblists (name, description, user_id) VALUES ('$name', '$description', '$user_id')";

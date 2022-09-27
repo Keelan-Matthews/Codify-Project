@@ -68,7 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "follow":
-            $instance->follow($data->user_id, $data->event_id);
+            $instance->follow($data->user_id, $data->profile_id);
+            break;
+
+        case "unfollow":
+            $instance->unfollow($data->user_id, $data->profile_id);
             break;
 
         case "explore":

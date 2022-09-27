@@ -157,7 +157,7 @@ const populateUserEvents = () => {
             }
             else {
                 $('.events').html(`
-                    <div class="mt-5 col-12 d-flex justify-content-center align-items-center">
+                    <div class="mt-5 col-12 d-flex justify-content-center">
                         <span class="fw-bold text-white fs-1">No events</span>
                     </div>
                 `);
@@ -274,6 +274,7 @@ $(".events").on('click', '.event-card', function () {
                 .appendTo('#event-image');
             $('.event-category').text(data.category);
             $('#event-details-user').addClass('d-none');
+            $('#edit-event').removeClass('d-none');
 
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
@@ -308,8 +309,6 @@ $("#go-back-list-details").on('click', () => {
     $("#lists-container").toggleClass('d-none');
 });
 
-// Remember to update followingUser and update friendship !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 $("#follow-button").on('click', function () {
     $(this).toggleClass('btn-primary');
     $(this).toggleClass('bg-white');
@@ -318,32 +317,52 @@ $("#follow-button").on('click', function () {
     $("#follow-icon").toggleClass('fa-check');
     $("#follow-icon").toggleClass('text-black');
 
+    const profile_id = getUrlParameter('user_id');
+
     if ($(this).hasClass('btn-primary')) {
         $(this).children('span').text('Follow');
+        followingUser = false;
+
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "type": "unfollow",
+                "user_id": user_id,
+                "profile_id": profile_id
+            }),
+            url: 'api.php',
+            type: 'POST',
+            success: (res) => {
+                console.log(res);
+            },
+            error: (res) => {
+                console.log(res);
+            },
+            processData: false
+        })
     }
     else {
         $(this).children('span').text('Following');
+        followingUser = true;
+
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "type": "follow",
+                "user_id": user_id,
+                "profile_id": profile_id
+            }),
+            url: 'api.php',
+            type: 'POST',
+            success: (res) => {
+                console.log(res);
+            },
+            error: (res) => {
+                console.log(res);
+            },
+            processData: false
+        })
     }
-
-    const profile_id = getUrlParameter('user_id');
-
-    $.ajax({
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "type": "follow",
-            "user_id": user_id,
-            "profile_id": profile_id
-        }),
-        url: 'api.php',
-        type: 'POST',
-        success: (res) => {
-            console.log(res);
-        },
-        error: (res) => {
-            console.log(res);
-        },
-        processData: false
-    })
 });
 
 $('#event-form').submit((e) => {
@@ -555,6 +574,8 @@ $('#list-form').submit((e) => {
 $('#list-options').on('click', '.list-group-item', function() {
     let event_id = $('.event-details').attr('id');
     let list_id = $(this).attr('id');
+
+    console.log(event_id, list_id);
 
     $.ajax({
         contentType: 'application/json',

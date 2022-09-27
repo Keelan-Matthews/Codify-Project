@@ -287,9 +287,14 @@ $(".events").on('click', '.event-card', function () {
             $('#event-user').text(data.username);
             $('#event-user-photo').attr('src', data.profile_photo);
             $('#view-profile').attr('href', 'profile.php?user_id=' + data.user_id);
+            $('.event-details').attr('id', event_id);
 
             if ($('#event-details-user').hasClass('d-none')) {
                 $('#event-details-user').removeClass('d-none');
+            }
+
+            if (!$('#edit-event').hasClass('d-none')) {
+                $('#edit-event').addClass('d-none');
             }
             
             let tags = [];
@@ -377,4 +382,9 @@ $('#list-options').on('click', '.list-group-item', function() {
             console.log('An error occurred during the api call');
         }
     })
+});
+
+$('.followed-users').on('click', '.user-card', function () {
+    let user_id = $(this).attr('id');
+    window.location.href = 'profile.php?user_id=' + user_id;
 });
