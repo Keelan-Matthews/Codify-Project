@@ -388,3 +388,8 @@ $('.followed-users').on('click', '.user-card', function () {
     let user_id = $(this).attr('id');
     window.location.href = 'profile.php?user_id=' + user_id;
 });
+
+$('#attend-event').on('click', () => {
+    console.log('clicked');
+    $('#reviewModal').modal('show');
+});

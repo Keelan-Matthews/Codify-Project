@@ -84,72 +84,45 @@
                         </div>
                         <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
                     </div>
-                    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-                        <div class="col-2">
-                            <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
-                        </div>
-                        <div class="col-10">
-                            <p class="text-white fw-bold mb-0">Keelan Matthews</p>
-                            <p class="rating">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                        </div>
-                        <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-                    </div>
-                    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-                        <div class="col-2">
-                            <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
-                        </div>
-                        <div class="col-10">
-                            <p class="text-white fw-bold mb-0">Keelan Matthews</p>
-                            <p class="rating">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                        </div>
-                        <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-                    </div>
-                    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-                        <div class="col-2">
-                            <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
-                        </div>
-                        <div class="col-10">
-                            <p class="text-white fw-bold mb-0">Keelan Matthews</p>
-                            <p class="rating">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                        </div>
-                        <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-                    </div>
-                    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-                        <div class="col-2">
-                            <img src="./media/profile_photos/default.png" alt="" class="rounded-circle w-100">
-                        </div>
-                        <div class="col-10">
-                            <p class="text-white fw-bold mb-0">Keelan Matthews</p>
-                            <p class="rating">
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                                <i class="fas fa-star text-warning"></i>
-                            </p>
-                        </div>
-                        <p class="text-white mt-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quae.</p>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white border-0">
+                    <h5 class="modal-title" id="reviewLabel">Review the event</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="list-form" enctype="multipart/form-data">
+                        <div>
+                            <label class="text-white mb-1">Rate</label>
+                            <div class="rating text-lighter-gray-2">
+                                <i class="fas fa-star rating-star shadow"></i>
+                                <i class="fas fa-star rating-star shadow"></i>
+                                <i class="fas fa-star rating-star shadow"></i>
+                                <i class="fas fa-star rating-star shadow"></i>
+                                <i class="fas fa-star rating-star shadow"></i>
+                            </div>
+                        </div>
+                        <div class="form-floating form-group mb-5">
+                            <textarea class="form-control mt-4" id="reviewComment" name="comment" rows="5" style="height:100%;"></textarea>
+                            <label for="reviewComment">Comments</label>
+                        </div>
+                        <div class="form-group">
+                            <label for="reviewImage" class="mb-2">Proof of attendance</label>
+                            <input type="file" class="form-control" id="reviewImage" name="image">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="list-form" name="submit" class="btn btn-primary">Review</button>
+                </div>
+            </div>
+        </div>
+    </div>

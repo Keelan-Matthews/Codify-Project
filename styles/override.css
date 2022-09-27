@@ -257,6 +257,10 @@ select:-webkit-autofill:focus {
     background-color: #383838 !important;
 }
 
+.text-lighter-gray-2 {
+    color: #383838 !important;
+}
+
 .event-card {
     transition: all 0.2s ease;
 }
@@ -272,7 +276,7 @@ select:-webkit-autofill:focus {
 }
 
 .event-details {
-    height: 85vh;
+    height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
 }
