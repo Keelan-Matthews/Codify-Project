@@ -23,6 +23,50 @@ if ($_SESSION["signed_in"] == false) {
                         <p class="text-white mt-2">Hey man, how are you?</p>
                     </div>
                 </div>
+                <div class="lighter-gray-2 p-3 rounded row mt-4">
+                    <div class="col-3">
+                        <img src="./media/profile_photos/admin.jpg" alt="" class="rounded-circle w-100">
+                    </div>
+                    <div class="col-9">
+                        <div>
+                            <h4 class="text-white fw-bold mb-0">Keelan Matthews</h4>
+                        </div>
+                        <p class="text-white mt-2">Hey man, how are you?</p>
+                    </div>
+                </div>
+                <div class="lighter-gray-2 p-3 rounded row mt-4">
+                    <div class="col-3">
+                        <img src="./media/profile_photos/admin.jpg" alt="" class="rounded-circle w-100">
+                    </div>
+                    <div class="col-9">
+                        <div>
+                            <h4 class="text-white fw-bold mb-0">Keelan Matthews</h4>
+                        </div>
+                        <p class="text-white mt-2">Hey man, how are you?</p>
+                    </div>
+                </div>
+                <div class="lighter-gray-2 p-3 rounded row mt-4">
+                    <div class="col-3">
+                        <img src="./media/profile_photos/admin.jpg" alt="" class="rounded-circle w-100">
+                    </div>
+                    <div class="col-9">
+                        <div>
+                            <h4 class="text-white fw-bold mb-0">Keelan Matthews</h4>
+                        </div>
+                        <p class="text-white mt-2">Hey man, how are you?</p>
+                    </div>
+                </div>
+                <div class="lighter-gray-2 p-3 rounded row mt-4">
+                    <div class="col-3">
+                        <img src="./media/profile_photos/admin.jpg" alt="" class="rounded-circle w-100">
+                    </div>
+                    <div class="col-9">
+                        <div>
+                            <h4 class="text-white fw-bold mb-0">Keelan Matthews</h4>
+                        </div>
+                        <p class="text-white mt-2">Hey man, how are you?</p>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col-12 col-md-7">
@@ -38,11 +82,17 @@ if ($_SESSION["signed_in"] == false) {
                             </div>
                         </div>
                         <div class="messages d-flex flex-column mt-3 align-items-start">
-                            <div class="my-message text-white p-3 rounded-pill lighter-gray-2 align-self-end">
-                                <p class="mb-0">Hey my dudeeeee</p>
-                            </div>
-                            <div class="friend-message text-white p-3 px-4 rounded-pill bg-primary">
+                            <div class="friend-message text-white p-3 rounded-3 bg-primary mb-3 me-5">
                                 <p class="mb-0">Hey man, how are you?</p>
+                            </div>
+                            <div class="my-message text-white p-3 rounded-3 lighter-gray-2 align-self-end mb-3 ms-5">
+                                <p class="mb-0">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Similique architecto odit, inventore debitis molestiae facilis necessitatibus aliquid laboriosam, sint commodi explicabo eius quasi quos numquam suscipit veniam corporis quisquam quia sequi consequuntur culpa maxime voluptatem optio quae. Quod, autem veniam accusamus id qui quam non placeat laboriosam rerum soluta quis facere voluptas officiis dolor ad pariatur earum recusandae eos, iste debitis asperiores facilis! Consequatur dolor reiciendis dicta obcaecati, incidunt totam molestiae rerum ipsam ex dolorum!</p>
+                            </div>
+                            <div class="friend-message text-white p-3 rounded-3 bg-primary mb-3 me-5">
+                                <p class="mb-0">Crazy</p>
+                            </div>
+                            <div class="friend-message text-white p-3 rounded-3 bg-primary mb-3 me-5">
+                                <p class="mb-0">Catch you bro</p>
                             </div>
                         </div>
                     </div>
