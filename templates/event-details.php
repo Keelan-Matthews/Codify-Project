@@ -38,15 +38,27 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="btn d-none" id="edit-event">
-                        <i class="fas fa-ellipsis text-white fs-5"></i>
-                    </div>
+                    <div class="dropdown">
+                            <button class="btn d-none" type="button" id="edit-event" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-ellipsis text-white"></i>
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="edit-event" id="edit-options">
+                                <li class="list-group-item mx-2 btn fw-bold" id="edit-details">
+                                    <i class="fas fa-edit pe-2"></i>
+                                    Edit Details
+                                </li>
+                                <li class="list-group-item mx-2 btn fw-bold" id="delete-event">
+                                    <i class="fas fa-trash pe-2"></i>
+                                    Delete Event
+                                </li>
+                            </ul>
+                        </div>
                 </div>
             </div>
 
             <p class="text-white mt-5 event-description"></p>
 
-            <div class="d-flex justify-content-center">
+            <div class="d-flex justify-content-center mt-5">
                 <div class="w-50">
                     <div id="carouselReview" class="carousel slide" data-bs-ride="true">
                         <div class="carousel-inner">

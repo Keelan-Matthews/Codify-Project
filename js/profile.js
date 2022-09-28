@@ -292,10 +292,15 @@ $(".events").on('click', '.event-card', function () {
             }
 
             let reviews = res.data[2];
-            $('.reviews').html(reviews.map(reviewCard).join(''));
-
-            $('.carousel-inner').html(reviews.map(carouselCard).join(''));
-            $('.carousel-item').first().addClass('active');
+            if (reviews[0] != null) {
+                $('.reviews').html(reviews.map(reviewCard).join(''));
+                $('.carousel-inner').html(reviews.map(carouselCard).join(''));
+                $('.carousel-item').first().addClass('active');
+            }
+            else {
+                $('.reviews').html('<p class="text-center mb-0 text-white">No reviews available</p>');
+                $('.carousel-inner').html('<p class="text-center mb-0 text-white">No images available</p>');
+            }
         },
         error: (res) => {
             console.log(res);
@@ -647,7 +652,7 @@ const reviewCard = ({username, profile_photo, rating, comment}) => `
 
 const carouselCard = ({image}) => `
     <div class="carousel-item">
-        <img src="${image}" class="d-block w-100 add-list rounded" alt="">
+        <img src="${image}" class="d-block w-100 rounded-2" alt="">
     </div>
 `;
 
@@ -662,3 +667,7 @@ const showStars = (rating) => {
     }
     return stars;
 }
+
+$('#edit-event').on('click', () => {
+    
+});

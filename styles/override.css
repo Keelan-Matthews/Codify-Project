@@ -243,7 +243,7 @@ select:-webkit-autofill:focus {
     transition: 0.2s ease;
 }
 
-#list-options {
+#list-options, #edit-options {
     background-color: var(--background);
     color: white;
 }
