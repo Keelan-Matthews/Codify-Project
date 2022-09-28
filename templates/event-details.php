@@ -1,9 +1,9 @@
-<div class="event-details">
+<div class="event-details mb-5">
     <button class="d-flex text-white align-items-center mb-4 fw-bold btn" id="go-back-event-details">
         <i class="fas fa-arrow-left pe-2"></i>
         <p class="mb-0">Go Back</p>
     </button>
-    <div class="row lighter-gray rounded p-4">
+    <div class="row lighter-gray rounded p-4 mb-5">
         <div class="col-12 col-md-7">
             <div id="event-image"></div>
             <div class="d-flex align-items-start justify-content-between mt-4">

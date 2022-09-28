@@ -47,6 +47,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->addEvent($name, $description, $date, $location, $category, $image, $user_id, $tag1, $tag2, $tag3);
             break;
 
+        case "edit_event":
+            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
+            $description = isset($_POST["description"]) ? test_input($_POST["description"]) : null;
+            $date = isset($_POST["date"]) ? test_input($_POST["date"]) : null;
+            $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
+            $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
+            $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $tag1 = isset($_POST["tag1"]) ? test_input($_POST["tag1"]) : null;
+            $tag2 = isset($_POST["tag2"]) ? test_input($_POST["tag2"]) : null;
+            $tag3 = isset($_POST["tag3"]) ? test_input($_POST["tag3"]) : null;
+            $event_id = isset($_POST["event_id"]) ? test_input($_POST["event_id"]) : null;
+            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
+            $instance->editEvent($name, $description, $date, $location, $category, $image, $tag1, $tag2, $tag3, $event_id, $user_id);
+            break;
+
         case "home":
             $instance->returnHome($data->user_id);
             break;

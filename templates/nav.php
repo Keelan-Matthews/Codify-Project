@@ -44,7 +44,7 @@
             </ul>
         </div>
     </nav>
-    <div class="btn btn-primary btn-lg mt-3 w-75 mobile-hide" data-bs-toggle="modal" data-bs-target="#createEvent">Create Event</div>
+    <div class="btn btn-primary btn-lg mt-3 w-75 mobile-hide" data-bs-toggle="modal" data-bs-target="#createEvent" id="create-event-button">Create Event</div>
 </div>
 
 <div class="modal fade" id="createEvent" tabindex="-1" aria-labelledby="createEventLabel" aria-hidden="true">
@@ -145,7 +145,7 @@
             </div>
             <div class="modal-footer border-0">
                 <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
-                <button type="submit" form="event-form" name="submit" class="btn btn-primary">Create</button>
+                <button type="submit" form="event-form" name="submit" class="btn btn-primary" id="createEventButton">Create</button>
             </div>
         </div>
     </div>

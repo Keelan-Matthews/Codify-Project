@@ -1,5 +1,5 @@
 let followingUser = false;
-
+let createOrEdit = 'create';
 $(document).ready(() => {
     populateUserEvents();
     populateUserLists();
@@ -115,8 +115,8 @@ const addList = () => `
 `;
 
 const eventTag = (tag_name) => `
-    <div class="p-2 rounded bg-dark me-2">
-        <small><span class="fw-bold"># </span>${tag_name}</small>
+    <div class="p-2 rounded bg-dark me-2" id="${tag_name}">
+        <small><span class="fw-bold"># </span><span>${tag_name}</span></small>
     </div>
 `;
 
@@ -383,36 +383,65 @@ $('#event-form').submit((e) => {
         $('#createEvent').modal('show');
     }
     else {
-        let form = $('form')[1];
-        let formData = new FormData(form);
-        formData.append('type', 'add_event');
-        formData.append('user_id', user_id);
-
-        let tagCounter = 1;
-        $('input[type=checkbox]:checked').each(function () {
-            formData.append(`tag${tagCounter++}`, $(this).val());
-        });
-
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
+        if (createOrEdit == 'create') {
+            let form = $('form')[2];
+            let formData = new FormData(form);
+            formData.append('type', 'add_event');
+            formData.append('user_id', user_id);
+    
+            let tagCounter = 1;
+            $('input[type=checkbox]:checked').each(function () {
+                formData.append(`tag${tagCounter++}`, $(this).val());
+            });
+    
+            $.ajax({
+                url: 'api.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (res) => {
+                    console.log(res);
+                    $('#createEvent').modal('hide');
+                },
+                error: () => {
+                    console.log('An error occurred during the api call');
+                    $('#createEvent').modal('show');
+                }
+    
+            })
         }
-
-        $.ajax({
-            url: 'api.php',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: (res) => {
-                console.log(res);
-                $('#createEvent').modal('hide');
-            },
-            error: () => {
-                console.log('An error occurred during the api call');
-                $('#createEvent').modal('show');
-            }
-
-        })
+        else {
+            let form = $('form')[2];
+            let formData = new FormData(form);
+            formData.append('type', 'edit_event');
+            formData.append('user_id', user_id);
+            let event_id = $('.event-details').attr('id');
+            console.log(event_id);
+            formData.append('event_id', event_id);
+    
+            let tagCounter = 1;
+            $('input[type=checkbox]:checked').each(function () {
+                formData.append(`tag${tagCounter++}`, $(this).val());
+            });
+    
+            $.ajax({
+                url: 'api.php',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: (res) => {
+                    console.log(res);
+                    $('#createEvent').modal('hide');
+                },
+                error: () => {
+                    console.log('An error occurred during the api call');
+                    $('#createEvent').modal('show');
+                }
+    
+            })
+        }
     }
 });
 
@@ -453,7 +482,7 @@ const checkInputs = () => {
     if (!setValidity($('#eventLocation'), locationErrorMessage)) valid = false;
 
     let imgErrorMessage = '';
-    if (eventImg === 0) {
+    if (eventImg === 0 && createOrEdit === 'create') {
         imgErrorMessage = 'Event image is required';
     }
 
@@ -668,6 +697,47 @@ const showStars = (rating) => {
     return stars;
 }
 
-$('#edit-event').on('click', () => {
-    
+$('#edit-details').on('click', () => {
+    $('#createEvent').modal('show');
+    $('#createEventLabel').text('Edit Event');
+    $('#createEventButton').text('Save Changes');
+    createOrEdit = 'edit';
+
+    $('#eventName').val($('h3.event-title').text());
+    $('#eventLocation').val($('.event-location').text());
+    $('#eventDescription').val($('.event-description').text());
+    $('#eventDate').val($('.event-date').text());
+
+    $('#eventCategory').val($('.event-category').text());
+
+    $('.event-tags').children().each(function() {
+        let tag = $(this).attr('id');
+        $(`input[value="${tag}"]`).prop('checked', true);
+    })
+
+    numTags = $('.event-tags').children().length;
+
+    if (numTags === 3) {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', true);
+                $('.tags').addClass('disabled-tags');
+            }
+        })
+    }
+    else {
+        $('.form-check-input').each(function () {
+            if (!this.checked) {
+                $(this).prop('disabled', false);
+                $('.tags').removeClass('disabled-tags');
+            }
+        })
+    }
+
+});
+
+$('#create-event-button').on('click', () => {
+    $('#createEventLabel').text('Create Event');
+    $('#createEventButton').text('Create');
+    createOrEdit = 'create';
 });

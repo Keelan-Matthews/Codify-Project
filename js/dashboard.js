@@ -487,3 +487,8 @@ const showStars = (rating) => {
     }
     return stars;
 }
+
+$('#create-event-button').on('click', () => {
+    $('#createEventLabel').text('Create Event');
+    $('#createEventButton').text('Create');
+});

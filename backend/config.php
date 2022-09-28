@@ -151,7 +151,7 @@ class Database
             exit();
         }
 
-        if ($filename == null) {
+        if ($filename == "") {
             header('Location: dashboard.php?error=emptyimage');
             exit();
         }
@@ -180,6 +180,71 @@ class Database
         }
     }
 
+    function editEvent($name, $description, $date, $location, $category, $image, $tag1, $tag2, $tag3, $event_id, $user_id)
+    {
+        $filename = $image['name'];
+
+        if ($name == null) {
+            header('Location: dashboard.php?error=emptyname');
+            exit();
+        }
+
+        if ($location == null) {
+            header('Location: dashboard.php?error=emptylocation');
+            exit();
+        }
+
+        if ($date == null) {
+            header('Location: dashboard.php?error=emptydate');
+            exit();
+        }
+
+        if ($category == null) {
+            header('Location: dashboard.php?error=emptycategory');
+            exit();
+        }
+
+        if ($description == null) {
+            header('Location: dashboard.php?error=emptydescription');
+            exit();
+        }
+
+        if ($filename == "") {
+            $sql = "UPDATE dbevents SET `name` = '$name', `description` = '$description', `date` = '$date', `location` = '$location', `category` = '$category', `tag1` = '$tag1', `tag2` = '$tag2', `tag3` = '$tag3' WHERE `event_id` = '$event_id'";
+            $result = $this->connection->query($sql);
+
+            if ($result) {
+                header('HTTP/1.1 200 OK');
+                echo json_encode($this->success("Event edited successfully"));
+            } else {
+                echo json_encode($this->error("An error occured while editing event"));
+            }
+        } else {
+            // $target_dir = "media/events/";
+            // $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            // $image_name =  $name . $user_id . $category;
+            // $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
+
+            // $allowedFiles =  array('jpg', 'jpeg', 'png');
+
+            // if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
+            //     move_uploaded_file($image['tmp_name'], $image_path);
+            // } else {
+            //     header('Location: dashboard.php?error=incorrectimage');
+            //     exit();
+            // }
+
+            // $sql = "UPDATE dbevents SET name = '$name', description = '$description', date = '$date', location = '$location', category = '$category', image = '$image_path', tag1 = '$tag1', tag2 = '$tag2', tag3 = '$tag3' WHERE event_id = '$event_id'";
+            // $result = $this->connection->query($sql);
+            // if ($result) {
+            //     header('HTTP/1.1 200 OK');
+            //     echo json_encode($this->success("Event edited successfully"));
+            // } else {
+            //     echo json_encode($this->error("An error occured while editing event"));
+            // }
+        }
+    }
+
     function returnUserEvents($user_id, $profile_id)
     {
         $sql = "SELECT * FROM dbevents WHERE user_id = $profile_id";
@@ -196,7 +261,7 @@ class Database
         $result2 = $this->getConnection()->query($sql2);
         $row2 = $result2->fetch_assoc();
         $followers = $row2['followers'];
-        
+
         $sql3 = "SELECT following_id FROM dbfollowing WHERE user_id = '$user_id' AND following_id = '$profile_id'";
         $result3 = $this->getConnection()->query($sql3);
         $following = $result3->num_rows > 0;
@@ -221,7 +286,7 @@ class Database
     function returnUserLists($profile_id)
     {
         $sql = "SELECT * FROM dblists WHERE user_id = $profile_id";
-        $result = $this->connection->query($sql);      
+        $result = $this->connection->query($sql);
 
         $lists = array();
         if ($result->num_rows > 0) {
@@ -303,8 +368,7 @@ class Database
             while ($row = $result2->fetch_assoc()) {
                 $lists = $row;
             }
-        }
-        else {
+        } else {
             $lists = null;
         }
 
@@ -315,8 +379,7 @@ class Database
             while ($row = $result3->fetch_assoc()) {
                 $reviews = $row;
             }
-        }
-        else {
+        } else {
             $reviews = null;
         }
 
@@ -471,7 +534,7 @@ class Database
         }
     }
 
-    function addReview($user_id, $event_id, $comment, $image, $rating) 
+    function addReview($user_id, $event_id, $comment, $image, $rating)
     {
         $filename = $image['name'];
         $target_dir = "media/events/";
@@ -501,7 +564,7 @@ class Database
         }
     }
 
-    function addList($user_id, $name, $description) 
+    function addList($user_id, $name, $description)
     {
         $sql = "INSERT INTO dblists (name, description, user_id) VALUES ('$name', '$description', '$user_id')";
         $result = $this->getConnection()->query($sql);
@@ -516,7 +579,7 @@ class Database
         }
     }
 
-    function addToList($event_id, $list_id) 
+    function addToList($event_id, $list_id)
     {
         $sql = "INSERT INTO dblistitems (list_id, event_id) VALUES ('$list_id', '$event_id')";
         $result = $this->getConnection()->query($sql);
