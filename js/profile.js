@@ -741,3 +741,28 @@ $('#create-event-button').on('click', () => {
     $('#createEventButton').text('Create');
     createOrEdit = 'create';
 });
+
+$('#explore-nav').on('click', () => {
+    window.location.href = 'dashboard.php';
+    populateExploreEvents();
+});
+
+const populateExploreEvents = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "explore"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            $('.events').html(res.data.map(eventCard).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
