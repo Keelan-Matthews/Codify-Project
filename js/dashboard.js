@@ -314,6 +314,9 @@ $(".events").on('click', '.event-card', function () {
 
             let reviews = res.data[2];
             $('.reviews').html(reviews.map(reviewCard).join(''));
+
+            $('.carousel-inner').html(reviews.map(carouselCard).join(''));
+            $('.carousel-item').first().addClass('active');
         },
         error: (res) => {
             console.log(res);
@@ -457,6 +460,12 @@ const reviewCard = ({username, profile_photo, rating, comment}) => `
             </p>
         </div>
         <p class="text-white mt-2">${comment}</p>
+    </div>
+`;
+
+const carouselCard = ({image}) => `
+    <div class="carousel-item">
+        <img src="${image}" class="d-block w-100 2" alt="">
     </div>
 `;
 

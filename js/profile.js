@@ -290,6 +290,12 @@ $(".events").on('click', '.event-card', function () {
             else {
                 $('#list-options').html('<p class="text-center mb-0">No lists available</p>');
             }
+
+            let reviews = res.data[2];
+            $('.reviews').html(reviews.map(reviewCard).join(''));
+
+            $('.carousel-inner').html(reviews.map(carouselCard).join(''));
+            $('.carousel-item').first().addClass('active');
         },
         error: (res) => {
             console.log(res);
@@ -623,3 +629,36 @@ $('.lists').on('click', '.list-card', function() {
         processData: false,
     })
 });
+
+const reviewCard = ({username, profile_photo, rating, comment}) => `
+    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+        <div class="col-2">
+            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+        </div>
+        <div class="col-10">
+            <p class="text-white fw-bold mb-0">${username}</p>
+            <p class="rating">
+                ${showStars(rating)}
+            </p>
+        </div>
+        <p class="text-white mt-2">${comment}</p>
+    </div>
+`;
+
+const carouselCard = ({image}) => `
+    <div class="carousel-item">
+        <img src="${image}" class="d-block w-100 add-list rounded" alt="">
+    </div>
+`;
+
+const showStars = (rating) => {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="fas fa-star text-warning"></i>';
+    }
+
+    for (let i = 0; i < 5 - rating; i++) {
+        stars += '<i class="fas fa-star text-lighter-gray-2"></i>';
+    }
+    return stars;
+}

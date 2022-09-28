@@ -45,6 +45,24 @@
             </div>
 
             <p class="text-white mt-5 event-description"></p>
+
+            <div class="d-flex justify-content-center">
+                <div class="w-50">
+                    <div id="carouselReview" class="carousel slide" data-bs-ride="true">
+                        <div class="carousel-inner">
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselReview" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselReview" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div class="col-12 col-md-5 ps-4">
             <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mb-5" id="event-details-user">
