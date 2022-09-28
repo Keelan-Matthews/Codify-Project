@@ -105,7 +105,8 @@ class Database
 
         // Follow user 11 on register
         $stmt2 = $this->connection->prepare("INSERT INTO dbfollowing (`user_id`, `following_id`) VALUES (?, ?)");
-        $stmt2->bind_param("ii", $_SESSION["user_id"], 11);
+        $gmtk_id = 11;
+        $stmt2->bind_param("ii", $_SESSION["user_id"], $gmtk_id);
         $stmt2->execute();
 
         if ($stmt->execute()) {
@@ -306,7 +307,18 @@ class Database
         else {
             $lists = null;
         }
-        
+
+        $sql3 = "SELECT dbreviews.*, dbusers.username, dbusers.profile_photo FROM dbreviews LEFT JOIN dbusers ON dbusers.user_id = dbreviews.user_id WHERE dbreviews.event_id = '$event_id'";
+        $result3 = $this->getConnection()->query($sql3);
+
+        if ($result3->num_rows > 0) {
+            while ($row = $result3->fetch_assoc()) {
+                $reviews = $row;
+            }
+        }
+        else {
+            $reviews = null;
+        }
 
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
@@ -314,7 +326,7 @@ class Database
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");
-            echo json_encode($this->success(array($event, array($lists))));
+            echo json_encode($this->success(array($event, array($lists), array($reviews))));
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("No events found"));
@@ -455,6 +467,36 @@ class Database
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("An error occured while unfollowing user"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function addReview($user_id, $event_id, $comment, $image, $rating) 
+    {
+        $filename = $image['name'];
+        $target_dir = "media/events/";
+        $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+        $image_name =  $user_id . $event_id . $rating;
+        $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
+
+        $allowedFiles =  array('jpg', 'jpeg', 'png');
+
+        if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
+            move_uploaded_file($image['tmp_name'], $image_path);
+        } else {
+            header('Location: dashboard.php?error=incorrectimage');
+            exit();
+        }
+
+        $sql = "INSERT INTO dbreviews (user_id, event_id, comment, image, rating) VALUES ('$user_id', '$event_id', '$comment', '$image_path', '$rating')";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Added review"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while adding review"));
             header("HTTP/1.1 404 Not Found");
         }
     }

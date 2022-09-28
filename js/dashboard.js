@@ -13,7 +13,7 @@ const eventCard = ({ name, date, location, image, profile_photo, event_id, user_
         </div>
     </div>
 `;
-const userCard = ({user_id, profile_photo, username}) => `
+const userCard = ({ user_id, profile_photo, username }) => `
     <div class="user-card mb-5 position-relative" id="${user_id}" title="${username}">
         <img src="${profile_photo}" class="rounded-circle me-3 " width="70" height="70" id="user-card-image">
     </div>
@@ -25,7 +25,7 @@ const eventTag = (tag_name) => `
     </div>
 `;
 
-const listItem = ({list_id, name}) => `
+const listItem = ({ list_id, name }) => `
     <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${name}</li>
 `;
 
@@ -127,7 +127,7 @@ const resize = () => {
     }
 }
 
-$('form').submit((e) => {
+$('#event-form').on('submit', (e) => {
     e.preventDefault();
     if (!checkInputs()) {
         console.log('invalid inputs');
@@ -296,7 +296,7 @@ $(".events").on('click', '.event-card', function () {
             if (!$('#edit-event').hasClass('d-none')) {
                 $('#edit-event').addClass('d-none');
             }
-            
+
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
@@ -311,6 +311,9 @@ $(".events").on('click', '.event-card', function () {
             }
 
             $('.event-tags').html(tags.map(eventTag).join(''));
+
+            let reviews = res.data[2];
+            $('.reviews').html(reviews.map(reviewCard).join(''));
         },
         error: (res) => {
             console.log(res);
@@ -324,13 +327,9 @@ $("#go-back-event-details").on('click', () => {
     $("#event-details-container").toggleClass('d-none');
 });
 
-// $("#view-profile").on('click', () => {
-//     window.location.href = 'profile.php?user_id=' + user_id;
-// });
-
 let numTags = 0;
 $('.form-check-input').on('change', function () {
-    
+
     if (this.checked) {
         numTags++;
         if (numTags > 3) {
@@ -361,7 +360,7 @@ $('.form-check-input').on('change', function () {
     }
 });
 
-$('#list-options').on('click', '.list-group-item', function() {
+$('#list-options').on('click', '.list-group-item', function () {
     let event_id = $('.event-details').attr('id');
     let list_id = $(this).attr('id');
 
@@ -390,6 +389,85 @@ $('.followed-users').on('click', '.user-card', function () {
 });
 
 $('#attend-event').on('click', () => {
-    console.log('clicked');
     $('#reviewModal').modal('show');
 });
+
+$('#review-form').on('submit', (e) => {
+    e.preventDefault();
+    let form = $('form')[0];
+    let formData = new FormData(form);
+    let event_id = $('.event-details').attr('id');
+    let rating = $('.rating').attr('id');
+    formData.append('type', 'add_review');
+    formData.append('user_id', user_id);
+    formData.append('event_id', event_id);
+    formData.append('rating', rating);
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+
+            $('#reviewModal').modal('hide');
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
+            $('#reviewModal').modal('show');
+        }
+
+    })
+});
+
+$('.star-rating').on('click', function () {
+    const starClassActive = "fas fa-star star-rating shadow text-warning";
+    const starClassInactive = "fas fa-star star-rating shadow text-lighter-gray-2";
+
+    let i = $(this).index();
+    $('.rating').attr('id', i + 1);
+
+    let allStars = $('.star-rating');
+    let activeStars = $('.star-rating').slice(0, i + 1);
+
+    if ($(this).hasClass(starClassInactive)) {
+        for (i; i >= 0; --i)
+            activeStars[i].className = starClassActive;
+    } else {
+        for (i; i < 5; ++i)
+            allStars[i].className = starClassInactive;
+    }
+});
+
+const reviewCard = ({username, profile_photo, rating, comment}) => `
+    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+        <div class="col-2">
+            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+        </div>
+        <div class="col-10">
+            <p class="text-white fw-bold mb-0">${username}</p>
+            <p class="rating">
+                ${showStars(rating)}
+            </p>
+        </div>
+        <p class="text-white mt-2">${comment}</p>
+    </div>
+`;
+
+const showStars = (rating) => {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="fas fa-star text-warning"></i>';
+    }
+
+    for (let i = 0; i < 5 - rating; i++) {
+        stars += '<i class="fas fa-star text-lighter-gray-2"></i>';
+    }
+    return stars;
+}

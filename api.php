@@ -86,6 +86,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->addList($user_id, $name, $description);
             break;
 
+        case "add_review":
+            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
+            $event_id = isset($_POST["event_id"]) ? test_input($_POST["event_id"]) : null;
+            $comment = isset($_POST["comment"]) ? test_input($_POST["comment"]) : null;
+            $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $rating = isset($_POST["rating"]) ? test_input($_POST["rating"]) : null;
+            $instance->addReview($user_id, $event_id, $comment, $image, $rating);
+            break;
+
         case "add_to_list":
             $instance->addToList($data->event_id, $data->list_id);
             break;
