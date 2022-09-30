@@ -131,13 +131,15 @@ label {
 
 .events::-webkit-scrollbar,
 .event-details::-webkit-scrollbar,
-#profile-container::-webkit-scrollbar {
+#profile-container::-webkit-scrollbar,
+#list-details-container::-webkit-scrollbar {
     width: 0.01em;
 }
 
 .events::-webkit-scrollbar-thumb,
 .event-details::-webkit-scrollbar-thumb,
-#profile-container::-webkit-scrollbar-thumb {
+#profile-container::-webkit-scrollbar-thumb,
+#list-details-container::-webkit-scrollbar-thumb {
     background-color: var(--primary);
 }
 

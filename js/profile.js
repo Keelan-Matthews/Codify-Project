@@ -45,27 +45,27 @@ const eventCard = ({ name, date, location, image, event_id }) => `
     </div>
 `;
 
-const eventCardLight = ({ name, date, location, image, event_id }) => `
+const eventCardLight = ({ title, date, location, image, event_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray-2 shadow rounded event-card" id="${event_id}">
             <div class="d-flex p-3">
                 <div class="text-white">
-                    <h5 class="my-0">${name}</h5>
+                    <h5 class="my-0">${title}</h5>
                     <small>${location}</small>
                 </div>
             </div>
-            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
+            <img src="${image}" alt="${title}" class="my-2 w-100" height="200">
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
         </div>
     </div>
 `;
 
-const listCard = ({ name, count, images, list_id }) => `
+const listCard = ({ title, count, images, list_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded list-card" id="${list_id}">
             <div class="d-flex p-3">
                 <div class="text-white">
-                    <h5 class="my-0">${name}</h5>
+                    <h5 class="my-0">${title}</h5>
                     <small>${count} events</small>
                 </div>
             </div>
@@ -101,8 +101,8 @@ const listGallery = (images) => {
     return `<div class="row p-3">${gallery}</div>`;
 }
 
-const listItem = ({list_id, name}) => `
-    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${name}</li>
+const listItem = ({list_id, title}) => `
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0,13)+"..." : title}</li>
 `
 
 const addList = () => `
@@ -283,7 +283,7 @@ $(".events").on('click', '.event-card', function () {
 
             $('.event-tags').html(tags.map(eventTag).join(''));
 
-            let lists = res.data[1];
+            let lists = res.data[1][0];
             if (lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
             }
@@ -654,7 +654,7 @@ $('.lists').on('click', '.list-card', function() {
             console.log(res);
 
             $('.list-events').html(res.data.map(eventCardLight).join(''));
-            $('.list-title').text(res.data[0].name);
+            $('.list-title').text(res.data[0].title);
             $('.list-description').text(res.data[0].description);
         },
         error: (res) => {

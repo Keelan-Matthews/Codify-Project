@@ -15,7 +15,7 @@
     height: 350px;
 }
 
-#profile-container {
+#profile-container, #list-details-container {
     height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;

@@ -364,7 +364,7 @@ class Database
 
     function returnListEvents($list_id)
     {
-        $sql = "SELECT DISTINCT dbevents.*, dblists.name, dblists.description FROM dbevents LEFT JOIN dblistitems ON dblistitems.event_id = dbevents.event_id LEFT JOIN dblists ON dblists.list_id = dblistitems.list_id WHERE dblistitems.list_id = $list_id";
+        $sql = "SELECT DISTINCT dbevents.*, dblists.title, dblists.description FROM dbevents LEFT JOIN dblistitems ON dblistitems.event_id = dbevents.event_id LEFT JOIN dblists ON dblists.list_id = dblistitems.list_id WHERE dblistitems.list_id = $list_id";
         $result = $this->connection->query($sql);
 
         $events = array();
@@ -410,9 +410,10 @@ class Database
         $sql2 = "SELECT * FROM dbLists WHERE user_id = '$user_id'";
         $result2 = $this->getConnection()->query($sql2);
 
+        $lists = array();
         if ($result2->num_rows > 0) {
             while ($row = $result2->fetch_assoc()) {
-                $lists = $row;
+                $lists[] = $row;
             }
         } else {
             $lists = null;
@@ -421,9 +422,10 @@ class Database
         $sql3 = "SELECT dbreviews.*, dbusers.username, dbusers.profile_photo FROM dbreviews LEFT JOIN dbusers ON dbusers.user_id = dbreviews.user_id WHERE dbreviews.event_id = '$event_id'";
         $result3 = $this->getConnection()->query($sql3);
 
+        $reviews = array();
         if ($result3->num_rows > 0) {
             while ($row = $result3->fetch_assoc()) {
-                $reviews = $row;
+                $reviews[] = $row;
             }
         } else {
             $reviews = null;
@@ -612,7 +614,7 @@ class Database
 
     function addList($user_id, $name, $description)
     {
-        $sql = "INSERT INTO dblists (name, description, user_id) VALUES ('$name', '$description', '$user_id')";
+        $sql = "INSERT INTO dblists (title, description, user_id) VALUES ('$name', '$description', '$user_id')";
         $result = $this->getConnection()->query($sql);
         if ($result) {
             header("Content-Type: application/json");
@@ -698,7 +700,6 @@ function emailExists($conn, $email)
         return false;
     }
 }
-
 function test_input($data)
 {
     $data = trim($data);

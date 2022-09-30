@@ -25,8 +25,8 @@ const eventTag = (tag_name) => `
     </div>
 `;
 
-const listItem = ({ list_id, name }) => `
-    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${name}</li>
+const listItem = ({ list_id, title }) => `
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0,13)+"..." : title}</li>
 `;
 
 const populateHomeEvents = () => {
@@ -302,7 +302,7 @@ $(".events").on('click', '.event-card', function () {
             if (data.tag2 !== null) tags.push(data.tag2);
             if (data.tag3 !== null) tags.push(data.tag3);
 
-            let lists = res.data[1];
+            let lists = res.data[1][0];
             if (lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
             }
@@ -312,7 +312,7 @@ $(".events").on('click', '.event-card', function () {
 
             $('.event-tags').html(tags.map(eventTag).join(''));
 
-            let reviews = res.data[2];
+            let reviews = res.data[2][0];
 
             if (reviews[0] != null) {
                 $('.reviews').html(reviews.map(reviewCard).join(''));

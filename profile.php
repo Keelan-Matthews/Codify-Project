@@ -61,7 +61,7 @@ if (isset($_GET["error"])) {
                 <div class="modal-body">
                     <form action="" method="post" id="profile-form" enctype="multipart/form-data">
                         <div class="form-group mb-5">
-                            <label for="profilePhoto">Event Image</label>
+                            <label for="profilePhoto">Profile Image</label>
                             <input type="file" class="form-control" id="profilePhoto" name="image">
                         </div>
                         <div class="form-floating form-group">
