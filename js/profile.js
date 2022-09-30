@@ -166,7 +166,7 @@ const populateUserEvents = () => {
             $('#username').html(res.data[0].username);
 
             if (res.data[0].profile_photo != "")
-                $('#user-profile-photo').attr('src', res.data[0].profile_photo);
+                $('#user-profile-photo').attr('src', res.data[0].profile_photo+"?t=" + new Date().getTime());
             else
                 $('#user-profile-photo').attr('src', 'media/profile_photos/default.png');
 
@@ -384,7 +384,7 @@ $('#event-form').submit((e) => {
     }
     else {
         if (createOrEdit == 'create') {
-            let form = $('form')[2];
+            let form = $('form#event-form')[0];
             let formData = new FormData(form);
             formData.append('type', 'add_event');
             formData.append('user_id', user_id);
@@ -412,7 +412,7 @@ $('#event-form').submit((e) => {
             })
         }
         else {
-            let form = $('form')[2];
+            let form = $('form#event-form')[0];
             let formData = new FormData(form);
             formData.append('type', 'edit_event');
             formData.append('user_id', user_id);
@@ -583,7 +583,7 @@ $('#lists-container').on('click', '.add-list', () => {
 $('#list-form').submit((e) => {
     e.preventDefault();
 
-    let form = $('form')[0];
+    let form = $('form#list-form')[0];
     let formData = new FormData(form);
     formData.append('type', 'add_list');
     formData.append('user_id', user_id);
@@ -766,3 +766,37 @@ const populateExploreEvents = () => {
         processData: false,
     })
 }
+
+$('#edit-profile').on('click', () => {
+    $('#editProfileModal').modal('show');
+});
+
+$('#profile-form').submit((e) => {
+    e.preventDefault();
+
+    let form = $('form#profile-form')[0];
+    let formData = new FormData(form);
+    formData.append('type', 'edit_profile');
+    formData.append('user_id', user_id);
+
+    for (var pair of formData.entries()) {
+        console.log(pair[0] + ', ' + pair[1]);
+    }
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+            $('#editProfileModal').modal('hide');
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
+            $('#editProfileModal').modal('show');
+        }
+
+    })
+});

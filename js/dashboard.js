@@ -134,7 +134,7 @@ $('#event-form').on('submit', (e) => {
         $('#createEvent').modal('show');
     }
     else {
-        let form = $('form')[0];
+        let form = $('form#event-form')[0];
         let formData = new FormData(form);
         formData.append('type', 'add_event');
         formData.append('user_id', user_id);
@@ -404,7 +404,7 @@ $('#attend-event').on('click', () => {
 
 $('#review-form').on('submit', (e) => {
     e.preventDefault();
-    let form = $('form')[0];
+    let form = $('form#review-form')[0];
     let formData = new FormData(form);
     let event_id = $('.event-details').attr('id');
     let rating = $('.rating').attr('id');

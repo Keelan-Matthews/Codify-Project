@@ -220,28 +220,28 @@ class Database
                 echo json_encode($this->error("An error occured while editing event"));
             }
         } else {
-            // $target_dir = "media/events/";
-            // $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
-            // $image_name =  $name . $user_id . $category;
-            // $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
+            $target_dir = "media/events/";
+            $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $image_name =  $name . $user_id . $category;
+            $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
 
-            // $allowedFiles =  array('jpg', 'jpeg', 'png');
+            $allowedFiles =  array('jpg', 'jpeg', 'png');
 
-            // if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
-            //     move_uploaded_file($image['tmp_name'], $image_path);
-            // } else {
-            //     header('Location: dashboard.php?error=incorrectimage');
-            //     exit();
-            // }
+            if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
+                move_uploaded_file($image['tmp_name'], $image_path);
+            } else {
+                header('Location: dashboard.php?error=incorrectimage');
+                exit();
+            }
 
-            // $sql = "UPDATE dbevents SET name = '$name', description = '$description', date = '$date', location = '$location', category = '$category', image = '$image_path', tag1 = '$tag1', tag2 = '$tag2', tag3 = '$tag3' WHERE event_id = '$event_id'";
-            // $result = $this->connection->query($sql);
-            // if ($result) {
-            //     header('HTTP/1.1 200 OK');
-            //     echo json_encode($this->success("Event edited successfully"));
-            // } else {
-            //     echo json_encode($this->error("An error occured while editing event"));
-            // }
+            $sql = "UPDATE dbevents SET name = '$name', description = '$description', date = '$date', location = '$location', category = '$category', image = '$image_path', tag1 = '$tag1', tag2 = '$tag2', tag3 = '$tag3' WHERE event_id = '$event_id'";
+            $result = $this->connection->query($sql);
+            if ($result) {
+                header('HTTP/1.1 200 OK');
+                echo json_encode($this->success("Event edited successfully"));
+            } else {
+                echo json_encode($this->error("An error occured while editing event"));
+            }
         }
     }
 
@@ -280,6 +280,52 @@ class Database
             header("Content-Type: application/json");
             echo json_encode($this->error("No events found"));
             header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function editProfile($user_id, $username, $email, $password, $image)
+    {
+        $result = true;
+        if ($username) {
+            $sql = "UPDATE dbusers SET username = '$username' WHERE user_id = '$user_id'";
+            $result = $this->connection->query($sql);
+        }
+
+        if ($email) {
+            $sql = "UPDATE dbusers SET email = '$email' WHERE user_id = '$user_id'";
+            $result = $this->connection->query($sql);
+        }
+
+        if ($password) {
+            $sql = "UPDATE dbusers SET password = '$password' WHERE user_id = '$user_id'";
+            $result = $this->connection->query($sql);
+        }
+
+        if ($image) {
+            $filename = $image['name'];
+            $target_dir = "media/profile_photos/";
+            $ext = strtolower(pathinfo($filename, PATHINFO_EXTENSION));
+            $image_name =  $user_id;
+            $image_path = strtolower($target_dir . str_replace(" ", "", $image_name) . "." . $ext);
+
+            $allowedFiles =  array('jpg', 'jpeg', 'png');
+
+            if ($image['size'] < 30000000 && in_array($ext, $allowedFiles)) {
+                move_uploaded_file($image['tmp_name'], $image_path);
+            } else {
+                header('Location: dashboard.php?error=incorrectimage');
+                exit();
+            }
+
+            $sql = "UPDATE dbusers SET profile_photo = '$image_path' WHERE user_id = '$user_id'";
+            $result = $this->connection->query($sql);
+        }
+
+        if ($result) {
+            header('HTTP/1.1 200 OK');
+            echo json_encode($this->success("Profile edited successfully"));
+        } else {
+            echo json_encode($this->error("An error occured while editing profile"));
         }
     }
 

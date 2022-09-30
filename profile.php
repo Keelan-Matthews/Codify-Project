@@ -51,6 +51,41 @@ if (isset($_GET["error"])) {
         </div>
     </div>
 
+    <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white border-0">
+                    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="" method="post" id="profile-form" enctype="multipart/form-data">
+                        <div class="form-group mb-5">
+                            <label for="profilePhoto">Event Image</label>
+                            <input type="file" class="form-control" id="profilePhoto" name="image">
+                        </div>
+                        <div class="form-floating form-group">
+                            <input type="text" class="form-control mt-4" placeholder="Username" id="profileUsername" name="username""></input>
+                            <label for="profileUsername">Username</label>
+                        </div>
+                        <div class="form-floating form-group">
+                            <input type="text" class="form-control mt-4" placeholder="Email" id="profileEmail" name="email""></input>
+                            <label for="profileEmail">New Email Address</label>
+                        </div>
+                        <div class="form-floating form-group">
+                            <input type="password" class="form-control mt-4" placeholder="Password" id="profilePassword" name="password""></input>
+                            <label for="profilePassword">New Password</label>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" form="profile-form" name="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-12 col-md-10">

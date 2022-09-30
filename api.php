@@ -101,6 +101,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->addList($user_id, $name, $description);
             break;
 
+        case "edit_profile":
+            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
+            $username = isset($_POST["username"]) ? test_input($_POST["username"]) : null;
+            $email = isset($_POST["email"]) ? test_input($_POST["email"]) : null;
+            $password = isset($_POST["password"]) ? test_input($_POST["password"]) : null;
+            $image = isset($_FILES['image']) ? $_FILES['image'] : null;
+            $instance->editProfile($user_id, $username, $email, $password, $image);
+            break;
+
         case "add_review":
             $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
             $event_id = isset($_POST["event_id"]) ? test_input($_POST["event_id"]) : null;
