@@ -54,7 +54,7 @@ if ($_SESSION["signed_in"] == true) {
                 </a>
             </div>
             <div class="illustration">
-                <img src="media/svg/splash.svg" alt="">
+                <img src="./media/svg/splash.svg" alt="">
             </div>
         </div>
     </div>

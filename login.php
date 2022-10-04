@@ -25,7 +25,7 @@ if (isset($_GET["error"])) {
         <div id="illustration-col" class="col-12 col-md-6 bcg-light">
             <div class="d-flex align-items-center justify-content-center h-100">
                 <div class="illustration">
-                    <img src="media/svg/login.svg" alt="">
+                    <img src="./media/svg/login.svg" alt="">
                 </div>
             </div>
         </div>

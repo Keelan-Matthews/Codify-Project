@@ -284,7 +284,7 @@ $(".events").on('click', '.event-card', function () {
             $('.event-tags').html(tags.map(eventTag).join(''));
 
             let lists = res.data[1][0];
-            if (lists[0] != null) {
+            if (lists != null && lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
             }
             else {
