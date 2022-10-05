@@ -24,10 +24,12 @@ const userCard = ({ user_id, profile_photo, username }) => `
 
 const userSearchCard = ({ user_id, profile_photo, username }) => `
     <div class="p-3 col-12 col-md-4 col-lg-3">
-        <div class="card lighter-gray shadow rounded" id="${user_id}"">
-            <img src="${profile_photo}" alt="${username}" class="rounded-circle w-100 p-5">
-            <h3 class="text-white text-center mt-4">${username}</h3>
-        </div>
+        <a href="profile.php?user_id=${user_id}">
+            <div class="card lighter-gray shadow rounded" id="${user_id}"">
+                <img src="${profile_photo}" alt="${username}" class="rounded-circle w-100 h-100 p-5">
+                <h3 class="text-white text-center my-4">${username}</h3>
+            </div>
+        </a>
     </div>
 `;
 
@@ -616,6 +618,8 @@ $('.search-input').on('keyup', () => {
         let filteredUsers = usersArray.filter(user => {
             return user.username.toLowerCase().includes(search.toLowerCase());
         })
+
+        filteredUsers = filteredUsers.filter(user => user.user_id != user_id);
         $('.events').html(filteredUsers.map(userSearchCard).join(''));
     }
     else {
