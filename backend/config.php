@@ -646,6 +646,44 @@ class Database
         }
     }
 
+    function getMessages($user_id, $friend_id)
+    {
+        $sql = "SELECT * FROM dbmessages WHERE (user_id = '$user_id' AND friend_id = '$friend_id') OR (user_id = '$friend_id' AND friend_id = '$user_id') ORDER BY time ASC";
+        $result = $this->getConnection()->query($sql);
+        $messages = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $messages[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($messages));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No messages found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function getFriends($user_id)
+    {
+        $sql = "SELECT dbusers.username, dbusers.profile_photo, dbusers.user_id FROM dbusers LEFT JOIN dbfollowing ON dbfollowing.user_id = dbusers.user_id WHERE dbfollowing.following_id = '$user_id' AND dbfollowing.user_id IN (SELECT dbfollowing.following_id FROM dbfollowing WHERE dbfollowing.user_id = '$user_id')";
+        $result = $this->getConnection()->query($sql);
+        $friends = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $friends[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($friends));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No friends found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     function returnFollowers($profile_id)
     {
         $sql = "SELECT dbusers.username, dbusers.profile_photo, dbusers.user_id FROM dbusers LEFT JOIN dbfollowing ON dbfollowing.user_id = dbusers.user_id WHERE dbfollowing.following_id = '$profile_id'";
@@ -680,6 +718,40 @@ class Database
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("An error occured while adding event to list"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function returnUserInfo($user_id)
+    {
+        $sql = "SELECT * FROM dbusers WHERE user_id = '$user_id'";
+        $result = $this->getConnection()->query($sql);
+        $user = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $user[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($user));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No user found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function sendMessage($user_id, $friend_id, $message, $time)
+    {
+        $sql = "INSERT INTO dbmessages (message, user_id, friend_id, time) VALUES ('$message', '$user_id', '$friend_id', '$time')";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Message sent"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while sending message"));
             header("HTTP/1.1 404 Not Found");
         }
     }

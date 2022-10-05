@@ -136,6 +136,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnAllUsers();
             break;
 
+        case "get_messages":
+            $instance->getMessages($data->user_id, $data->friend_id);
+            break;
+
+        case "get_friends":
+            $instance->getFriends($data->user_id);
+            break;
+
+        case "user":
+            $instance->returnUserInfo($data->user_id);
+            break;
+
+        case "send_message":
+            $instance->sendMessage($data->user_id, $data->friend_id, $data->message, $data->time);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }
