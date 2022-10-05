@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "add_event":
-            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
-            $description = isset($_POST["description"]) ? test_input($_POST["description"]) : null;
-            $date = isset($_POST["date"]) ? test_input($_POST["date"]) : null;
-            $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
-            $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
+            $name = isset($_POST["name"]) ? $_POST["name"] : null;
+            $description = isset($_POST["description"]) ? $_POST["description"] : null;
+            $date = isset($_POST["date"]) ? $_POST["date"] : null;
+            $location = isset($_POST["location"]) ? $_POST["location"] : null;
+            $category = isset($_POST["category"]) ? $_POST["category"] : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
             $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
             $tag1 = isset($_POST["tag1"]) ? test_input($_POST["tag1"]) : null;
@@ -48,11 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "edit_event":
-            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
-            $description = isset($_POST["description"]) ? test_input($_POST["description"]) : null;
-            $date = isset($_POST["date"]) ? test_input($_POST["date"]) : null;
-            $location = isset($_POST["location"]) ? test_input($_POST["location"]) : null;
-            $category = isset($_POST["category"]) ? test_input($_POST["category"]) : null;
+            $name = isset($_POST["name"]) ? $_POST["name"] : null;
+            $description = isset($_POST["description"]) ? $_POST["description"] : null;
+            $date = isset($_POST["date"]) ? $_POST["date"] : null;
+            $location = isset($_POST["location"]) ? $_POST["location"] : null;
+            $category = isset($_POST["category"]) ? $_POST["category"] : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
             $tag1 = isset($_POST["tag1"]) ? test_input($_POST["tag1"]) : null;
             $tag2 = isset($_POST["tag2"]) ? test_input($_POST["tag2"]) : null;
@@ -95,28 +95,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case "add_list":
-            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
-            $name = isset($_POST["name"]) ? test_input($_POST["name"]) : null;
-            $description = isset($_POST["description"]) ? test_input($_POST["description"]) : null;
+            $user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
+            $name = isset($_POST["name"]) ? $_POST["name"] : null;
+            $description = isset($_POST["description"]) ? $_POST["description"] : null;
             $instance->addList($user_id, $name, $description);
             break;
 
         case "edit_profile":
-            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
-            $username = isset($_POST["username"]) ? test_input($_POST["username"]) : null;
-            $email = isset($_POST["email"]) ? test_input($_POST["email"]) : null;
-            $password = isset($_POST["password"]) ? test_input($_POST["password"]) : null;
+            $user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
+            $username = isset($_POST["username"]) ? $_POST["username"] : null;
+            $email = isset($_POST["email"]) ? $_POST["email"] : null;
+            $password = isset($_POST["password"]) ? $_POST["password"] : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
             $instance->editProfile($user_id, $username, $email, $password, $image);
             break;
 
         case "add_review":
-            $user_id = isset($_POST["user_id"]) ? test_input($_POST["user_id"]) : null;
-            $event_id = isset($_POST["event_id"]) ? test_input($_POST["event_id"]) : null;
-            $comment = isset($_POST["comment"]) ? test_input($_POST["comment"]) : null;
+            $user_id = isset($_POST["user_id"]) ? $_POST["user_id"] : null;
+            $event_id = isset($_POST["event_id"]) ? $_POST["event_id"] : null;
+            $comment = isset($_POST["comment"]) ? $_POST["comment"] : null;
             $image = isset($_FILES['image']) ? $_FILES['image'] : null;
-            $rating = isset($_POST["rating"]) ? test_input($_POST["rating"]) : null;
-            $instance->addReview($user_id, $event_id, $comment, $image, $rating);
+            $rating = isset($_POST["rating"]) ? $_POST["rating"] : null;
+            $review_date = isset($_POST["review_date"]) ? $_POST["review_date"] : null;
+            $instance->addReview($user_id, $event_id, $comment, $image, $rating, $review_date);
             break;
 
         case "add_to_list":

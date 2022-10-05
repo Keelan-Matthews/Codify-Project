@@ -320,8 +320,9 @@ $(".events").on('click', '.event-card', function () {
                 $('.carousel-item').first().addClass('active');
 
                 let total = 0;
-                reviews.forEach(r => total += r.rating);
+                reviews.forEach(r => total += parseInt(r.rating));
                 let avg = total / reviews.length;
+                
                 $('.average-rating').text(avg.toFixed(1));
             }
             else {
@@ -417,6 +418,7 @@ $('#review-form').on('submit', (e) => {
     formData.append('user_id', user_id);
     formData.append('event_id', event_id);
     formData.append('rating', rating);
+    formData.append('review_date', new Date().toISOString().slice(0, 19).replace('T', ' '));
 
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
@@ -460,16 +462,22 @@ $('.star-rating').on('click', function () {
     }
 });
 
-const reviewCard = ({user_id, username, profile_photo, rating, comment}) => `
+const reviewCard = ({user_id, username, profile_photo, rating, comment, review_date}) => `
     <a href="profile.php?user_id=${user_id}">
         <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
             <div class="col-2">
                 <img src="${profile_photo}" alt="" class="rounded-circle w-100">
             </div>
             <div class="col-10">
-                <p class="text-white fw-bold mb-0">${username}</p>
+                <div class="d-flex justify-content-between">
+                    <p class="text-white fw-bold mb-0">${username}</p>
+                    <small class="text-white">
+                        ${showReviewDate(review_date)}
+                    </small>
+                </div>
+                
                 <p class="rating">
-                    ${showStars(rating)}
+                    ${showStarsReview(rating)}
                 </p>
             </div>
             <p class="text-white mt-2">${comment}</p>
@@ -494,6 +502,38 @@ const showStars = (rating) => {
     }
     return stars;
 }
+
+const showStarsReview = (rating) => {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="fas fa-star text-warning"></i>';
+    }
+
+    for (let i = 0; i < 5 - rating; i++) {
+        stars += '<i class="fas fa-star text-lighter-gray"></i>';
+    }
+    return stars;
+}
+
+const showReviewDate = (date) => {
+    let dateObj = new Date(date);
+    let ratingDate = dateObj.toISOString().slice(0, 9);
+    let currDate = new Date().toISOString().slice(0, 9);
+    let day = dateObj.getDate();
+    let month = dateObj.getMonth() + 1;
+    let year = dateObj.getFullYear();
+
+    if (ratingDate === currDate)
+        return "Today";
+    else if (year === new Date().getFullYear()){
+        let monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        return day + " " + monthNames[month - 1];
+    }
+    else {
+        return day + "/" + month + "/" + year;
+    }
+}
+
 
 $('#create-event-button').on('click', () => {
     $('#createEventLabel').text('Create Event');

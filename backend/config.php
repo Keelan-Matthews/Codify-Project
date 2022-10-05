@@ -419,7 +419,7 @@ class Database
             $lists = null;
         }
 
-        $sql3 = "SELECT dbreviews.*, dbusers.username, dbusers.profile_photo FROM dbreviews LEFT JOIN dbusers ON dbusers.user_id = dbreviews.user_id WHERE dbreviews.event_id = '$event_id'";
+        $sql3 = "SELECT dbreviews.*, dbusers.username, dbusers.profile_photo FROM dbreviews LEFT JOIN dbusers ON dbusers.user_id = dbreviews.user_id WHERE dbreviews.event_id = '$event_id' ORDER BY dbreviews.review_date DESC";
         $result3 = $this->getConnection()->query($sql3);
 
         $reviews = array();
@@ -582,7 +582,7 @@ class Database
         }
     }
 
-    function addReview($user_id, $event_id, $comment, $image, $rating)
+    function addReview($user_id, $event_id, $comment, $image, $rating, $review_date)
     {
         $filename = $image['name'];
         $target_dir = "media/events/";
@@ -599,7 +599,7 @@ class Database
             exit();
         }
 
-        $sql = "INSERT INTO dbreviews (user_id, event_id, comment, image, rating) VALUES ('$user_id', '$event_id', '$comment', '$image_path', '$rating')";
+        $sql = "INSERT INTO dbreviews (user_id, event_id, comment, image, rating, review_date) VALUES ('$user_id', '$event_id', '$comment', '$image_path', '$rating', '$review_date')";
         $result = $this->getConnection()->query($sql);
         if ($result) {
             header("Content-Type: application/json");
@@ -724,10 +724,5 @@ function test_input($data)
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
-    return clean($data);
+    return $data;
 }
-
-function clean($string){
-    $string = str_replace(' ', '-', $string); // Replaces spaces with hyphens.
-    return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
- }

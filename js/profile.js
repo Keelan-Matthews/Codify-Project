@@ -310,7 +310,7 @@ $(".events").on('click', '.event-card', function () {
                 $('.carousel-item').first().addClass('active');
 
                 let total = 0;
-                reviews.forEach(r => total += r.rating);
+                reviews.forEach(r => total += parseInt(r.rating));
                 let avg = total / reviews.length;
                 $('.average-rating').text(avg.toFixed(1));
             }
@@ -681,16 +681,22 @@ $('.lists').on('click', '.list-card', function () {
     })
 });
 
-const reviewCard = ({ user_id, username, profile_photo, rating, comment }) => `
+const reviewCard = ({user_id, username, profile_photo, rating, comment, review_date}) => `
     <a href="profile.php?user_id=${user_id}">
         <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
             <div class="col-2">
                 <img src="${profile_photo}" alt="" class="rounded-circle w-100">
             </div>
             <div class="col-10">
-                <p class="text-white fw-bold mb-0">${username}</p>
+                <div class="d-flex justify-content-between">
+                    <p class="text-white fw-bold mb-0">${username}</p>
+                    <small class="text-white">
+                        ${showReviewDate(review_date)}
+                    </small>
+                </div>
+                
                 <p class="rating">
-                    ${showStars(rating)}
+                    ${showStarsReview(rating)}
                 </p>
             </div>
             <p class="text-white mt-2">${comment}</p>
@@ -712,6 +718,18 @@ const showStars = (rating) => {
 
     for (let i = 0; i < 5 - rating; i++) {
         stars += '<i class="fas fa-star text-lighter-gray-2"></i>';
+    }
+    return stars;
+}
+
+const showStarsReview = (rating) => {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += '<i class="fas fa-star text-warning"></i>';
+    }
+
+    for (let i = 0; i < 5 - rating; i++) {
+        stars += '<i class="fas fa-star text-lighter-gray"></i>';
     }
     return stars;
 }
@@ -843,3 +861,20 @@ $('.followers-label').on('click', () => {
 
     })
 });
+
+const showReviewDate = (date) => {
+    let dateObj = new Date(date);
+    let day = dateObj.getDate();
+    let month = dateObj.getMonth() + 1;
+    let year = dateObj.getFullYear();
+
+    if (dateObj === new Date())
+        return "Today";
+    else if (year === new Date().getFullYear()){
+        let monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+        return day + " " + monthNames[month - 1];
+    }
+    else {
+        return day + "/" + month + "/" + year;
+    }
+}

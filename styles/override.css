@@ -259,6 +259,10 @@ select:-webkit-autofill:focus {
     background-color: #383838 !important;
 }
 
+.text-lighter-gray {
+    color: #2C2C2C !important;
+}
+
 .text-lighter-gray-2 {
     color: #383838 !important;
 }
