@@ -661,7 +661,6 @@ class Database
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("No messages found"));
-            header("HTTP/1.1 404 Not Found");
         }
     }
 

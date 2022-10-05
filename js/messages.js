@@ -101,7 +101,7 @@ const friendCard = ({username, user_id, profile_photo}) => `
             <div>
                 <h4 class="text-white fw-bold mb-0">${username}</h4>
             </div>
-            <p class="text-white mt-2 last-message"></p>
+            <p class="text-white mt-2 last-message">${getLastMessage(user_id)}</p>
         </div>
     </div>
 `;
@@ -184,3 +184,45 @@ $('.text-bar button').on('click', () => {
         processData: false,
     })
 });
+
+const getLastMessage = (friend_id) => {
+    let lastMessageArray = [];
+    const result = new Promise((resolve, reject) => {
+        $.ajax({
+            async: false,
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "type": "get_messages",
+                "user_id": user_id,
+                "friend_id": friend_id
+            }),
+            url: 'api.php',
+            type: 'POST',
+            success: (res) => {
+                console.log(res);
+                if (res.data.message) 
+                    lastMessageArray.push("");
+                else {
+                    let lastMessage = res.data[res.data.length - 1];
+                    if (parseInt(lastMessage.user_id) == user_id) {
+                        let concat = lastMessage.message.length > 30 ? lastMessage.message.substring(0, 20) + "..." : lastMessage.message;
+                        lastMessageArray.push("You: " + concat);
+                    }
+                    else {
+                        lastMessageArray.push(lastMessage.message.length > 30 ? lastMessage.message.substring(0, 25) + "..." : lastMessage.message);
+                    }
+                }
+                resolve(lastMessageArray);
+            },
+            error: (res) => {
+                console.log(res);
+                reject(res);
+            },
+            processData: false,
+        })
+    });
+
+    result.then((res) => {
+        $('.friends').find(`#${friend_id} .last-message`).html(res[res.length - 1]);
+    })
+}
