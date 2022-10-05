@@ -86,6 +86,19 @@ if (isset($_GET["error"])) {
         </div>
     </div>
 
+    <div class="modal fade" id="showFollowers" tabindex="-1" aria-labelledby="showFollowersLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white border-0">
+                    <h5 class="modal-title fs-3" id="showFollowers">Followers</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="followers-body">
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-12 col-md-10">
@@ -102,7 +115,7 @@ if (isset($_GET["error"])) {
                                         <h2 class="text-white fw-bold mb-0 me-2" id="username"></h2>
                                     </div>
 
-                                    <h4 class="text-primary mt-2 mb-0"><span id="user-followers"></span> Followers</h4>
+                                    <h4 class="text-primary mt-2 mb-0 followers-label"><span id="user-followers"></span> Followers</h4>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end" id="profile-actions">
                                     <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">

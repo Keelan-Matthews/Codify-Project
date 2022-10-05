@@ -20,3 +20,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
+.followers-label {
+    cursor: pointer;
+}

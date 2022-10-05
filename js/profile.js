@@ -70,13 +70,12 @@ const listCard = ({ title, count, images, list_id }) => `
                 </div>
             </div>
             <div class="lighter-gray-2">
-            ${
-                images ?
-                    listGallery(images) :
-                    `<div class="d-flex justify-content-center align-items-center" style="height: 270px;">
+            ${images ?
+        listGallery(images) :
+        `<div class="d-flex justify-content-center align-items-center" style="height: 270px;">
                         <h5 class="text-white fw-bold">No events</h5>
                     </div>`
-            }
+    }
             </div>
         </div>
     </div>
@@ -101,8 +100,8 @@ const listGallery = (images) => {
     return `<div class="row p-3">${gallery}</div>`;
 }
 
-const listItem = ({list_id, title}) => `
-    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0,13)+"..." : title}</li>
+const listItem = ({ list_id, title }) => `
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0, 13) + "..." : title}</li>
 `
 
 const addList = () => `
@@ -118,6 +117,19 @@ const eventTag = (tag_name) => `
     <div class="p-2 rounded bg-dark me-2" id="${tag_name}">
         <small><span class="fw-bold"># </span><span>${tag_name}</span></small>
     </div>
+`;
+
+const followerCard = ({ username, profile_photo, user_id }) => `
+<a href="profile.php?user_id=${user_id}">
+    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-2">
+        <div class="col-2">
+            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+        </div>
+        <div class="col-10">
+            <p class="text-white fw-bold mb-0">${username}</p>
+        </div>
+    </div>
+</a>
 `;
 
 const getUrlParameter = (sParam) => {
@@ -166,7 +178,7 @@ const populateUserEvents = () => {
             $('#username').html(res.data[0].username);
 
             if (res.data[0].profile_photo != "")
-                $('#user-profile-photo').attr('src', res.data[0].profile_photo+"?t=" + new Date().getTime());
+                $('#user-profile-photo').attr('src', res.data[0].profile_photo + "?t=" + new Date().getTime());
             else
                 $('#user-profile-photo').attr('src', 'media/profile_photos/default.png');
 
@@ -220,7 +232,7 @@ const populateUserLists = () => {
                 $('.lists').html(res.data.map(listCard).join(''));
             }
 
-            if (user_id == profile_id) 
+            if (user_id == profile_id)
                 $('#lists-container').append(addList);
 
             if (res.data.message && user_id != profile_id) {
@@ -292,10 +304,15 @@ $(".events").on('click', '.event-card', function () {
             }
 
             let reviews = res.data[2];
-            if (reviews[0] != null) {
+            if (reviews != null && reviews[0] != null) {
                 $('.reviews').html(reviews.map(reviewCard).join(''));
                 $('.carousel-inner').html(reviews.map(carouselCard).join(''));
                 $('.carousel-item').first().addClass('active');
+
+                let total = 0;
+                reviews.forEach(r => total += r.rating);
+                let avg = total / reviews.length;
+                $('.average-rating').text(avg.toFixed(1));
             }
             else {
                 $('.reviews').html('<p class="text-center mb-0 text-white">No reviews available</p>');
@@ -388,12 +405,12 @@ $('#event-form').submit((e) => {
             let formData = new FormData(form);
             formData.append('type', 'add_event');
             formData.append('user_id', user_id);
-    
+
             let tagCounter = 1;
             $('input[type=checkbox]:checked').each(function () {
                 formData.append(`tag${tagCounter++}`, $(this).val());
             });
-    
+
             $.ajax({
                 url: 'api.php',
                 type: 'POST',
@@ -408,7 +425,7 @@ $('#event-form').submit((e) => {
                     console.log('An error occurred during the api call');
                     $('#createEvent').modal('show');
                 }
-    
+
             })
         }
         else {
@@ -419,12 +436,12 @@ $('#event-form').submit((e) => {
             let event_id = $('.event-details').attr('id');
             console.log(event_id);
             formData.append('event_id', event_id);
-    
+
             let tagCounter = 1;
             $('input[type=checkbox]:checked').each(function () {
                 formData.append(`tag${tagCounter++}`, $(this).val());
             });
-    
+
             $.ajax({
                 url: 'api.php',
                 type: 'POST',
@@ -439,7 +456,7 @@ $('#event-form').submit((e) => {
                     console.log('An error occurred during the api call');
                     $('#createEvent').modal('show');
                 }
-    
+
             })
         }
     }
@@ -611,7 +628,7 @@ $('#list-form').submit((e) => {
     })
 });
 
-$('#list-options').on('click', '.list-group-item', function() {
+$('#list-options').on('click', '.list-group-item', function () {
     let event_id = $('.event-details').attr('id');
     let list_id = $(this).attr('id');
 
@@ -636,7 +653,7 @@ $('#list-options').on('click', '.list-group-item', function() {
     })
 });
 
-$('.lists').on('click', '.list-card', function() {
+$('.lists').on('click', '.list-card', function () {
     let list_id = $(this).attr('id');
     $('#list-details-container').toggleClass('d-none');
     $('#lists-container').toggleClass('d-none');
@@ -664,22 +681,24 @@ $('.lists').on('click', '.list-card', function() {
     })
 });
 
-const reviewCard = ({username, profile_photo, rating, comment}) => `
-    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-        <div class="col-2">
-            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+const reviewCard = ({ user_id, username, profile_photo, rating, comment }) => `
+    <a href="profile.php?user_id=${user_id}">
+        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+            <div class="col-2">
+                <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+            </div>
+            <div class="col-10">
+                <p class="text-white fw-bold mb-0">${username}</p>
+                <p class="rating">
+                    ${showStars(rating)}
+                </p>
+            </div>
+            <p class="text-white mt-2">${comment}</p>
         </div>
-        <div class="col-10">
-            <p class="text-white fw-bold mb-0">${username}</p>
-            <p class="rating">
-                ${showStars(rating)}
-            </p>
-        </div>
-        <p class="text-white mt-2">${comment}</p>
-    </div>
+    </a>
 `;
 
-const carouselCard = ({image}) => `
+const carouselCard = ({ image }) => `
     <div class="carousel-item">
         <img src="${image}" class="d-block w-100 rounded-2" alt="">
     </div>
@@ -710,7 +729,7 @@ $('#edit-details').on('click', () => {
 
     $('#eventCategory').val($('.event-category').text());
 
-    $('.event-tags').children().each(function() {
+    $('.event-tags').children().each(function () {
         let tag = $(this).attr('id');
         $(`input[value="${tag}"]`).prop('checked', true);
     })
@@ -796,6 +815,30 @@ $('#profile-form').submit((e) => {
         error: () => {
             console.log('An error occurred during the api call');
             $('#editProfileModal').modal('show');
+        }
+
+    })
+});
+
+$('.followers-label').on('click', () => {
+    $('#showFollowers').modal('show');
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: JSON.stringify({
+            "type": "followers",
+            "profile_id": getUrlParameter('user_id')
+        }),
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+
+            $('#followers-body').html(res.data.map(followerCard).join(''));
+        },
+        error: () => {
+            console.log('An error occurred during the api call');
         }
 
     })

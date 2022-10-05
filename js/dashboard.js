@@ -314,10 +314,15 @@ $(".events").on('click', '.event-card', function () {
 
             let reviews = res.data[2][0];
 
-            if (reviews[0] != null) {
+            if (reviews != null && reviews[0] != null) {
                 $('.reviews').html(reviews.map(reviewCard).join(''));
                 $('.carousel-inner').html(reviews.map(carouselCard).join(''));
                 $('.carousel-item').first().addClass('active');
+
+                let total = 0;
+                reviews.forEach(r => total += r.rating);
+                let avg = total / reviews.length;
+                $('.average-rating').text(avg.toFixed(1));
             }
             else {
                 $('.reviews').html('<p class="text-center mb-0 text-white">No reviews available</p>');
@@ -455,19 +460,21 @@ $('.star-rating').on('click', function () {
     }
 });
 
-const reviewCard = ({username, profile_photo, rating, comment}) => `
-    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-        <div class="col-2">
-            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+const reviewCard = ({user_id, username, profile_photo, rating, comment}) => `
+    <a href="profile.php?user_id=${user_id}">
+        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+            <div class="col-2">
+                <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+            </div>
+            <div class="col-10">
+                <p class="text-white fw-bold mb-0">${username}</p>
+                <p class="rating">
+                    ${showStars(rating)}
+                </p>
+            </div>
+            <p class="text-white mt-2">${comment}</p>
         </div>
-        <div class="col-10">
-            <p class="text-white fw-bold mb-0">${username}</p>
-            <p class="rating">
-                ${showStars(rating)}
-            </p>
-        </div>
-        <p class="text-white mt-2">${comment}</p>
-    </div>
+    </a>
 `;
 
 const carouselCard = ({image}) => `

@@ -127,6 +127,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnListEvents($data->list_id);
             break;
 
+        case "followers":
+            $instance->returnFollowers($data->profile_id);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

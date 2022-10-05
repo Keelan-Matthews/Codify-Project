@@ -96,7 +96,14 @@
             </div>
 
             <div class="pt-3">
-                <h4 class="text-white">Reviews</h4>
+                <div class="d-flex justify-content-between">
+                    <h4 class="text-white">Reviews</h4>
+                    <div class="text-white">
+                        <span class="average-rating">0</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
                 <div class="reviews">
                 </div>
             </div>

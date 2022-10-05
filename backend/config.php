@@ -627,6 +627,25 @@ class Database
         }
     }
 
+    function returnFollowers($profile_id)
+    {
+        $sql = "SELECT dbusers.username, dbusers.profile_photo, dbusers.user_id FROM dbusers LEFT JOIN dbfollowing ON dbfollowing.user_id = dbusers.user_id WHERE dbfollowing.following_id = '$profile_id'";
+        $result = $this->getConnection()->query($sql);
+        $followers = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $followers[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($followers));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No followers found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     function addToList($event_id, $list_id)
     {
         $sql = "INSERT INTO dblistitems (list_id, event_id) VALUES ('$list_id', '$event_id')";
