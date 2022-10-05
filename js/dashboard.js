@@ -34,7 +34,7 @@ const userSearchCard = ({ user_id, profile_photo, username }) => `
 `;
 
 const eventTag = (tag_name) => `
-    <div class="p-2 rounded bg-dark me-2">
+    <div class="p-2 rounded bg-dark me-2 tag-click" id="${tag_name}">
         <small><span class="fw-bold"># </span>${tag_name}</small>
     </div>
 `;
@@ -568,6 +568,11 @@ const populateExploreEvents = () => {
             exploreEvents = res.data;
 
             $('.events').html(res.data.map(eventCard).join(''));
+
+            if (getUrlParameter('tag')) {
+                $('.search-input').val("#"+getUrlParameter('tag'));
+                $('.search-input').trigger('keyup');
+            }
         },
         error: (res) => {
             console.log(res);
@@ -628,3 +633,24 @@ $('.search-input').on('keyup', () => {
         $('.events').html(filteredEvents.map(eventCard).join(''));
     }
 });
+
+$('.event-details').on('click', '.tag-click', function() {
+    let tag = $(this).attr('id');
+    window.location.href = "explore.php?tag=" + tag;
+});
+
+const getUrlParameter = (sParam) => {
+    var sPageURL = window.location.search.substring(1),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : decodeURIComponent(sParameterName[1]);
+        }
+    }
+    return false;
+};

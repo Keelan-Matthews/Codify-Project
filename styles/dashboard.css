@@ -28,3 +28,7 @@
     font-size: 19px !important;
     letter-spacing: normal;
 }
+
+.tag-click {
+    cursor: pointer;
+}

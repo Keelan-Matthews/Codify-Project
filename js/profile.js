@@ -114,7 +114,7 @@ const addList = () => `
 `;
 
 const eventTag = (tag_name) => `
-    <div class="p-2 rounded bg-dark me-2" id="${tag_name}">
+    <div class="p-2 rounded bg-dark me-2 tag-click" id="${tag_name}">
         <small><span class="fw-bold"># </span><span>${tag_name}</span></small>
     </div>
 `;
@@ -853,3 +853,8 @@ const showReviewDate = (date) => {
         return day + "/" + month + "/" + year;
     }
 }
+
+$('.event-details').on('click', '.tag-click', function() {
+    let tag = $(this).attr('id');
+    window.location.href = "explore.php?tag=" + tag;
+});
