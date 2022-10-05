@@ -9,3 +9,22 @@
 .user-card:hover {
     transform: scale(1.05);
 }
+
+.search-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 280px;
+}
+
+.search-text {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    width: 280px;
+}
+
+.smaller-text {
+    font-size: 19px !important;
+    letter-spacing: normal;
+}

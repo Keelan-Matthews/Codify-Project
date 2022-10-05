@@ -16,11 +16,11 @@
                         <span class="navtext-hide">Home</span>
                     </a>
                 </li>
-                <li class="fs-4 fw-light my-4 explore-link">
-                    <div class="btn btn-lg d-flex align-items-center text-white fs-4" id="explore-nav">
+                <li class="fs-4 fw-light my-4">
+                    <a href="explore.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-globe pe-2"></i>
                         <span class="navtext-hide">Explore</span>
-                    </d>
+                    </a>
                 </li>
                 <div class="mobile-show" data-bs-toggle="modal" data-bs-target="#createEvent">
                     <li class="fs-4 fw-light my-4 rounded-circle bg-primary d-flex justify-content-center align-items-center px-2">

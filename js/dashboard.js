@@ -1,3 +1,5 @@
+let exploreEvents;
+
 const eventCard = ({ name, date, location, image, profile_photo, event_id, user_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded event-card" id="${event_id}" data-user-id="${user_id}">
@@ -26,7 +28,7 @@ const eventTag = (tag_name) => `
 `;
 
 const listItem = ({ list_id, title }) => `
-    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0,13)+"..." : title}</li>
+    <li class="list-group-item mx-2 btn fw-bold" id="${list_id}">${title.length > 14 ? title.substring(0, 13) + "..." : title}</li>
 `;
 
 const populateHomeEvents = () => {
@@ -72,35 +74,14 @@ const populateHomeUsers = () => {
     })
 }
 
-const populateExploreEvents = () => {
-    $.ajax({
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "type": "explore"
-        }),
-        url: 'api.php',
-        type: 'POST',
-        success: (res) => {
-            console.log(res);
-
-            $('.events').html(res.data.map(eventCard).join(''));
-        },
-        error: (res) => {
-            console.log(res);
-        },
-        processData: false,
-    })
-}
-
 $(document).ready(() => {
-    populateHomeEvents();
-    populateHomeUsers();
+    if (window.location.pathname.includes('dashboard.php')) {
+        populateHomeEvents();
+        populateHomeUsers();
+    } else {
+        populateExploreEvents();
+    }
     resize();
-});
-
-$('#explore-nav').on('click', () => {
-    console.log('explore');
-    populateExploreEvents();
 });
 
 $(window).resize(() => {
@@ -322,14 +303,14 @@ $(".events").on('click', '.event-card', function () {
                 let total = 0;
                 reviews.forEach(r => total += parseInt(r.rating));
                 let avg = total / reviews.length;
-                
+
                 $('.average-rating').text(avg.toFixed(1));
             }
             else {
                 $('.reviews').html('<p class="text-center mb-0 text-white">No reviews available</p>');
                 $('.carousel-inner').html('<p class="text-center mb-0 text-white">No images available</p>');
             }
-            
+
         },
         error: (res) => {
             console.log(res);
@@ -462,7 +443,7 @@ $('.star-rating').on('click', function () {
     }
 });
 
-const reviewCard = ({user_id, username, profile_photo, rating, comment, review_date}) => `
+const reviewCard = ({ user_id, username, profile_photo, rating, comment, review_date }) => `
     <a href="profile.php?user_id=${user_id}">
         <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
             <div class="col-2">
@@ -485,7 +466,7 @@ const reviewCard = ({user_id, username, profile_photo, rating, comment, review_d
     </a>
 `;
 
-const carouselCard = ({image}) => `
+const carouselCard = ({ image }) => `
     <div class="carousel-item">
         <img src="${image}" class="d-block w-100 rounded-2" alt="">
     </div>
@@ -525,8 +506,8 @@ const showReviewDate = (date) => {
 
     if (ratingDate === currDate)
         return "Today";
-    else if (year === new Date().getFullYear()){
-        let monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    else if (year === new Date().getFullYear()) {
+        let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         return day + " " + monthNames[month - 1];
     }
     else {
@@ -538,4 +519,74 @@ const showReviewDate = (date) => {
 $('#create-event-button').on('click', () => {
     $('#createEventLabel').text('Create Event');
     $('#createEventButton').text('Create');
+});
+
+const populateExploreEvents = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "explore"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            exploreEvents = res.data;
+
+            $('.events').html(res.data.map(eventCard).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
+$('.search-input').on('keyup', () => {
+    let search = $('.search-input').val();
+    
+    if (search === '') {
+        $('.search-text').html("AHHHH");
+    }
+
+    if (search[0] === '#') {
+        $('.search-text').html(
+            "<span class='color-char'>" + search[0] +"</span>"
+        );
+        search = search.slice(1);
+        let taggedEvents = exploreEvents.map(event => {
+            return [event.tag1, event.tag2, event.tag3];
+        })
+
+        let filteredEvents = exploreEvents.map((event, index) => {
+            let found = false;
+
+            taggedEvents[index].forEach(tag => {
+                if (tag == null) return;
+                if (tag.toLowerCase().includes(search.toLowerCase())) {
+                    found = true;
+                }
+            });
+
+            if (found) {
+                return event;
+            }
+        })
+        
+        filteredEvents = filteredEvents.filter(event => event != null);
+        $('.events').html(filteredEvents.map(eventCard).join(''));
+    }
+    else if (search[0] === '@') {
+        $('.search-text').html(
+            "<span class='color-char'>" + search[0] +"</span>"
+        );
+        search = search.slice(1);
+        // display users
+    }
+    else {
+        $('.search-text').html("");
+        let filteredEvents = exploreEvents.filter(event => event.name.toLowerCase().includes(search.toLowerCase()));
+        $('.events').html(filteredEvents.map(eventCard).join(''));
+    }
 });

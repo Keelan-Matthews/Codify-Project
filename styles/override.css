@@ -88,6 +88,12 @@ a>div:hover p {
     border: 0;
 }
 
+.btn-lighter-gray {
+    background-color: #2C2C2C;
+    border: 0;
+    color: white;
+}
+
 .bcg-light {
     background-color: #E8F4FF;
 }
@@ -285,4 +291,15 @@ select:-webkit-autofill:focus {
     height: 90vh;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.color-char {
+    color: var(--primary) !important;
+    font-weight: bold;
+    background-color: #383838;
+    padding: 4px;
+    border-radius: 5px;
+    position: absolute;
+    top: 3px;
+    left: -1px;
 }
