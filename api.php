@@ -132,6 +132,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnFollowers($data->profile_id);
             break;
 
+        case "all_users":
+            $instance->returnAllUsers();
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

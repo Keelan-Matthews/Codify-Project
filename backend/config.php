@@ -612,6 +612,25 @@ class Database
         }
     }
 
+    function returnAllUsers()
+    {
+        $sql = "SELECT * FROM dbusers";
+        $result = $this->getConnection()->query($sql);
+        $users = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $users[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($users));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No users found"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+    
     function addList($user_id, $name, $description)
     {
         $sql = "INSERT INTO dblists (title, description, user_id) VALUES ('$name', '$description', '$user_id')";

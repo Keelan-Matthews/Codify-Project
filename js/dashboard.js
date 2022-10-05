@@ -1,4 +1,5 @@
 let exploreEvents;
+let usersArray;
 
 const eventCard = ({ name, date, location, image, profile_photo, event_id, user_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
@@ -18,6 +19,15 @@ const eventCard = ({ name, date, location, image, profile_photo, event_id, user_
 const userCard = ({ user_id, profile_photo, username }) => `
     <div class="user-card mb-5 position-relative" id="${user_id}" title="${username}">
         <img src="${profile_photo}" class="rounded-circle me-3 " width="70" height="70" id="user-card-image">
+    </div>
+`;
+
+const userSearchCard = ({ user_id, profile_photo, username }) => `
+    <div class="p-3 col-12 col-md-4 col-lg-3">
+        <div class="card lighter-gray shadow rounded" id="${user_id}"">
+            <img src="${profile_photo}" alt="${username}" class="rounded-circle w-100 p-5">
+            <h3 class="text-white text-center mt-4">${username}</h3>
+        </div>
     </div>
 `;
 
@@ -74,12 +84,33 @@ const populateHomeUsers = () => {
     })
 }
 
+const getAllUsers = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "all_users"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            usersArray = res.data;
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
 $(document).ready(() => {
     if (window.location.pathname.includes('dashboard.php')) {
         populateHomeEvents();
         populateHomeUsers();
     } else {
         populateExploreEvents();
+        getAllUsers();
     }
     resize();
 });
@@ -582,7 +613,10 @@ $('.search-input').on('keyup', () => {
             "<span class='color-char'>" + search[0] +"</span>"
         );
         search = search.slice(1);
-        // display users
+        let filteredUsers = usersArray.filter(user => {
+            return user.username.toLowerCase().includes(search.toLowerCase());
+        })
+        $('.events').html(filteredUsers.map(userSearchCard).join(''));
     }
     else {
         $('.search-text').html("");
