@@ -41,7 +41,7 @@ if (isset($_GET["error"])) {
                         </div>
                     </div>
 
-                    <div class="events row">
+                    <div class="events row" id="explore-events">
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">

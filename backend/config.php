@@ -535,7 +535,7 @@ class Database
 
     function returnExplore()
     {
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id ORDER BY dbevents.date DESC";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo, dbusers.verified FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id ORDER BY dbevents.date DESC";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {

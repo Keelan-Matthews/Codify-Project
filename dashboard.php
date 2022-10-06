@@ -30,7 +30,7 @@ if (isset($_GET["error"])) {
                 <div class="" id="events-container">
                     <div class="followed-users d-flex"></div>
                     <h4 class="border-bottom border-4 text-white pb-3 border-color fw-bold">Home feed</h4>
-                    <div class="events row">
+                    <div class="events row" id="dashboard-events">
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">

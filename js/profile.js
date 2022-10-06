@@ -253,9 +253,9 @@ const populateUserLists = () => {
     })
 }
 
-$(".events").on('click', '.event-card', function () {
-    $("#profile-container").toggleClass('d-none');
-    $("#event-details-container").toggleClass('d-none');
+$(".events, .list-events").on('click', '.event-card', function () {
+    $("#profile-container").addClass('d-none');
+    $("#event-details-container").removeClass('d-none');
 
     let event_id = $(this).attr('id');
 
@@ -330,14 +330,19 @@ $(".events").on('click', '.event-card', function () {
 });
 
 $("#go-back-event-details").on('click', () => {
-    $("#profile-container").toggleClass('d-none');
-    $("#event-details-container").toggleClass('d-none');
+    $("#profile-container").removeClass('d-none');
+    $("#event-details-container").addClass('d-none');
+
+    if (!$("#list-details-container").hasClass('d-none')) {
+        $("#list-details-container").addClass('d-none');
+        $("#lists-container").removeClass('d-none');
+    }
 });
 
 $("#go-back-list-details").on('click', () => {
-    $("#profile-container").toggleClass('d-none');
-    $("#list-details-container").toggleClass('d-none');
-    $("#lists-container").toggleClass('d-none');
+    $("#profile-container").removeClass('d-none');
+    $("#list-details-container").addClass('d-none');
+    $("#lists-container").removeClass('d-none');
 });
 
 $("#follow-button").on('click', function () {

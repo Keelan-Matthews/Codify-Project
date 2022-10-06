@@ -282,11 +282,6 @@ select:-webkit-autofill:focus {
     cursor: pointer;
 }
 
-.events {
-    height: 80vh;
-    overflow-y: scroll;
-}
-
 .event-details {
     height: 90vh;
     overflow-y: scroll;
@@ -302,4 +297,9 @@ select:-webkit-autofill:focus {
     position: absolute;
     top: 3px;
     left: -1px;
+}
+
+#dashboard-events, #explore-events {
+    height: 80vh;
+    overflow-y: scroll;
 }
