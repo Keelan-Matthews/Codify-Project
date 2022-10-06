@@ -176,6 +176,9 @@ const populateUserEvents = () => {
             }
 
             $('#username').html(res.data[0].username);
+            $('#username_list').html(res.data[0].username);
+            $('#username_event').html(res.data[0].username);
+
 
             if (res.data[0].profile_photo != "")
                 $('#user-profile-photo').attr('src', res.data[0].profile_photo + "?t=" + new Date().getTime());

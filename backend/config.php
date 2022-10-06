@@ -384,7 +384,7 @@ class Database
 
     function returnHome($user_id)
     {
-        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id' ORDER BY dbevents.date DESC";
+        $sql = "SELECT DISTINCT dbevents.*, dbusers.profile_photo, dbusers.verified FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id LEFT JOIN dbfollowing ON dbfollowing.following_id = dbevents.user_id WHERE dbfollowing.user_id = '$user_id' ORDER BY dbevents.date DESC";
         $result = $this->getConnection()->query($sql);
         $events = array();
         if ($result->num_rows > 0) {
@@ -633,7 +633,7 @@ class Database
     
     function addList($user_id, $name, $description)
     {
-        $sql = "INSERT INTO dblists (title, description, user_id) VALUES ('$name', '$description', '$user_id')";
+        $sql = "INSERT INTO dblists (title, description, count, user_id) VALUES ('$name', '$description', 0, '$user_id')";
         $result = $this->getConnection()->query($sql);
         if ($result) {
             header("Content-Type: application/json");

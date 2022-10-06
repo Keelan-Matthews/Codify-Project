@@ -1,13 +1,21 @@
 let exploreEvents;
 let usersArray;
 
-const eventCard = ({ name, date, location, image, profile_photo, event_id, user_id }) => `
+const eventCard = ({ name, date, location, image, profile_photo, event_id, user_id, verified }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray shadow rounded event-card" id="${event_id}" data-user-id="${user_id}">
             <div class="d-flex p-3">
                 <img src="${profile_photo}" class="rounded-circle me-3" width="50" height="50">
                 <div class="text-white">
-                    <h5 class="my-0">${name}</h5>
+                    <div class="d-flex align-items-center">
+                        <h5 class="my-0 me-1">${name}</h5>
+                        ${
+                            verified == "1" ?
+                                '<img src="./media/svg/verified.svg" alt="Verified" width="15" height="15">'
+                            : ""
+                        }
+                    </div>
+                    
                     <small>${location}</small>
                 </div>
             </div>

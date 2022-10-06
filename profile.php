@@ -156,11 +156,11 @@ if (isset($_GET["error"])) {
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">
-                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold">Keelan Matthews</span> / <span class="text-muted event-title"></span></h4>
+                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold" id="username_event"></span> / <span class="text-muted event-title"></span></h4>
                     <?php require 'templates/event-details.php'; ?>
                 </div>
                 <div class="d-none" id="list-details-container">
-                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold">Keelan Matthews</span> / <span class="text-muted list-title"></span></h4>
+                    <h4 class="border-bottom border-4 text-white pb-3 mb-4 border-color"><span class="fw-bold" id="username_list"></span> / <span class="text-muted list-title"></span></h4>
                     <?php require 'templates/list-details.php'; ?>
                 </div>
             </div>
