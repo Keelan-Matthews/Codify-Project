@@ -25,3 +25,16 @@
 .tag-click {
     cursor: pointer;
 }
+
+.followed-users {
+    overflow-x: scroll;
+    width: 100vw;
+}
+
+.followed-users::-webkit-scrollbar {
+    height: 0.01em;
+}
+
+.followed-users::-webkit-scrollbar-thumb {
+    background-color: #2C2C2C;
+}
