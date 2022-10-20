@@ -684,12 +684,17 @@ $('.lists').on('click', '.list-card', function () {
         },
         error: (res) => {
             console.log(res);
+            $('.list-events').html(`
+                <div class="mb-5 col-12 d-flex justify-content-center align-items-center">
+                    <span class="fw-bold text-white fs-1">No events in list</span>
+                </div>
+            `);
         },
         processData: false,
     })
 });
 
-const reviewCard = ({user_id, username, profile_photo, rating, comment, review_date}) => `
+const reviewCard = ({ user_id, username, profile_photo, rating, comment, review_date }) => `
     <a href="profile.php?user_id=${user_id}">
         <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
             <div class="col-2">
@@ -853,8 +858,8 @@ const showReviewDate = (date) => {
 
     if (dateObj === new Date())
         return "Today";
-    else if (year === new Date().getFullYear()){
-        let monthNames = ["January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December"];
+    else if (year === new Date().getFullYear()) {
+        let monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
         return day + " " + monthNames[month - 1];
     }
     else {
@@ -862,7 +867,7 @@ const showReviewDate = (date) => {
     }
 }
 
-$('.event-details').on('click', '.tag-click', function() {
+$('.event-details').on('click', '.tag-click', function () {
     let tag = $(this).attr('id');
     window.location.href = "explore.php?tag=" + tag;
 });

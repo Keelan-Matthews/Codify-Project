@@ -209,6 +209,18 @@ class Database
             exit();
         }
 
+        if ($tag1 == "") {
+            $tag1 = null;
+        }
+
+        if ($tag2 == "") {
+            $tag2 = null;
+        }
+
+        if ($tag3 == "") {
+            $tag3 = null;
+        }
+
         if ($filename == "") {
             $sql = "UPDATE dbevents SET `name` = '$name', `description` = '$description', `date` = '$date', `location` = '$location', `category` = '$category', `tag1` = '$tag1', `tag2` = '$tag2', `tag3` = '$tag3' WHERE `event_id` = '$event_id'";
             $result = $this->connection->query($sql);
