@@ -111,7 +111,7 @@ const friendBubble = ({message, time}) => `
         <div class="friend-message text-white p-3 rounded-3 bg-primary mb-1 me-5">
             <p class="mb-0">${message}</p>
         </div>
-        <small class="text-white">${time.slice(0,-3)}</small>
+        <small class="text-white">${transformTime(time)}</small>
     </div>
 `;
 
@@ -120,7 +120,7 @@ const myBubble = ({message, time}) => `
         <div class="my-message text-white p-3 rounded-3 lighter-gray-2 align-self-end mb-1 ms-5">
             <p class="mb-0">${message}</p>
         </div>
-        <small class="text-white">${time.slice(0,-3)}</small>
+        <small class="text-white">${transformTime(time)}</small>
     </div>
 `;
 
@@ -159,7 +159,14 @@ $('.text-bar button').on('click', () => {
     if (am_pm == 'PM') {
         hours = parseInt(hours) + 12;
     }
-    time = `${hours}:${minutes}:${seconds}`;
+
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+
     $('.text-bar input').val('');
     $('.messages').append(myBubble({message, time}));
     $('.messages').scrollTop($('.messages')[0].scrollHeight);
@@ -184,6 +191,30 @@ $('.text-bar button').on('click', () => {
         processData: false,
     })
 });
+
+const transformTime = (time) => {
+    let hours = time.split(' ')[1].split(':')[0];
+    let minutes = time.split(' ')[1].split(':')[1];
+    let seconds = time.split(' ')[1].split(':')[2];
+    let date = time.split(' ')[0].split('-');
+    let year = date[0];
+    let month = date[1];
+    let day = date[2];
+
+    let today = new Date();
+    let yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    if (today.getFullYear() == year && today.getMonth() + 1 == month && today.getDate() == day) {
+        return `Today at ${hours}:${minutes}`;
+    }
+    else if (yesterday.getFullYear() == year && yesterday.getMonth() + 1 == month && yesterday.getDate() == day) {
+        return `Yesterday at ${hours}:${minutes}`;
+    }
+    else {
+        return `${month}/${day} at ${hours}:${minutes}`;
+    }
+}
 
 const getLastMessage = (friend_id) => {
     let lastMessageArray = [];

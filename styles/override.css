@@ -303,3 +303,8 @@ select:-webkit-autofill:focus {
     height: 80vh;
     overflow-y: scroll;
 }
+
+.active {
+    background-color: var(--primary);
+    color: white;
+}

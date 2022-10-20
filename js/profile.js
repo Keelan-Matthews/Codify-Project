@@ -45,16 +45,16 @@ const eventCard = ({ name, date, location, image, event_id }) => `
     </div>
 `;
 
-const eventCardLight = ({ title, date, location, image, event_id }) => `
+const eventCardLight = ({ name, date, location, image, event_id }) => `
     <div class="p-3 col-12 col-md-6 col-lg-4">
         <div class="card lighter-gray-2 shadow rounded event-card" id="${event_id}">
             <div class="d-flex p-3">
                 <div class="text-white">
-                    <h5 class="my-0">${title}</h5>
+                    <h5 class="my-0">${name}</h5>
                     <small>${location}</small>
                 </div>
             </div>
-            <img src="${image}" alt="${title}" class="my-2 w-100" height="200">
+            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
         </div>
     </div>

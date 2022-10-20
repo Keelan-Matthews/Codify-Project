@@ -9,14 +9,14 @@
             <img src="media/svg/logo.svg" alt="" class="w-50">
         </a>
         <div class="w-100">
-            <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation align-items-center">
-                <li class="fs-4 fw-light my-4 home-link active">
+            <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation align-items-center navigation-list">
+                <li class="fs-4 fw-light my-4 home-link">
                     <a href="dashboard.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-home pe-2"></i>
                         <span class="navtext-hide">Home</span>
                     </a>
                 </li>
-                <li class="fs-4 fw-light my-4">
+                <li class="fs-4 fw-light my-4 explore-link">
                     <a href="explore.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-globe pe-2"></i>
                         <span class="navtext-hide">Explore</span>
@@ -29,13 +29,13 @@
                         </div>
                     </li>
                 </div>
-                <li class="fs-4 fw-light my-4">
+                <li class="fs-4 fw-light my-4 inbox-link">
                     <a href="messages.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-inbox pe-2"></i>
                         <span class="navtext-hide">Inbox</span>
                     </a>
                 </li>
-                <li class="fs-4 fw-light my-4">
+                <li class="fs-4 fw-light my-4 profile-link">
                     <a href="profile.php?user_id=<?php echo $_SESSION['user_id'] ?>" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-user pe-2"></i>
                         <span class="navtext-hide">Profile</span>

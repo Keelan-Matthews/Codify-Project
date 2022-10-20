@@ -407,7 +407,7 @@ class Database
         $sql = "SELECT DISTINCT dbevents.*, dbusers.username, dbusers.profile_photo FROM dbevents LEFT JOIN dbusers ON dbusers.user_id = dbevents.user_id WHERE dbevents.event_id = '$event_id'";
         $result = $this->getConnection()->query($sql);
 
-        $sql2 = "SELECT * FROM dbLists WHERE user_id = '$user_id'";
+        $sql2 = "SELECT * FROM dblists WHERE user_id = '$user_id'";
         $result2 = $this->getConnection()->query($sql2);
 
         $lists = array();
@@ -707,7 +707,7 @@ class Database
         $sql = "INSERT INTO dblistitems (list_id, event_id) VALUES ('$list_id', '$event_id')";
         $result = $this->getConnection()->query($sql);
 
-        $sql2 = "UPDATE dbLists SET count = count + 1 WHERE list_id = '$list_id'";
+        $sql2 = "UPDATE dblists SET count = count + 1 WHERE list_id = '$list_id'";
         $result2 = $this->getConnection()->query($sql2);
 
         if ($result) {
