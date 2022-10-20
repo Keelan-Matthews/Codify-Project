@@ -10,32 +10,32 @@
         </a>
         <div class="w-100">
             <ul class="list-unstyled d-flex flex-md-column justify-content-around navigation align-items-center navigation-list">
-                <li class="fs-4 fw-light my-4 home-link">
+                <li class="fs-4 fw-light my-md-4 home-link">
                     <a href="dashboard.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-home pe-2"></i>
                         <span class="navtext-hide">Home</span>
                     </a>
                 </li>
-                <li class="fs-4 fw-light my-4 explore-link">
+                <li class="fs-4 fw-light my-md-4 explore-link">
                     <a href="explore.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-globe pe-2"></i>
                         <span class="navtext-hide">Explore</span>
                     </a>
                 </li>
                 <div class="mobile-show" data-bs-toggle="modal" data-bs-target="#createEvent">
-                    <li class="fs-4 fw-light my-4 rounded-circle bg-primary d-flex justify-content-center align-items-center px-2">
+                    <li class="fs-4 fw-light my-md-4 rounded-circle bg-primary d-flex justify-content-center align-items-center px-2">
                         <div class="text-white">
                             <i class="fas fa-plus"></i>
                         </div>
                     </li>
                 </div>
-                <li class="fs-4 fw-light my-4 inbox-link">
+                <li class="fs-4 fw-light my-md-4 inbox-link">
                     <a href="messages.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-inbox pe-2"></i>
                         <span class="navtext-hide">Inbox</span>
                     </a>
                 </li>
-                <li class="fs-4 fw-light my-4 profile-link">
+                <li class="fs-4 fw-light my-md-4 profile-link">
                     <a href="profile.php?user_id=<?php echo $_SESSION['user_id'] ?>" class="d-flex align-items-center text-white btn btn-lg fs-4">
                         <i class="fas fa-user pe-2"></i>
                         <span class="navtext-hide">Profile</span>

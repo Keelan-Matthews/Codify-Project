@@ -6,26 +6,26 @@
     <div class="row lighter-gray rounded p-4 mb-5">
         <div class="col-12 col-md-7">
             <div id="event-image"></div>
-            <div class="d-flex align-items-start justify-content-between mt-4">
+            <div class="d-xl-flex align-items-start justify-content-between mt-4">
                 <div>
                     <h3 class="text-white event-title"></h3>
-                    <div class="d-flex align-items-center">
-                        <h5 class="text-primary">
+                    <div class="d-sm-flex align-items-center">
+                        <h6 class="text-primary">
                             <i class="fas fa-tag pe-2"></i>
                             <span class="event-category"></span>
-                        </h5>
-                        <h5 class="text-primary mx-4">
+                        </h6>
+                        <h6 class="text-primary mx-sm-4">
                             <i class="fas fa-location-pin pe-2"></i>
                             <span class="event-location"></span>
-                        </h5>
-                        <h5 class="text-primary">
+                        </h6>
+                        <h6 class="text-primary">
                             <i class="fas fa-calendar pe-2"></i>
                             <span class="event-date"></span>
-                        </h5>
+                        </h6>
                     </div>
                     <div class="text-white d-flex mt-2 event-tags"></div>
                 </div>
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center mt-3 mt-xl-0">
                     <div class="btn btn-primary btn-lg me-2" id="attend-event">Attend</div>
                     <div class="add-tip">
                         <span class="tooltiptext">add event to a list</span>
@@ -77,7 +77,7 @@
 
         </div>
         <div class="col-12 col-md-5 ps-4">
-            <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mb-5" id="event-details-user">
+            <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mb-5 mt-4 mt-md-0" id="event-details-user">
                 <div class="col-2">
                     <img src="" alt="" class="rounded-circle w-100" id="event-user-photo">
                 </div>
