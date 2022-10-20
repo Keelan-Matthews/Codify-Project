@@ -120,17 +120,17 @@ if (isset($_GET["error"])) {
                                 <div class="col-4 d-flex align-items-center justify-content-end" id="profile-actions">
                                     <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">
                                         <i class="fas fa-user-plus me-2" id="follow-icon"></i>
-                                        <span>Follow</span>
+                                        <span class="d-none d-lg-inline">Follow</span>
                                     </div>
                                     <div class="btn btn-outline text-white border-white btn-lg w-50" id="message-button">
                                         <i class="fas fa-comment-dots me-2"></i>
-                                        Message
+                                        <span class="d-none d-lg-inline">Message</span>
                                     </div>
                                 </div>
                                 <div class="col-4 d-flex align-items-center justify-content-end" id="edit-actions">
                                     <div class="btn btn-primary btn-lg me-2 w-50" id="edit-profile">
                                         <i class="fas fa-pen me-2"></i>
-                                        <span>Edit profile</span>
+                                        <span class="d-none d-lg-inline">Edit profile</span>
                                     </div>
                                 </div>
                             </div>
