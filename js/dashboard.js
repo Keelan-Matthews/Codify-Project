@@ -319,6 +319,21 @@ $(".events").on('click', '.event-card', function () {
                 $('#edit-event').addClass('d-none');
             }
 
+            if (data.attended) {
+                $('#attend-event').attr('disabled', true);
+                $('#attend-event').text('Attended');
+                $('#attend-event').removeClass('btn');
+                $('#attend-event').removeClass('btn-primary');
+                $('#attend-event').addClass('text-white');
+            }
+            else {
+                $('#attend-event').attr('disabled', false);
+                $('#attend-event').text('Attend');
+                $('#attend-event').addClass('btn');
+                $('#attend-event').addClass('btn-primary');
+                $('#attend-event').removeClass('text-white');
+            }
+
             let tags = [];
             if (data.tag1 !== null) tags.push(data.tag1);
             if (data.tag2 !== null) tags.push(data.tag2);
@@ -427,7 +442,10 @@ $('.followed-users').on('click', '.user-card', function () {
 });
 
 $('#attend-event').on('click', () => {
-    $('#reviewModal').modal('show');
+    let text = $('#attend-event').text();
+    if (text === 'Attend') {
+        $('#reviewModal').modal('show');
+    }
 });
 
 $('#review-form').on('submit', (e) => {

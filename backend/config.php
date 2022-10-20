@@ -441,6 +441,14 @@ class Database
         $sql3 = "SELECT dbreviews.*, dbusers.username, dbusers.profile_photo FROM dbreviews LEFT JOIN dbusers ON dbusers.user_id = dbreviews.user_id WHERE dbreviews.event_id = '$event_id' ORDER BY dbreviews.review_date DESC";
         $result3 = $this->getConnection()->query($sql3);
 
+        $sql4 = "SELECT * FROM dbreviews WHERE user_id = '$user_id' AND event_id = '$event_id'";
+        $result4 = $this->getConnection()->query($sql4);
+
+        $attended = false;
+        if ($result4->num_rows > 0) {
+            $attended = true;
+        }
+
         $reviews = array();
         if ($result3->num_rows > 0) {
             while ($row = $result3->fetch_assoc()) {
@@ -453,6 +461,7 @@ class Database
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $event = $row;
+                $event['attended'] = $attended;
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");
