@@ -308,3 +308,13 @@ select:-webkit-autofill:focus {
     background-color: var(--primary);
     color: white;
 }
+
+.search-responsiveness {
+    width: 25%
+}
+
+@media screen and (max-width: 967px) {
+    .search-responsiveness {
+        width: 65%
+    }
+}

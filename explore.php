@@ -30,8 +30,8 @@ if (isset($_GET["error"])) {
                 <div class="" id="events-container">
                     <div class="d-flex justify-content-between align-items-center border-bottom border-4 border-color">
                         <h4 class="text-white fw-bold">Explore</h4>
-                        <div class="input-group mb-3 w-25">
-                            <div class="position-relative w-100 mb-3">
+                        <div class="input-group mb-3 search-responsiveness">
+                            <div class="position-relative w-100 mb-3 d-flex">
                                 <input type="text" class="form-control search-input smaller-text" placeholder="Search for anything" aria-label="Search for events" aria-describedby="button-addon2">
                                 <p class="search-text text-white p-2 smaller-text"></p>
                                 <div class="text-white text-end p-2">
