@@ -278,12 +278,19 @@ class Database
         $result3 = $this->getConnection()->query($sql3);
         $following = $result3->num_rows > 0;
 
+        // see if user is following me
+        $sql4 = "SELECT user_id FROM dbfollowing WHERE user_id = '$profile_id' AND following_id = '$user_id'";
+        $result4 = $this->getConnection()->query($sql4);
+        $followed = $result4->num_rows > 0;
+
+
         $events = array();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $events[] = $row;
                 $events[0]['followers'] = $followers;
                 $events[0]['following'] = $following;
+                $events[0]['mutual'] = ($followed && $following);
             }
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");

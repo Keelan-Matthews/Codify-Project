@@ -192,6 +192,12 @@ const populateUserEvents = () => {
             else {
                 $('#edit-actions').addClass('d-none');
                 $('#profile-actions').removeClass('d-none');
+
+                if (res.data[0].mutual) {
+                    $('#message-button').removeClass('d-none');
+                } else {
+                    $('#message-button').addClass('d-none');
+                }
             }
 
             followingUser = res.data[0].following;
@@ -468,6 +474,11 @@ $('#event-form').submit((e) => {
             })
         }
     }
+});
+
+$('#message-button').on('click', () => {
+    const profile_id = getUrlParameter('user_id');
+    window.location.href = `messages.php?friend_id=${profile_id}`;
 });
 
 const checkInputs = () => {

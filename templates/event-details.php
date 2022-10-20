@@ -89,9 +89,9 @@
                     <div class="btn btn-primary me-2">
                         <a href="" id="view-profile"><span class="text-white">View</span></a>
                     </div>
-                    <div class="btn btn-primary">
+                    <!-- <div class="btn btn-primary">
                         <i class="fas fa-comment-dots"></i>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
