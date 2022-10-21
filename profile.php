@@ -28,7 +28,10 @@ if (isset($_GET["error"])) {
         <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
             <div class="modal-content lighter-gray">
                 <div class="modal-header text-white border-0">
-                    <h5 class="modal-title" id="createListLabel">Create List</h5>
+                    <h5 class="modal-title" id="createListLabel">
+                        <i class="fas fa-border-all me-2 text-primary"></i>
+                        Create List
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -55,7 +58,10 @@ if (isset($_GET["error"])) {
         <div class="modal-dialog modal-dialog-centered modal-fullscreen-sm-down modal-dialog-scrollable">
             <div class="modal-content lighter-gray">
                 <div class="modal-header text-white border-0">
-                    <h5 class="modal-title" id="editProfileLabel">Edit Profile</h5>
+                    <h5 class="modal-title" id="editProfileLabel">
+                        <i class="fas fa-user me-2 text-primary"></i>
+                        Edit Profile
+                    </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -66,21 +72,26 @@ if (isset($_GET["error"])) {
                         </div>
                         <div class="form-floating form-group">
                             <input type="text" class="form-control mt-4" placeholder="Username" id="profileUsername" name="username""></input>
-                            <label for="profileUsername">Username</label>
+                            <label for=" profileUsername">Username</label>
                         </div>
                         <div class="form-floating form-group">
                             <input type="text" class="form-control mt-4" placeholder="Email" id="profileEmail" name="email""></input>
-                            <label for="profileEmail">New Email Address</label>
+                            <label for=" profileEmail">New Email Address</label>
                         </div>
                         <div class="form-floating form-group">
                             <input type="password" class="form-control mt-4" placeholder="Password" id="profilePassword" name="password""></input>
-                            <label for="profilePassword">New Password</label>
+                            <label for=" profilePassword">New Password</label>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer border-0">
-                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" form="profile-form" name="submit" class="btn btn-primary">Save Changes</button>
+                <div class="border-0 p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProfileModal">Delete Profile</button>
+                        <div>
+                            <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" form="profile-form" name="submit" class="btn btn-primary">Save Changes</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -167,6 +178,28 @@ if (isset($_GET["error"])) {
 
         </div>
         <?php require 'templates/nav.php' ?>
+    </div>
+
+    <!-- delete profile modal -->
+    <div class="modal fade" id="deleteProfileModal" tabindex="-1" aria-labelledby="deleteProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content lighter-gray">
+                <div class="modal-header text-white border-0">
+                    <h5 class="modal-title" id="deleteProfileModalLabel">
+                        <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                        Delete Profile
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-white fs-5">
+                    Are you sure you want to delete your profile? This process cannot be undone.
+                </div>
+                <div class="modal-footer border-0">
+                    <button type="button" class="btn btn-outline text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="delete-profile">Delete</button>
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 <?php

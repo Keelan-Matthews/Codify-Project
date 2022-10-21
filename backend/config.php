@@ -658,7 +658,7 @@ class Database
             header("HTTP/1.1 404 Not Found");
         }
     }
-    
+
     function addList($user_id, $name, $description)
     {
         $sql = "INSERT INTO dblists (title, description, count, user_id) VALUES ('$name', '$description', 0, '$user_id')";
@@ -779,6 +779,31 @@ class Database
         } else {
             header("Content-Type: application/json");
             echo json_encode($this->error("An error occured while sending message"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
+    function deleteProfile($user_id)
+    {
+        $sql3 = "SELECT profile_photo FROM dbusers WHERE user_id = '$user_id'";
+        $result3 = $this->getConnection()->query($sql3);
+        $row = $result3->fetch_assoc();
+        $profile_photo = $row['profile_photo'];
+        unlink($profile_photo);
+
+        $sql = "DELETE FROM dbfollowing WHERE user_id = '$user_id' OR following_id = '$user_id'";
+        $this->getConnection()->query($sql);
+
+        $sql2 = "DELETE FROM dbusers WHERE user_id = '$user_id'";
+        $result2 = $this->getConnection()->query($sql2);
+
+        if ($result2) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Profile deleted"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while deleting profile"));
             header("HTTP/1.1 404 Not Found");
         }
     }

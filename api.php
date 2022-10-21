@@ -152,6 +152,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->sendMessage($data->user_id, $data->friend_id, $data->message, $data->time);
             break;
 
+        case "delete_profile":
+            $instance->deleteProfile($data->user_id);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

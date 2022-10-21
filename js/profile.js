@@ -882,3 +882,24 @@ $('.event-details').on('click', '.tag-click', function () {
     let tag = $(this).attr('id');
     window.location.href = "explore.php?tag=" + tag;
 });
+
+$('#delete-profile').on('click', () => {
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: JSON.stringify({
+            "type": "delete_profile",
+            "user_id": getUrlParameter('user_id')
+        }),
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+            window.location.href = "backend/logout.php";
+        },
+        error: () => {
+            console.log('Profile could not be deleted');
+        }
+
+    })
+});
