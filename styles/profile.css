@@ -24,3 +24,12 @@
 .followers-label {
     cursor: pointer;
 }
+
+.delete-review {
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.delete-review:hover {
+    font-size: 1.2em;
+}

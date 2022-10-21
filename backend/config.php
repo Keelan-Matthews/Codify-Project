@@ -862,6 +862,37 @@ class Database
         }
     }
 
+    function deleteReview($review_id)
+    {
+        $sql = "SELECT user_id, event_id FROM dbreviews WHERE review_id = '$review_id'";
+        $result = $this->getConnection()->query($sql);
+        $row = $result->fetch_assoc();
+        $user_id = $row['user_id'];
+        $event_id = $row['event_id'];
+
+        $sql2 = "DELETE FROM dbattendees WHERE user_id = '$user_id' AND event_id = '$event_id'";
+        $this->getConnection()->query($sql2);
+
+        $sql3 = "SELECT image FROM dbreviews WHERE review_id = '$review_id'";
+        $result3 = $this->getConnection()->query($sql3);
+        $row = $result3->fetch_assoc();
+        $image = $row['image'];
+        unlink($image);
+
+        $sql4 = "DELETE FROM dbreviews WHERE review_id = '$review_id'";
+        $result = $this->getConnection()->query($sql4);
+
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Review deleted"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while deleting review"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     private function error($message)
     {
         return ["status" => "failed", "timestamp" => time(), "data" => ["message" => $message]];

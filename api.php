@@ -160,6 +160,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->deleteEvent($data->event_id);
             break;
 
+        case "delete_review":
+            $instance->deleteReview($data->review_id);
+            break;
+
         case "attended_events":
             $instance->returnAttendedEvents($data->user_id);
             break;
