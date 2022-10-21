@@ -1,0 +1,15 @@
+.friends {
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+/* hide scrollbar */
+.friends::-webkit-scrollbar {
+    display: none;
+}
+
+h4, p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

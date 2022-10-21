@@ -218,6 +218,11 @@ select:-webkit-autofill:focus {
     border-color: #2C2C2C !important;
 }
 
+.border-color-2 {
+    border-color: #3b3b3b !important;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 767px) {
     .mobile-nav {
         position: fixed;

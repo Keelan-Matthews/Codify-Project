@@ -3,6 +3,12 @@ $(document).ready(() => {
     resize();
 
     if (getUrlParameter('friend_id')) {
+        if ($(window).width() < 769) {
+            $('#friend-list').addClass('d-none');
+        }
+        else {
+            $('#friend-list').removeClass('d-none');
+        }
         $('#friend_info').removeClass('d-none');
         $('.text-bar').removeClass('d-none');
 
@@ -93,14 +99,12 @@ const resize = () => {
 }
 
 const friendCard = ({username, user_id, profile_photo}) => `
-    <div class="lighter-gray-2 p-3 rounded row mt-4 friend_card" id="${user_id}">
-        <div class="col-3">
+    <div class="border-bottom border-4 border-color-2 p-3 rounded row mt-4 friend_card" id="${user_id}">
+        <div class="col-3 col-md-12 col-xl-3">
             <img src="${profile_photo}" alt="" class="rounded-circle w-100">
         </div>
-        <div class="col-9">
-            <div>
-                <h4 class="text-white fw-bold mb-0">${username}</h4>
-            </div>
+        <div class="col-9 d-block d-md-none d-xl-block">
+            <h4 class="text-white fw-bold mb-0">${username}</h4>
             <p class="text-white mt-2 last-message">${getLastMessage(user_id)}</p>
         </div>
     </div>
