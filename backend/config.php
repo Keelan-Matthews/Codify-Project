@@ -808,6 +808,25 @@ class Database
         }
     }
 
+    function deleteEvent($event_id)
+    {
+        $sql2 = "DELETE FROM dblistitems WHERE event_id = '$event_id'";
+        $this->getConnection()->query($sql2);
+        
+        $sql = "DELETE FROM dbevents WHERE event_id = '$event_id'";
+        $result = $this->getConnection()->query($sql);
+
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Event deleted"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while deleting event"));
+            header("HTTP/1.1 404 Not Found");
+        }
+    }
+
     private function error($message)
     {
         return ["status" => "failed", "timestamp" => time(), "data" => ["message" => $message]];

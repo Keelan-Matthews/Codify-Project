@@ -156,6 +156,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->deleteProfile($data->user_id);
             break;
 
+        case "delete_event":
+            $instance->deleteEvent($data->event_id);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

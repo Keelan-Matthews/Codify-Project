@@ -903,3 +903,26 @@ $('#delete-profile').on('click', () => {
 
     })
 });
+
+$('#delete-event').on('click', () => {
+    const event_id = $('.event-details').attr('id');
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: JSON.stringify({
+            "type": "delete_event",
+            "event_id": event_id
+        }),
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            console.log(res);
+            window.location.href = "profile.php?user_id=" + user_id;
+        },
+        error: () => {
+            console.log('Event could not be deleted');
+        }
+
+    })
+});
