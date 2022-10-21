@@ -274,6 +274,7 @@ const setValidity = (input, message) => {
 }
 
 $(".events").on('click', '.event-card', function () {
+    $('#attend-event').removeClass('d-none');
     $("#events-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
 

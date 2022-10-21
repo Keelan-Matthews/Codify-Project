@@ -347,6 +347,8 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
 
             $('.event-tags').html(tags.map(eventTag).join(''));
 
+            $('#attend-event').addClass('d-none');
+
             let lists = res.data[1][0];
             if (lists != null && lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
@@ -355,7 +357,7 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
                 $('#list-options').html('<p class="text-center mb-0">No lists available</p>');
             }
 
-            let reviews = res.data[2];
+            let reviews = res.data[2][0];
             if (reviews != null && reviews[0] != null) {
                 $('.reviews').html(reviews.map(reviewCard).join(''));
                 $('.carousel-inner').html(reviews.map(carouselCard).join(''));
