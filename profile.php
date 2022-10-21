@@ -121,27 +121,28 @@ if (isset($_GET["error"])) {
                                 <div class="col-2">
                                     <img src="" alt="" class="rounded-circle w-100" id="user-profile-photo">
                                 </div>
-                                <div class="col-6 d-flex flex-column justify-content-center mb-4">
+                                <div class="col-4 d-flex flex-column justify-content-center mb-4">
                                     <div class="d-flex align-items-center" id="username-verified">
                                         <h2 class="text-white fw-bold mb-0 me-2" id="username"></h2>
                                     </div>
 
                                     <h4 class="text-primary mt-2 mb-0 followers-label"><span id="user-followers"></span> Followers</h4>
                                 </div>
-                                <div class="col-4 d-flex align-items-center justify-content-end" id="profile-actions">
-                                    <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">
-                                        <i class="fas fa-user-plus me-2" id="follow-icon"></i>
-                                        <span class="d-none d-lg-inline">Follow</span>
+                                <div class="col-6 d-flex justify-content-end">
+                                    <div class="d-flex align-items-center justify-content-end w-75" id="profile-actions">
+                                        <div class="btn btn-primary btn-lg me-2 w-50" id="follow-button">
+                                            <i class="fas fa-user-plus me-2" id="follow-icon"></i>
+                                            <span class="d-none d-lg-inline">Follow</span>
+                                        </div>
+                                        <div class="btn btn-outline text-white border-white btn-lg w-50" id="message-button">
+                                            <i class="fas fa-comment-dots me-2"></i>
+                                            <span class="d-none d-lg-inline">Message</span>
+                                        </div>
                                     </div>
-                                    <div class="btn btn-outline text-white border-white btn-lg w-50" id="message-button">
-                                        <i class="fas fa-comment-dots me-2"></i>
-                                        <span class="d-none d-lg-inline">Message</span>
-                                    </div>
-                                </div>
-                                <div class="col-4 d-flex align-items-center justify-content-end" id="edit-actions">
-                                    <div class="btn btn-primary btn-lg me-2 w-50" id="edit-profile">
-                                        <i class="fas fa-pen me-2"></i>
-                                        <span class="d-none d-lg-inline">Edit profile</span>
+                                    <div class="d-flex align-items-center justify-content-end w-25" id="edit-actions">
+                                        <div class="btn btn-primary btn-lg me-2 w-50" id="edit-profile">
+                                            <i class="fas fa-pen"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

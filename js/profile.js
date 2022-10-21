@@ -175,10 +175,11 @@ const populateUserEvents = () => {
                 `);
             }
 
+            console.log(is_admin);
+
             $('#username').html(res.data[0].username);
             $('#username_list').html(res.data[0].username);
             $('#username_event').html(res.data[0].username);
-
 
             if (res.data[0].profile_photo != "")
                 $('#user-profile-photo').attr('src', res.data[0].profile_photo + "?t=" + new Date().getTime());
@@ -189,8 +190,17 @@ const populateUserEvents = () => {
                 $('#profile-actions').addClass('d-none');
                 $('#edit-actions').removeClass('d-none');
             }
-            else {
+            else if (is_admin == "") {
                 $('#edit-actions').addClass('d-none');
+                $('#profile-actions').removeClass('d-none');
+
+                if (res.data[0].mutual) {
+                    $('#message-button').removeClass('d-none');
+                } else {
+                    $('#message-button').addClass('d-none');
+                }
+            } else {
+                $('#edit-actions').removeClass('d-none');
                 $('#profile-actions').removeClass('d-none');
 
                 if (res.data[0].mutual) {
@@ -813,7 +823,7 @@ $('#profile-form').submit((e) => {
     let form = $('form#profile-form')[0];
     let formData = new FormData(form);
     formData.append('type', 'edit_profile');
-    formData.append('user_id', user_id);
+    formData.append('user_id', getUrlParameter('user_id'));
 
     for (var pair of formData.entries()) {
         console.log(pair[0] + ', ' + pair[1]);
