@@ -381,6 +381,37 @@ class Database
         }
     }
 
+    function returnAttendedEvents($user_id)
+    {
+        $sql = "SELECT event_id FROM dbattendees WHERE user_id = $user_id";
+        $result = $this->connection->query($sql);
+
+        $events = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $events[] = $row;
+            }
+
+            // append event details to each event
+            foreach ($events as $key => $event) {
+                $event_id = $event['event_id'];
+                $sql2 = "SELECT * FROM dbevents WHERE event_id = $event_id";
+                $result2 = $this->connection->query($sql2);
+                $row = $result2->fetch_assoc();
+                $events[$key] = $row;
+            }
+
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($events));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No events found"));
+            header("HTTP/1.1 200 OK");
+        }
+
+    }
+
     function returnListEvents($list_id)
     {
         $sql = "SELECT DISTINCT dbevents.*, dblists.title, dblists.description FROM dbevents LEFT JOIN dblistitems ON dblistitems.event_id = dbevents.event_id LEFT JOIN dblists ON dblists.list_id = dblistitems.list_id WHERE dblistitems.list_id = $list_id";
@@ -628,7 +659,11 @@ class Database
         }
 
         $sql = "INSERT INTO dbreviews (user_id, event_id, comment, image, rating, review_date) VALUES ('$user_id', '$event_id', '$comment', '$image_path', '$rating', '$review_date')";
+        $this->getConnection()->query($sql);
+
+        $sql = "INSERT INTO dbattendees (user_id, event_id) VALUES ('$user_id', '$event_id')";
         $result = $this->getConnection()->query($sql);
+
         if ($result) {
             header("Content-Type: application/json");
             header("HTTP/1.1 200 OK");

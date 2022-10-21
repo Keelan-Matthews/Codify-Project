@@ -3,6 +3,7 @@ let createOrEdit = 'create';
 $(document).ready(() => {
     populateUserEvents();
     populateUserLists();
+    populateUserAttendedEvents();
     resize();
 });
 
@@ -269,7 +270,39 @@ const populateUserLists = () => {
     })
 }
 
-$(".events, .list-events").on('click', '.event-card', function () {
+const populateUserAttendedEvents = () => {
+    const profile_id = getUrlParameter('user_id');
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "attended_events",
+            "user_id": profile_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+
+            if (res.data[0].name != null) {
+                $('.attended').html(res.data.map(eventCard).join(''));
+            }
+            else {
+                $('.attended').html(`
+                    <div class="mt-5 col-12 d-flex justify-content-center">
+                        <span class="fw-bold text-white fs-1">No events</span>
+                    </div>
+                `);
+            }
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
+$(".events, .list-events, .attended").on('click', '.event-card', function () {
     $("#profile-container").addClass('d-none');
     $("#event-details-container").removeClass('d-none');
 
@@ -607,21 +640,6 @@ $('.form-check-input').on('change', function () {
     }
 });
 
-$('#events-toggle').on('click', () => {
-    $('#events-container').removeClass('d-none');
-    $('#events-toggle').addClass('lighter-gray-2');
-
-    $('#lists-container').addClass('d-none');
-    $('#lists-toggle').removeClass('lighter-gray-2');
-})
-
-$('#lists-toggle').on('click', () => {
-    $('#lists-container').removeClass('d-none');
-    $('#lists-toggle').addClass('lighter-gray-2');
-    $('#events-container').addClass('d-none');
-    $('#events-toggle').removeClass('lighter-gray-2');
-})
-
 $('#lists-container').on('click', '.add-list', () => {
     $('#createList').modal('show');
 });
@@ -936,3 +954,36 @@ $('#delete-event').on('click', () => {
 
     })
 });
+
+$('#attended-toggle').on('click', () => {
+    $('#attended-container').removeClass('d-none');
+    $('#attended-toggle').addClass('lighter-gray-2');
+    
+    $('#lists-container').addClass('d-none');
+    $('#lists-toggle').removeClass('lighter-gray-2');
+
+    $('#events-container').addClass('d-none');
+    $('#events-toggle').removeClass('lighter-gray-2');
+});
+
+$('#events-toggle').on('click', () => {
+    $('#events-container').removeClass('d-none');
+    $('#events-toggle').addClass('lighter-gray-2');
+
+    $('#lists-container').addClass('d-none');
+    $('#lists-toggle').removeClass('lighter-gray-2');
+
+    $('#attended-container').addClass('d-none');
+    $('#attended-toggle').removeClass('lighter-gray-2');
+})
+
+$('#lists-toggle').on('click', () => {
+    $('#lists-container').removeClass('d-none');
+    $('#lists-toggle').addClass('lighter-gray-2');
+
+    $('#events-container').addClass('d-none');
+    $('#events-toggle').removeClass('lighter-gray-2');
+
+    $('#attended-container').addClass('d-none');
+    $('#attended-toggle').removeClass('lighter-gray-2');
+})

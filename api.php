@@ -160,6 +160,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->deleteEvent($data->event_id);
             break;
 
+        case "attended_events":
+            $instance->returnAttendedEvents($data->user_id);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

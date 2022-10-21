@@ -140,23 +140,29 @@ if (isset($_GET["error"])) {
                                         </div>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-end w-25" id="edit-actions">
-                                        <div class="btn btn-primary btn-lg me-2 w-50" id="edit-profile">
+                                        <div class="btn btn-primary btn-lg me-2" id="edit-profile">
                                             <i class="fas fa-pen"></i>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row text-white fw-bold pe-0 mt-3">
-                                <div class="col-6 d-flex justify-content-center align-items-center rounded p-3 active btn btn-outline border-0 lighter-gray-2" id="events-toggle">
+                                <div class="col-4 d-flex justify-content-center align-items-center rounded p-3 active btn btn-outline border-0 lighter-gray-2" id="events-toggle">
                                     <h4 class="mb-0">
                                         <i class="fas fa-calendar me-2"></i>
-                                        Events
+                                        <span class="d-none d-md-inline">Events</span>
                                     </h4>
                                 </div>
-                                <div class="col-6 d-flex justify-content-center align-items-center rounded p-3 list-offset text-white btn btn-outline border-0" id="lists-toggle">
+                                <div class="col-4 d-flex justify-content-center align-items-center rounded p-3 list-offset text-white btn btn-outline border-0" id="lists-toggle">
                                     <h4 class="mb-0">
                                         <i class="fas fa-border-all me-2"></i>
-                                        Lists
+                                        <span class="d-none d-md-inline">Lists</span>
+                                    </h4>
+                                </div>
+                                <div class="col-4 d-flex justify-content-center align-items-center rounded p-3 list-offset text-white btn btn-outline border-0" id="attended-toggle">
+                                    <h4 class="mb-0">
+                                        <i class="fas fa-user-check me-2"></i>
+                                        <span class="d-none d-md-inline">Attended</span>
                                     </h4>
                                 </div>
                             </div>
@@ -165,6 +171,8 @@ if (isset($_GET["error"])) {
                     <div class="row events mt-5 pt-4" id="events-container">
                     </div>
                     <div class="row lists mt-5 pt-4 d-none" id="lists-container">
+                    </div>
+                    <div class="row attended mt-5 pt-4 d-none" id="attended-container">
                     </div>
                 </div>
                 <div class="d-none" id="event-details-container">
