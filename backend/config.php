@@ -893,6 +893,38 @@ class Database
         }
     }
 
+    function returnUnreadMessages($user_id)
+    {
+        $sql = "SELECT * FROM dbmessages WHERE friend_id = '$user_id' AND read_status IS NULL";
+        $result = $this->getConnection()->query($sql);
+        $messages = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $messages[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($messages));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No unread messages found"));
+        }
+    }
+
+    function markRead($user_id, $friend_id)
+    {
+        $sql = "UPDATE dbmessages SET read_status = '1' WHERE user_id = '$friend_id' AND friend_id = '$user_id'";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Messages marked as read"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while marking messages as read"));
+        }
+    }
+
     private function error($message)
     {
         return ["status" => "failed", "timestamp" => time(), "data" => ["message" => $message]];

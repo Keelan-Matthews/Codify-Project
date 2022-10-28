@@ -3,6 +3,23 @@ $(document).ready(() => {
     resize();
 
     if (getUrlParameter('friend_id')) {
+        $.ajax({
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "type": "mark_read",
+                "user_id": user_id,
+                "friend_id": getUrlParameter('friend_id')
+            }),
+            url: 'api.php',
+            type: 'POST',
+            success: (res) => {
+                console.log(res);
+            },
+            error: (res) => {
+                console.log(res);
+            }
+        })
+
         if ($(window).width() < 769) {
             $('#friend-list').addClass('d-none');
         }
@@ -138,7 +155,6 @@ const getFriends = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
             $('.friends').html(res.data.map(friendCard).join(''));
         },
         error: (res) => {
@@ -234,7 +250,6 @@ const getLastMessage = (friend_id) => {
             url: 'api.php',
             type: 'POST',
             success: (res) => {
-                console.log(res);
                 if (res.data.message) 
                     lastMessageArray.push("");
                 else {

@@ -323,3 +323,14 @@ select:-webkit-autofill:focus {
         width: 65%
     }
 }
+
+.unread-active::before {
+    content: "";
+    position: absolute;
+    top: 20px;
+    right: 0;
+    padding: 7px;
+    border-radius: 100%;
+    background-color: var(--primary);
+    opacity: 0.7;
+}

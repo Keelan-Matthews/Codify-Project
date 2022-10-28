@@ -30,9 +30,10 @@
                     </li>
                 </div>
                 <li class="fs-4 fw-light my-md-4 inbox-link">
-                    <a href="messages.php" class="d-flex align-items-center text-white btn btn-lg fs-4">
+                    <a href="messages.php" class="d-flex align-items-center text-white btn btn-lg fs-4 position-relative">
                         <i class="fas fa-inbox pe-2"></i>
                         <span class="navtext-hide">Inbox</span>
+                        <small class="ms-2 text-primary unread"></small>
                     </a>
                 </li>
                 <li class="fs-4 fw-light my-md-4 profile-link">

@@ -62,7 +62,6 @@ const populateHomeEvents = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
 
             $('.events').html(res.data.map(eventCard).join(''));
         },
@@ -83,7 +82,6 @@ const populateHomeUsers = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
 
             $('.followed-users').html(res.data.map(userCard).join(''));
         },
@@ -114,6 +112,31 @@ const getAllUsers = () => {
     })
 }
 
+const getUnreadMessages = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "unread_messages",
+            "user_id": user_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            if (res.data.length > 0) {
+                $('.unread').addClass('unread-active');
+            }
+            else {
+                $('.unread').removeClass('unread-active');
+            }
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
+
 $(document).ready(() => {
     if (window.location.pathname.includes('dashboard.php')) {
         populateHomeEvents();
@@ -122,6 +145,7 @@ $(document).ready(() => {
         populateExploreEvents();
         getAllUsers();
     }
+    getUnreadMessages();
     resize();
 });
 
@@ -166,10 +190,6 @@ $('#event-form').on('submit', (e) => {
             formData.append(`tag${tagCounter++}`, $(this).val());
         });
 
-        for (var pair of formData.entries()) {
-            console.log(pair[0] + ', ' + pair[1]);
-        }
-
         $.ajax({
             url: 'api.php',
             type: 'POST',
@@ -177,7 +197,6 @@ $('#event-form').on('submit', (e) => {
             contentType: false,
             processData: false,
             success: (res) => {
-                console.log(res);
                 populateHomeEvents();
                 $('#createEvent').modal('hide');
             },
@@ -290,7 +309,6 @@ $(".events").on('click', '.event-card', function () {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
             let data = res.data[0];
 
             if ($('#event-image').children().length > 0) {
@@ -470,10 +488,6 @@ $('#review-form').on('submit', (e) => {
     formData.append('rating', rating);
     formData.append('review_date', new Date().toISOString().slice(0, 19).replace('T', ' '));
 
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
     $.ajax({
         url: 'api.php',
         type: 'POST',
@@ -481,8 +495,6 @@ $('#review-form').on('submit', (e) => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
-
             $('#reviewModal').modal('hide');
         },
         error: () => {
@@ -603,8 +615,6 @@ const populateExploreEvents = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
-
             exploreEvents = res.data;
 
             $('.events').html(res.data.map(eventCard).join(''));

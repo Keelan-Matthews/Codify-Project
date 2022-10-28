@@ -168,6 +168,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->returnAttendedEvents($data->user_id);
             break;
 
+        case "unread_messages":
+            $instance->returnUnreadMessages($data->user_id);
+            break;
+
+        case "mark_read":
+            $instance->markRead($data->user_id, $data->friend_id);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

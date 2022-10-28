@@ -4,6 +4,7 @@ $(document).ready(() => {
     populateUserEvents();
     populateUserLists();
     populateUserAttendedEvents();
+    getUnreadMessages();
     resize();
 });
 
@@ -162,7 +163,6 @@ const populateUserEvents = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
             $('#user-followers').html(res.data[0].followers);
 
             if (res.data[0].name != null) {
@@ -175,8 +175,6 @@ const populateUserEvents = () => {
                     </div>
                 `);
             }
-
-            console.log(is_admin);
 
             $('#username').html(res.data[0].username);
             $('#username_list').html(res.data[0].username);
@@ -246,7 +244,6 @@ const populateUserLists = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
 
             if (!res.data.message) {
                 $('.lists').html(res.data.map(listCard).join(''));
@@ -282,7 +279,6 @@ const populateUserAttendedEvents = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
 
             if (!res.data.message) {
                 $('.attended').html(res.data.map(eventCard).join(''));
@@ -318,7 +314,6 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
             let data = res.data[0];
 
             if ($('#event-image').children().length > 0) {
@@ -491,7 +486,6 @@ $('#event-form').submit((e) => {
                 contentType: false,
                 processData: false,
                 success: (res) => {
-                    console.log(res);
                     $('#createEvent').modal('hide');
                 },
                 error: () => {
@@ -507,7 +501,6 @@ $('#event-form').submit((e) => {
             formData.append('type', 'edit_event');
             formData.append('user_id', user_id);
             let event_id = $('.event-details').attr('id');
-            console.log(event_id);
             formData.append('event_id', event_id);
 
             let tagCounter = 1;
@@ -522,7 +515,6 @@ $('#event-form').submit((e) => {
                 contentType: false,
                 processData: false,
                 success: (res) => {
-                    console.log(res);
                     $('#createEvent').modal('hide');
                 },
                 error: () => {
@@ -668,10 +660,6 @@ $('#list-form').submit((e) => {
     formData.append('type', 'add_list');
     formData.append('user_id', user_id);
 
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
     $.ajax({
         url: 'api.php',
         type: 'POST',
@@ -679,7 +667,6 @@ $('#list-form').submit((e) => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
             populateUserLists();
             $('#createList').modal('hide');
         },
@@ -694,8 +681,6 @@ $('#list-form').submit((e) => {
 $('#list-options').on('click', '.list-group-item', function () {
     let event_id = $('.event-details').attr('id');
     let list_id = $(this).attr('id');
-
-    console.log(event_id, list_id);
 
     $.ajax({
         contentType: 'application/json',
@@ -731,14 +716,11 @@ $('.lists').on('click', '.list-card', function () {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
-
             $('.list-events').html(res.data.map(eventCardLight).join(''));
             $('.list-title').text(res.data[0].title);
             $('.list-description').text(res.data[0].description);
         },
         error: (res) => {
-            console.log(res);
             $('.list-events').html(`
                 <div class="mb-5 col-12 d-flex justify-content-center align-items-center">
                     <span class="fw-bold text-white fs-1">No events in list</span>
@@ -863,10 +845,6 @@ $('#profile-form').submit((e) => {
     formData.append('type', 'edit_profile');
     formData.append('user_id', getUrlParameter('user_id'));
 
-    for (var pair of formData.entries()) {
-        console.log(pair[0] + ', ' + pair[1]);
-    }
-
     $.ajax({
         url: 'api.php',
         type: 'POST',
@@ -874,7 +852,6 @@ $('#profile-form').submit((e) => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
             $('#editProfileModal').modal('hide');
         },
         error: () => {
@@ -898,8 +875,6 @@ $('.followers-label').on('click', () => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
-
             $('#followers-body').html(res.data.map(followerCard).join(''));
         },
         error: () => {
@@ -926,6 +901,30 @@ const showReviewDate = (date) => {
     }
 }
 
+const getUnreadMessages = () => {
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "unread_messages",
+            "user_id": user_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            if (res.data.length > 0) {
+                $('.unread').addClass('unread-active');
+            }
+            else {
+                $('.unread').removeClass('unread-active');
+            }
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
 $('.event-details').on('click', '.tag-click', function () {
     let tag = $(this).attr('id');
     window.location.href = "explore.php?tag=" + tag;
@@ -942,7 +941,6 @@ $('#delete-profile').on('click', () => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
             window.location.href = "backend/logout.php";
         },
         error: () => {
@@ -965,7 +963,6 @@ $('#delete-event').on('click', () => {
         contentType: false,
         processData: false,
         success: (res) => {
-            console.log(res);
             window.location.href = "profile.php?user_id=" + user_id;
         },
         error: () => {
