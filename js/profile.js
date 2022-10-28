@@ -284,7 +284,7 @@ const populateUserAttendedEvents = () => {
         success: (res) => {
             console.log(res);
 
-            if (res.data[0].name != null) {
+            if (!res.data.message) {
                 $('.attended').html(res.data.map(eventCard).join(''));
             }
             else {
@@ -349,6 +349,13 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
 
             $('#attend-event').addClass('d-none');
 
+            if (is_admin == 1) {
+                $('#edit-event').removeClass('d-none');
+            }
+            else {
+                $('#edit-event').addClass('d-none');
+            }
+
             let lists = res.data[1][0];
             if (lists != null && lists[0] != null) {
                 $('#list-options').html(lists.map(listItem).join(''));
@@ -373,7 +380,7 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
                 $('.carousel-inner').html('<p class="text-center mb-0 text-white">No images available</p>');
             }
 
-            if (data.user_id == user_id) {
+            if (data.user_id == user_id || is_admin == 1) {
                 $(".delete-review").removeClass('d-none')
             }
             else {
@@ -970,7 +977,7 @@ $('#delete-event').on('click', () => {
 
 $('.reviews').on('click', '.delete-review', function () {
     const review_id = $(this).attr('id');
-    
+
     $.ajax({
         url: 'api.php',
         type: 'POST',

@@ -315,9 +315,11 @@ $(".events").on('click', '.event-card', function () {
             if ($('#event-details-user').hasClass('d-none')) {
                 $('#event-details-user').removeClass('d-none');
             }
-
-            if (!$('#edit-event').hasClass('d-none')) {
+            if (is_admin != 1) {
                 $('#edit-event').addClass('d-none');
+            }
+            else {
+                $('#edit-event').removeClass('d-none');
             }
 
             if (data.attended) {

@@ -39,20 +39,20 @@
                         </div>
                     </div>
                     <div class="dropdown">
-                            <button class="btn d-none" type="button" id="edit-event" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-ellipsis text-white"></i>
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="edit-event" id="edit-options">
-                                <li class="list-group-item mx-2 btn fw-bold" id="edit-details">
-                                    <i class="fas fa-edit pe-2"></i>
-                                    Edit Details
-                                </li>
-                                <li class="list-group-item mx-2 btn fw-bold" id="delete-event">
-                                    <i class="fas fa-trash pe-2"></i>
-                                    Delete Event
-                                </li>
-                            </ul>
-                        </div>
+                        <button class="btn d-none" type="button" id="edit-event" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis text-white"></i>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="edit-event" id="edit-options">
+                            <li class="list-group-item mx-2 btn fw-bold" id="edit-details">
+                                <i class="fas fa-edit pe-2"></i>
+                                Edit Details
+                            </li>
+                            <li class="list-group-item mx-2 btn fw-bold" id="delete-event">
+                                <i class="fas fa-trash pe-2"></i>
+                                Delete Event
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
@@ -103,7 +103,7 @@
                         <i class="fas fa-star"></i>
                     </div>
                 </div>
-                
+
                 <div class="reviews">
                 </div>
             </div>
