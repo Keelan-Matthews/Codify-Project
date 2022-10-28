@@ -101,8 +101,6 @@ const getAllUsers = () => {
         url: 'api.php',
         type: 'POST',
         success: (res) => {
-            console.log(res);
-
             usersArray = res.data;
         },
         error: (res) => {
@@ -633,9 +631,8 @@ const populateExploreEvents = () => {
 
 $('.search-input').on('keyup', () => {
     let search = $('.search-input').val();
-    
     if (search === '') {
-        $('.search-text').html("AHHHH");
+        $('.search-text').html("");
     }
 
     if (search[0] === '#') {
@@ -679,7 +676,11 @@ $('.search-input').on('keyup', () => {
     }
     else {
         $('.search-text').html("");
-        let filteredEvents = exploreEvents.filter(event => event.name.toLowerCase().includes(search.toLowerCase()));
+        let filteredEvents = exploreEvents.filter(event => {
+            return event.name.toLowerCase().includes(search.toLowerCase()) ||
+                event.description.toLowerCase().includes(search.toLowerCase()) ||
+                event.date.toLowerCase().includes(search.toLowerCase());
+        });
         $('.events').html(filteredEvents.map(eventCard).join(''));
     }
 });
