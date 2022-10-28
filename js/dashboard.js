@@ -370,6 +370,13 @@ $(".events").on('click', '.event-card', function () {
                 $('.carousel-inner').html('<p class="text-center mb-0 text-white">No images available</p>');
             }
 
+            if (res.data[0].user_id == user_id || is_admin == 1) {
+                $(".delete-review").removeClass('d-none')
+            }
+            else {
+                $(".delete-review").addClass('d-none')
+            }
+
         },
         error: (res) => {
             console.log(res);
@@ -505,27 +512,31 @@ $('.star-rating').on('click', function () {
     }
 });
 
-const reviewCard = ({ user_id, username, profile_photo, rating, comment, review_date }) => `
-    <a href="profile.php?user_id=${user_id}">
-        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
-            <div class="col-2">
+const reviewCard = ({ review_id, user_id, username, profile_photo, rating, comment, review_date }) => `
+    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
+        <div class="col-2">
+            <a href="profile.php?user_id=${user_id}">
                 <img src="${profile_photo}" alt="" class="rounded-circle w-100">
-            </div>
-            <div class="col-10">
-                <div class="d-flex justify-content-between">
-                    <p class="text-white fw-bold mb-0">${username}</p>
-                    <small class="text-white">
-                        ${showReviewDate(review_date)}
-                    </small>
-                </div>
-                
-                <p class="rating">
-                    ${showStarsReview(rating)}
-                </p>
-            </div>
-            <p class="text-white mt-2">${comment}</p>
+            </a>
         </div>
-    </a>
+        <div class="col-10">
+            <div class="d-flex justify-content-between">
+                <p class="text-white fw-bold mb-0">${username}</p>
+                <small class="text-white">
+                    ${showReviewDate(review_date)}
+                    <span class="ms-2 delete-review" id=${review_id}>
+                        <i class="fas fa-trash-can"></i>
+                    </span>
+                </small>
+            </div>
+            
+            <p class="rating">
+                ${showStarsReview(rating)}
+            </p>
+        </div>
+        <p class="text-white mt-2">${comment}</p>
+    </div>
+    
 `;
 
 const carouselCard = ({ image }) => `
