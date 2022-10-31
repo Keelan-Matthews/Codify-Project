@@ -51,14 +51,16 @@ $(document).ready(() => {
                         url: 'api.php',
                         type: 'POST',
                         success: (res) => {
-                            $('.messages').html(res.data.map(message => {
-                                if (message.user_id == user_id) {
-                                    return myBubble(message);
-                                }
-                                else {
-                                    return friendBubble(message);
-                                }
-                            }).join(''));
+                            if (res.data.length > 0) {
+                                $('.messages').html(res.data.map(message => {
+                                    if (message.user_id == user_id) {
+                                        return myBubble(message);
+                                    }
+                                    else {
+                                        return friendBubble(message);
+                                    }
+                                }).join(''));
+                            }
                         },
                         error: (res) => {
                             console.log(res);
@@ -115,7 +117,7 @@ const resize = () => {
     }
 }
 
-const friendCard = ({username, user_id, profile_photo}) => `
+const friendCard = ({ username, user_id, profile_photo }) => `
     <div class="border-bottom border-4 border-color-2 p-3 rounded row mt-4 friend_card" id="${user_id}">
         <div class="col-3 col-md-12 col-xl-3">
             <img src="${profile_photo}" alt="" class="rounded-circle w-100">
@@ -127,7 +129,7 @@ const friendCard = ({username, user_id, profile_photo}) => `
     </div>
 `;
 
-const friendBubble = ({message, time}) => `
+const friendBubble = ({ message, time }) => `
     <div class="mb-3">
         <div class="friend-message text-white p-3 rounded-3 bg-primary mb-1 me-5">
             <p class="mb-0">${message}</p>
@@ -136,7 +138,7 @@ const friendBubble = ({message, time}) => `
     </div>
 `;
 
-const myBubble = ({message, time}) => `
+const myBubble = ({ message, time }) => `
     <div class="mb-3 d-flex flex-column align-items-end w-100">
         <div class="my-message text-white p-3 rounded-3 lighter-gray-2 align-self-end mb-1 ms-5">
             <p class="mb-0">${message}</p>
@@ -164,7 +166,7 @@ const getFriends = () => {
     })
 }
 
-$('.friends').on('click', '.friend_card', function() {
+$('.friends').on('click', '.friend_card', function () {
     let friend_id = $(this).attr('id');
     window.location.href = `messages.php?friend_id=${friend_id}`;
 });
@@ -188,7 +190,7 @@ $('.text-bar button').on('click', () => {
     time = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
     $('.text-bar input').val('');
-    $('.messages').append(myBubble({message, time}));
+    $('.messages').append(myBubble({ message, time }));
     $('.messages').scrollTop($('.messages')[0].scrollHeight);
 
     $.ajax({
@@ -250,7 +252,7 @@ const getLastMessage = (friend_id) => {
             url: 'api.php',
             type: 'POST',
             success: (res) => {
-                if (res.data.message) 
+                if (res.data.message)
                     lastMessageArray.push("");
                 else {
                     let lastMessage = res.data[res.data.length - 1];
