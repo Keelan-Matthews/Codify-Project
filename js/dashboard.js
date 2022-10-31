@@ -70,6 +70,29 @@ const populateHomeEvents = () => {
         },
         processData: false,
     })
+
+    getCategories();
+}
+
+const getCategories = () => {
+    // clear categories after first option
+    $('#eventCategory').html($('#eventCategory').children().slice(0, 1));
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "categories"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            $('#eventCategory').append(res.data.map(category => `<option value="${category.category}">${category.category}</option>`).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
 }
 
 const populateHomeUsers = () => {
@@ -145,6 +168,13 @@ $(document).ready(() => {
     }
     getUnreadMessages();
     resize();
+
+    if (is_admin == 1) {
+        $('#admin_add').removeClass('d-none');
+    }
+    else {
+        $('#admin_add').addClass('d-none');
+    }
 });
 
 $(window).resize(() => {
@@ -627,6 +657,8 @@ const populateExploreEvents = () => {
         },
         processData: false,
     })
+
+   getCategories();
 }
 
 $('.search-input').on('keyup', () => {
@@ -705,3 +737,35 @@ const getUrlParameter = (sParam) => {
     }
     return false;
 };
+
+$('#add-category-button').on('click', () => {
+
+    let category = $('#addCategory').val();
+
+    if (category === "") {
+        $('#addCategory').addClass('is-invalid');
+        $('#addCategoryError').text('Please enter a category');
+        return;
+    }
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "add_category",
+            "category": category
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            $('#addCategoryError').text('');
+            $('#addCategory').val('');
+            $('#addCategory').removeClass('is-invalid');
+
+            getCategories();
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+});

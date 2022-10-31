@@ -925,6 +925,38 @@ class Database
         }
     }
 
+    function returnCategories()
+    {
+        $sql = "SELECT * FROM dbcategories";
+        $result = $this->getConnection()->query($sql);
+        $categories = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categories[] = $row;
+            }
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success($categories));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("No categories found"));
+        }
+    }
+
+    function addCategory($category_name)
+    {
+        $sql = "INSERT INTO dbcategories (category) VALUES ('$category_name')";
+        $result = $this->getConnection()->query($sql);
+        if ($result) {
+            header("Content-Type: application/json");
+            header("HTTP/1.1 200 OK");
+            echo json_encode($this->success("Category added"));
+        } else {
+            header("Content-Type: application/json");
+            echo json_encode($this->error("An error occured while adding category"));
+        }
+    }
+
     private function error($message)
     {
         return ["status" => "failed", "timestamp" => time(), "data" => ["message" => $message]];

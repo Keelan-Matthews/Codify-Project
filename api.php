@@ -176,6 +176,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $instance->markRead($data->user_id, $data->friend_id);
             break;
 
+        case "categories":
+            $instance->returnCategories();
+            break;
+
+        case "add_category":
+            $instance->addCategory($data->category);
+            break;
+
         default:
             echo json_encode($api->error("An error occured while processing request"));
     }

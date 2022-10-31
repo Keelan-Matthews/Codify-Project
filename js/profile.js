@@ -151,6 +151,23 @@ const getUrlParameter = (sParam) => {
 };
 
 const populateUserEvents = () => {
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "categories"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            $('#eventCategory').append(res.data.map(category => `<option value="${category.category}">${category.category}</option>`).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+
     const profile_id = getUrlParameter('user_id');
 
     $.ajax({
@@ -179,6 +196,8 @@ const populateUserEvents = () => {
             $('#username').html(res.data[0].username);
             $('#username_list').html(res.data[0].username);
             $('#username_event').html(res.data[0].username);
+
+            console.log(is_admin)
 
             if (res.data[0].profile_photo != "")
                 $('#user-profile-photo').attr('src', res.data[0].profile_photo + "?t=" + new Date().getTime());

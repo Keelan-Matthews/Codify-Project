@@ -77,13 +77,22 @@
                     <div class="form-floating mb-5">
                         <select class="form-select mb-4 <?php echo ($categoryError === "") ? '' : 'is-invalid' ?>" id="eventCategory" name="category">
                             <option>Select Category</option>
-                            <option value="Hackathon">Hackathon</option>
-                            <option value="Game Jam">Game Jam</option>
-                            <option value="Speedrun">Speedrun</option>
-                            <option value="Other">Other</option>
                         </select>
                         <label for="eventCategory">Event Category</label>
                         <small><?php echo $categoryError ?></small>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-5" id="admin_add">
+                        <div class="form-floating form-group pe-3 w-100">
+                            <input type="text" class="form-control" id="addCategory" placeholder="category" name="addCategory">
+                            <label for="addCategory">Add Category</label>
+                            <small id="addCategoryError">test</small>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-primary w-100" id="add-category-button">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="form-floating form-group mb-5">
