@@ -63,10 +63,6 @@
     cursor: pointer;
 }
 
-.dragover .hover-prompt {
-    visibility: visible;
-}
-
 #profilePhoto {
     visibility: hidden;
 }

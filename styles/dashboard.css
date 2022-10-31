@@ -65,10 +65,18 @@
   display: none;
 }
 
-.crop-image {
-    object-fit: cover;
+.hover-prompt {
+    background-color: #2eac7c68;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    visibility: hidden;
 }
 
-.aspect-ratio {
-    aspect-ratio: 1/1;
+.dragover .hover-prompt {
+    visibility: visible;
+}
+
+#eventImage {
+    visibility: hidden;
 }

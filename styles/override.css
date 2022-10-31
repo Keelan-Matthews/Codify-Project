@@ -334,3 +334,30 @@ select:-webkit-autofill:focus {
     background-color: var(--primary);
     opacity: 0.7;
 }
+
+.dragover .hover-prompt {
+    visibility: visible;
+}
+
+.dragover .hover-prompt-event {
+    color: #2EAC7C !important;
+}
+
+#eventImage {
+    display: none;
+}
+
+.hover-prompt-event {
+    left: 0;
+    top: 0;
+    z-index: 3;
+    opacity: 0.5;
+}
+
+.crop-image {
+    object-fit: cover;
+}
+
+.aspect-ratio {
+    aspect-ratio: 1/1;
+}

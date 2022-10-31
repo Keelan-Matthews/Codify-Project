@@ -815,3 +815,25 @@ $('#add-category-button').on('click', () => {
         processData: false,
     })
 });
+
+$('#event-form').on('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').addClass('dragover');
+});
+
+$('#event-form').on('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').removeClass('dragover');
+});
+
+$('#event-form').on('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').removeClass('dragover');
+
+    let files = e.originalEvent.dataTransfer.files;
+    $('#eventImage').prop('files', files);
+    $('.currentEventPhoto').attr('src', URL.createObjectURL(files[0]));
+});

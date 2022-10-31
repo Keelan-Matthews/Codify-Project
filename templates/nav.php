@@ -62,6 +62,17 @@
                         <label for="eventName">Event Name</label>
                         <small><?php echo $nameError ?></small>
                     </div>
+
+                    <div id="eventDropContainer" class="position-relative">
+                        <img src="media/events/upload.jpg" alt="" class="currentEventPhoto w-100 rounded-3 crop-image" height="200">
+                        <div class="hover-prompt-event w-100 h-100 d-flex justify-content-center align-items-center position-absolute text-white">
+                            <i class="fas fa-cloud-arrow-up fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="form-group mb-5">
+                        <input type="file" class="form-control" id="eventImage" name="image">
+                    </div>
+
                     <div class="d-flex mb-5">
                         <div class="form-floating form-group w-50 pe-3">
                             <input type="text" class="form-control <?php echo ($locationError === "") ? '' : 'is-invalid' ?>" id="eventLocation" placeholder="location" name="location">
@@ -100,11 +111,7 @@
                         <label for="eventDescription">Event Description</label>
                         <small><?php echo $descriptionError ?></small>
                     </div>
-                    <div class="form-group mb-5">
-                        <label for="eventImage">Event Image</label>
-                        <input type="file" class="form-control <?php echo ($imageError === "") ? '' : 'is-invalid' ?>" id="eventImage" name="image">
-                        <small><?php echo $imageError ?></small>
-                    </div>
+
                     <div class="form-group">
                         <div class="d-flex flex-wrap justify-content-start">
                             <div class="form-check form-check-inline me-2 mb-2">

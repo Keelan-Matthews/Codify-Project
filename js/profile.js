@@ -501,6 +501,11 @@ $('#event-form').submit((e) => {
                 formData.append(`tag${tagCounter++}`, $(this).val());
             });
 
+            // console log formData
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+
             $.ajax({
                 url: 'api.php',
                 type: 'POST',
@@ -1145,4 +1150,26 @@ $('#profile-form').on('drop', (e) => {
     let files = e.originalEvent.dataTransfer.files;
     $('#profilePhoto').prop('files', files);
     $('.currentProfilePhoto').attr('src', URL.createObjectURL(files[0]));
+});
+
+$('#event-form').on('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').addClass('dragover');
+});
+
+$('#event-form').on('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').removeClass('dragover');
+});
+
+$('#event-form').on('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#event-form').removeClass('dragover');
+
+    let files = e.originalEvent.dataTransfer.files;
+    $('#eventImage').prop('files', files);
+    $('.currentEventPhoto').attr('src', URL.createObjectURL(files[0]));
 });
