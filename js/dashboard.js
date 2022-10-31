@@ -661,6 +661,17 @@ const populateExploreEvents = () => {
    getCategories();
 }
 
+const levenshteinDistance = (s, t) => {
+    if (!s.length) return t.length;
+    if (!t.length) return s.length;
+
+    return Math.min(
+            levenshteinDistance(s.substr(1), t) + 1,
+            levenshteinDistance(t.substr(1), s) + 1,
+            levenshteinDistance(s.substr(1), t.substr(1)) + (s.charAt(0).toLowerCase() !== t.charAt(0).toLowerCase() ? 1 : 0)
+    );
+}
+
 $('.search-input').on('keyup', () => {
     let search = $('.search-input').val();
     if (search === '') {
@@ -713,6 +724,22 @@ $('.search-input').on('keyup', () => {
                 event.description.toLowerCase().includes(search.toLowerCase()) ||
                 event.date.toLowerCase().includes(search.toLowerCase());
         });
+
+        // if filteredEvents is empty, then we check for levenshtein distance
+        if (filteredEvents.length === 0 ) {
+            let words;
+            for (let i = 0; i < exploreEvents.length; i++) {
+                words = exploreEvents[i].name.split(" ");
+
+                for (let j = 0; j < words.length; j++) {
+                    if (levenshteinDistance(words[j], search) <= 3) {
+                        filteredEvents.push(exploreEvents[i]);
+                        break;
+                    }
+                }
+            }
+        }
+
         $('.events').html(filteredEvents.map(eventCard).join(''));
     }
 });
