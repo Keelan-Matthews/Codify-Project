@@ -1,11 +1,20 @@
 let followingUser = false;
 let createOrEdit = 'create';
+let myProfile = false;
 $(document).ready(() => {
     populateUserEvents();
     populateUserLists();
     populateUserAttendedEvents();
     getUnreadMessages();
+    getCategories();
     resize();
+
+    if (is_admin == 1) {
+        $('#admin_add').removeClass('d-none');
+    }
+    else {
+        $('#admin_add').addClass('d-none');
+    }
 });
 
 $(window).resize(() => {
@@ -122,16 +131,27 @@ const eventTag = (tag_name) => `
 `;
 
 const followerCard = ({ username, profile_photo, user_id }) => `
-<a href="profile.php?user_id=${user_id}">
-    <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-2">
-        <div class="col-2">
-            <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+<div class="row">
+    <a href="profile.php?user_id=${user_id}" class="col-11">
+        <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-2">
+            <div class="col-2">
+                <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+            </div>
+            <div class="col-8">
+                <p class="text-white fw-bold mb-0">${username}</p>
+            </div>
         </div>
-        <div class="col-10">
-            <p class="text-white fw-bold mb-0">${username}</p>
+    </a>
+    ${
+        myProfile ?
+        `
+        <div class="remove_follower col-1 d-flex justify-content-center align-items-center" id="${user_id}">
+            <i class="fas fa-times text-white" id="${user_id}"></i>
         </div>
-    </div>
-</a>
+        `
+        : ''
+    }
+</div>
 `;
 
 const getUrlParameter = (sParam) => {
@@ -151,22 +171,6 @@ const getUrlParameter = (sParam) => {
 };
 
 const populateUserEvents = () => {
-
-    $.ajax({
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "type": "categories"
-        }),
-        url: 'api.php',
-        type: 'POST',
-        success: (res) => {
-            $('#eventCategory').append(res.data.map(category => `<option value="${category.category}">${category.category}</option>`).join(''));
-        },
-        error: (res) => {
-            console.log(res);
-        },
-        processData: false,
-    })
 
     const profile_id = getUrlParameter('user_id');
 
@@ -197,8 +201,6 @@ const populateUserEvents = () => {
             $('#username_list').html(res.data[0].username);
             $('#username_event').html(res.data[0].username);
 
-            console.log(is_admin)
-
             if (res.data[0].profile_photo != "")
                 $('#user-profile-photo').attr('src', res.data[0].profile_photo + "?t=" + new Date().getTime());
             else
@@ -207,6 +209,7 @@ const populateUserEvents = () => {
             if (user_id == profile_id) {
                 $('#profile-actions').addClass('d-none');
                 $('#edit-actions').removeClass('d-none');
+                myProfile = true;
             }
             else if (is_admin == "") {
                 $('#edit-actions').addClass('d-none');
@@ -1045,3 +1048,76 @@ $('#lists-toggle').on('click', () => {
     $('#attended-container').addClass('d-none');
     $('#attended-toggle').removeClass('lighter-gray-2');
 })
+
+$('#add-category-button').on('click', () => {
+
+    let category = $('#addCategory').val();
+
+    if (category === "") {
+        $('#addCategory').addClass('is-invalid');
+        $('#addCategoryError').text('Please enter a category');
+        return;
+    }
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "add_category",
+            "category": category
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            $('#addCategoryError').text('');
+            $('#addCategory').val('');
+            $('#addCategory').removeClass('is-invalid');
+
+            getCategories();
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+});
+
+const getCategories = () => {
+    // clear categories after first option
+    $('#eventCategory').html($('#eventCategory').children().slice(0, 1));
+
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "categories"
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            $('#eventCategory').append(res.data.map(category => `<option value="${category.category}">${category.category}</option>`).join(''));
+        },
+        error: (res) => {
+            console.log(res);
+        },
+        processData: false,
+    })
+}
+
+$('#followers-body').on('click', '.remove_follower', (e) => {
+    let follower_id = $(e.target).attr('id');
+    
+    $.ajax({
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "type": "unfollow",
+            "profile_id": user_id,
+            "user_id": follower_id
+        }),
+        url: 'api.php',
+        type: 'POST',
+        success: (res) => {
+            console.log(res);
+        }
+    })
+
+    window.location.href = "profile.php?user_id=" + user_id;
+});

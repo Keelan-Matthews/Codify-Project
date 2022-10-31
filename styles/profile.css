@@ -33,3 +33,12 @@
 .delete-review:hover {
     font-size: 1.2em;
 }
+
+.remove_follower {
+    cursor: pointer;
+    transition: 1s ease;
+}
+
+.remove_follower:hover i {
+    color: red !important;
+}
