@@ -322,7 +322,13 @@ const setValidity = (input, message) => {
 }
 
 $(".events").on('click', '.event-card', function () {
-    $('#attend-event').removeClass('d-none');
+    let creator_id = $(this).attr('data-user-id');
+
+    if (user_id != creator_id) 
+        $('#attend-event').removeClass('d-none');
+    else
+        $('#attend-event').addClass('d-none');
+
     $("#events-container").toggleClass('d-none');
     $("#event-details-container").toggleClass('d-none');
 
@@ -363,7 +369,7 @@ $(".events").on('click', '.event-card', function () {
             if ($('#event-details-user').hasClass('d-none')) {
                 $('#event-details-user').removeClass('d-none');
             }
-            if (is_admin != 1) {
+            if (is_admin != 1 && user_id != data.user_id) {
                 $('#edit-event').addClass('d-none');
             }
             else {

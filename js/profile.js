@@ -366,7 +366,7 @@ $(".events, .list-events, .attended").on('click', '.event-card', function () {
 
             $('#attend-event').addClass('d-none');
 
-            if (is_admin == 1) {
+            if (is_admin == 1 || user_id == data.user_id) {
                 $('#edit-event').removeClass('d-none');
             }
             else {
