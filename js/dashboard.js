@@ -19,14 +19,15 @@ const eventCard = ({ name, date, location, image, profile_photo, event_id, user_
                     <small>${location}</small>
                 </div>
             </div>
-            <img src="${image}" alt="${name}" class="my-2 w-100" height="200">
+            <img src="${image}" alt="${name}" class="my-2 w-100 crop-image" height="200">
+            
             <small class="text-white text-end my-3 me-3"><i class="fas fa-clock me-2"></i>${date}</small>
         </div>
     </div>
 `;
 const userCard = ({ user_id, profile_photo, username }) => `
     <div class="user-card mb-5 position-relative" id="${user_id}" title="${username}">
-        <img src="${profile_photo}" class="rounded-circle me-3 " width="70" height="70" id="user-card-image">
+        <img src="${profile_photo}" class="rounded-circle me-3" width="70" height="70" id="user-card-image">
     </div>
 `;
 
@@ -34,7 +35,7 @@ const userSearchCard = ({ user_id, profile_photo, username }) => `
     <div class="p-3 col-12 col-md-4 col-lg-3">
         <a href="profile.php?user_id=${user_id}">
             <div class="card lighter-gray shadow rounded" id="${user_id}"">
-                <img src="${profile_photo}" alt="${username}" class="rounded-circle w-100 h-100 p-5">
+                <img src="${profile_photo}" alt="${username}" class="rounded-circle w-100 p-5 crop-image aspect-ratio">
                 <h3 class="text-white text-center my-4">${username}</h3>
             </div>
         </a>
@@ -350,7 +351,8 @@ $(".events").on('click', '.event-card', function () {
             $('<img/>')
                 .attr('src', data.image)
                 .attr('alt', data.name)
-                .attr('class', 'rounded w-100')
+                .attr('class', 'rounded w-100 crop-image')
+                .attr('height', '450px')
                 .appendTo('#event-image');
             $('.event-category').text(data.category);
             $('#event-user').text(data.username);

@@ -857,6 +857,8 @@ $('#create-event-button').on('click', () => {
 
 $('#edit-profile').on('click', () => {
     $('#editProfileModal').modal('show');
+    let currPhoto = $('#user-profile-photo').attr('src');
+    $('.currentProfilePhoto').attr('src',currPhoto);
 });
 
 $('#profile-form').submit((e) => {
@@ -1120,4 +1122,27 @@ $('#followers-body').on('click', '.remove_follower', (e) => {
     })
 
     window.location.href = "profile.php?user_id=" + user_id;
+});
+
+// implement drag and drop for #profilePhoto file input
+$('#profile-form').on('dragover', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#profile-form').addClass('dragover');
+});
+
+$('#profile-form').on('dragleave', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#profile-form').removeClass('dragover');
+});
+
+$('#profile-form').on('drop', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    $('#profile-form').removeClass('dragover');
+
+    let files = e.originalEvent.dataTransfer.files;
+    $('#profilePhoto').prop('files', files);
+    $('.currentProfilePhoto').attr('src', URL.createObjectURL(files[0]));
 });

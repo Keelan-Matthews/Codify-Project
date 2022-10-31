@@ -66,8 +66,16 @@ if (isset($_GET["error"])) {
                 </div>
                 <div class="modal-body">
                     <form action="" method="post" id="profile-form" enctype="multipart/form-data">
+                        <div class="w-100 d-flex justify-content-center">
+                            <div id="profileDropContainer" class="position-relative">
+                                <img src="" alt="" class="currentProfilePhoto w-100 rounded-circle">
+                                <div class="hover-prompt w-100 h-100 d-flex justify-content-center align-items-center position-absolute text-white">
+                                    <span>Change photo</span>
+                                </div>
+                            </div>
+                        </div>
+                        
                         <div class="form-group mb-5">
-                            <label for="profilePhoto">Profile Image</label>
                             <input type="file" class="form-control" id="profilePhoto" name="image">
                         </div>
                         <div class="form-floating form-group">

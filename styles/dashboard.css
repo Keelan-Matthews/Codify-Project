@@ -64,3 +64,11 @@
 .ui-helper-hidden-accessible {
   display: none;
 }
+
+.crop-image {
+    object-fit: cover;
+}
+
+.aspect-ratio {
+    aspect-ratio: 1/1;
+}
