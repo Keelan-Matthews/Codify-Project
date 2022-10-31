@@ -741,6 +741,23 @@ $('.search-input').on('keyup', () => {
         }
 
         $('.events').html(filteredEvents.map(eventCard).join(''));
+
+        // use jquery autocomplete
+        let eventNames = exploreEvents.map(event => event.name);
+
+        $('.search-input').autocomplete({
+            source: eventNames,
+            select: (event, ui) => {
+                $().ready(() => {
+                    $('.search-input').trigger('keyup');
+                });
+            },
+            change: (event, ui) => {
+                $().ready(() => {
+                    $('.search-input').trigger('keyup');
+                });
+            }
+        });
     }
 });
 
