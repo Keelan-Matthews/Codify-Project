@@ -30,7 +30,7 @@ if ($_SESSION["signed_in"] == false) {
                         </div>
                     </div>
 
-                    <div class="text-bar mb-3 d-none">
+                    <div class="text-bar mb-5 mb-md-3 pb-5 pb-md-0 d-none">
                         <div class="d-flex align-items-center">
                             <input type="text" class="form-control rounded-pill border-0" style="height:50px;" placeholder="Type a message...">
                             <button class="btn btn-primary rounded-pill ms-3" style="height:50px; width:50px;">
