@@ -12,9 +12,9 @@ const resize = () => {
     }
 }
 
-$('form').submit((e) => { 
+$('form').submit((e) => {
     e.preventDefault();
-    if (!checkInputs()) 
+    if (!checkInputs())
         console.log("There was an error");
     else {
         $.ajax({
@@ -27,10 +27,13 @@ $('form').submit((e) => {
             url: 'api.php',
             type: 'POST',
             success: (res) => {
-                $(window).attr('location', 'dashboard.php');
+                if (res.status === 'failed')
+                    $(window).attr('location', `login.php?error=${res.data.message}`);
+                else
+                    $(window).attr('location', 'dashboard.php');
             },
             error: () => {
-                console.log('An error occurred during the api call');
+                console.log('An error occurred');
             },
             processData: false,
         })
@@ -45,21 +48,17 @@ const checkInputs = () => {
 
     let emailerrorMessage = '';
 
-    if(emailValue === '') 
+    if (emailValue === '')
         emailerrorMessage = 'Email cannot be blank';
-    else if (!isEmail(emailValue)) 
+    else if (!isEmail(emailValue))
         emailerrorMessage = 'Email is not valid';
 
     if (!setValidity($('#emailInput'), emailerrorMessage)) valid = false;
 
     let passworderrorMessage = '';
 
-    if(passwordValue === '')
+    if (passwordValue === '')
         passworderrorMessage = 'Password cannot be blank';
-    else if (passwordValue.length < 8) 
-        passworderrorMessage = 'Password must be at least 8 characters long';
-    else if (!isStrongPassword(passwordValue)) 
-        passworderrorMessage = 'Must contain characters, digits and special characters';
 
     if (!setValidity($('#passwordInput'), passworderrorMessage)) valid = false;
 
@@ -69,11 +68,6 @@ const checkInputs = () => {
 const isEmail = email => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return email.toLowerCase().match(re);
-}
-
-const isStrongPassword = password => {
-    const re = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-    return password.match(re);
 }
 
 const setErrorFor = (input, message) => {
@@ -93,8 +87,7 @@ const setValidity = (input, message) => {
         setErrorFor(input, message);
         return false;
     }
-    else 
-    {
+    else {
         setSuccessFor(input);
         return true;
     }

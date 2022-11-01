@@ -507,12 +507,14 @@ class Database
     function returnUser($email, $password)
     {
         if (empty($email) !== false) {
-            header('Location: ../login.php?error=emptyemail');
+            header("Content-Type: application/json");
+            echo json_encode($this->error("emptyemail"));
             exit();
         }
 
         if (empty($password) !== false) {
-            header('Location: ../login.php?error=emptypassword');
+            header("Content-Type: application/json");
+            echo json_encode($this->error("emptypassword"));
             exit();
         }
 
@@ -520,14 +522,16 @@ class Database
         $conn = $instance->getConnection();
 
         if (emailExists($conn, $email) === false) {
-            header('Location: login.php?error=emailnotexist');
+            header("Content-Type: application/json");
+            echo json_encode($this->error("emailnotexist"));
             exit();
         }
 
         $valid = $this->getUser($email, $password);
 
         if ($valid === false) {
-            header('Location: login.php?error=invalidpassword');
+            header("Content-Type: application/json");
+            echo json_encode($this->error("invalidpassword"));
             exit();
         } else {
             $sql = "SELECT * FROM dbusers WHERE `email` = '$email' AND `password` = '$password'";
@@ -545,6 +549,7 @@ class Database
                 $_SESSION["email"] = $user["data"]["email"];
             } else {
                 $user = $this->error("User not found");
+                header("HTTP/1.1 404 Not Found");
             }
             header("Content-Type: application/json");
 
