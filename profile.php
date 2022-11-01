@@ -127,7 +127,7 @@ if (isset($_GET["error"])) {
                         <div class="row lighter-gray rounded">
                             <div class="row p-4">
                                 <div class="col-2">
-                                    <img src="" alt="" class="rounded-circle w-100" id="user-profile-photo">
+                                    <img src="" alt="" class="rounded-circle w-100 crop-image aspect-ratio" id="user-profile-photo">
                                 </div>
                                 <div class="col-4 d-flex flex-column justify-content-center mb-4">
                                     <div class="d-flex align-items-center" id="username-verified">

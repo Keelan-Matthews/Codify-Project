@@ -762,7 +762,7 @@ const reviewCard = ({ review_id, user_id, username, profile_photo, rating, comme
     <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
         <div class="col-2">
             <a href="profile.php?user_id=${user_id}">
-                <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+                <img src="${profile_photo}" alt="" class="rounded-circle w-100 crop-image aspect-ratio">
             </a>
         </div>
         <div class="col-10">

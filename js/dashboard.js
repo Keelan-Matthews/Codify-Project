@@ -564,7 +564,7 @@ const reviewCard = ({ review_id, user_id, username, profile_photo, rating, comme
     <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mt-4">
         <div class="col-2">
             <a href="profile.php?user_id=${user_id}">
-                <img src="${profile_photo}" alt="" class="rounded-circle w-100">
+                <img src="${profile_photo}" alt="" class="rounded-circle w-100 crop-image aspect-ratio">
             </a>
         </div>
         <div class="col-10">
@@ -668,6 +668,28 @@ const populateExploreEvents = () => {
 
    getCategories();
 }
+
+$('#delete-event').on('click', () => {
+    const event_id = $('.event-details').attr('id');
+
+    $.ajax({
+        url: 'api.php',
+        type: 'POST',
+        data: JSON.stringify({
+            "type": "delete_event",
+            "event_id": event_id
+        }),
+        contentType: false,
+        processData: false,
+        success: (res) => {
+            window.location.href = "profile.php?user_id=" + user_id;
+        },
+        error: () => {
+            console.log('Event could not be deleted');
+        }
+
+    })
+});
 
 const levenshteinDistance = (s, t) => {
     if (!s.length) return t.length;

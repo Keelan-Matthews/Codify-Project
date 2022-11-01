@@ -79,7 +79,7 @@
         <div class="col-12 col-md-5 ps-4">
             <div class="d-flex align-items-center lighter-gray-2 p-3 rounded row mb-5 mt-4 mt-md-0" id="event-details-user">
                 <div class="col-2">
-                    <img src="" alt="" class="rounded-circle w-100" id="event-user-photo">
+                    <img src="" alt="" class="rounded-circle w-100 crop-image aspect-ratio" id="event-user-photo">
                 </div>
                 <div class="col-5">
                     <p class="text-white fw-bold mb-0" id="event-user"></p>
