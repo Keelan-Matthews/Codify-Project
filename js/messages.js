@@ -131,7 +131,7 @@ const friendCard = ({ username, user_id, profile_photo }) => `
 
 const friendBubble = ({ message, time }) => `
     <div class="mb-3">
-        <div class="text-white p-3 rounded-3 bg-primary mb-1 me-5">
+        <div class="friend-message text-white p-3 rounded-3 bg-primary mb-1 me-5">
             <p class="mb-0 text-wrap">${message}</p>
         </div>
         <small class="text-white">${transformTime(time)}</small>
@@ -139,8 +139,8 @@ const friendBubble = ({ message, time }) => `
 `;
 
 const myBubble = ({ message, time }) => `
-    <div class="mb-3 d-flex flex-column align-items-end">
-        <div class="text-white p-3 rounded-3 lighter-gray-2 align-self-end mb-1 ms-5">
+    <div class="mb-3 d-flex flex-column align-items-end w-100">
+        <div class="my-message text-white p-3 rounded-3 lighter-gray-2 align-self-end mb-1 ms-5">
             <p class="mb-0 text-wrap">${message}</p>
         </div>
         <small class="text-white">${transformTime(time)}</small>

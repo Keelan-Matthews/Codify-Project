@@ -1173,3 +1173,11 @@ $('#event-form').on('drop', (e) => {
     $('#eventImage').prop('files', files);
     $('.currentEventPhoto').attr('src', URL.createObjectURL(files[0]));
 });
+
+$('#profileDropContainer').on('click', () => {
+    $('#profilePhoto').click();
+
+    $('#profilePhoto').on('change', (e) => {
+        $('.currentProfilePhoto').attr('src', URL.createObjectURL(e.target.files[0]));
+    });
+});

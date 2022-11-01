@@ -843,3 +843,11 @@ $('#event-form').on('drop', (e) => {
     $('#eventImage').prop('files', files);
     $('.currentEventPhoto').attr('src', URL.createObjectURL(files[0]));
 });
+
+$('#eventDropContainer').on('click', () => {
+    $('#eventImage').trigger('click');
+
+    $('#eventImage').on('change', () => {
+        $('.currentEventPhoto').attr('src', URL.createObjectURL($('#eventImage')[0].files[0]));
+    });
+});
